@@ -1,0 +1,53 @@
+{
+  "generator-jhipster": {
+    "authenticationType": "oauth2",
+    "clientFramework": "angularX",
+    "serverPort": "8080",
+    "serviceDiscoveryType": "eureka",
+    "skipUserManagement": true,
+    "withAdminUi": true,
+    "baseName": "gateway",
+    "buildTool": "maven",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "cacheProvider": "no",
+    "enableHibernateCache": false,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": ["en"],
+    "messageBroker": false,
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "skipClient": false,
+    "testFrameworks": [],
+    "websocket": false,
+    "applicationType": "gateway",
+    "packageName": "com.mamazinha.gateway",
+    "packageFolder": "com/mamazinha/gateway",
+    "jhipsterVersion": "7.1.0",
+    "skipServer": false,
+    "clientPackageManager": "npm",
+    "dtoSuffix": "DTO",
+    "entitySuffix": "",
+    "reactive": true,
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "applicationIndex": 0,
+    "applications": {
+      "profile": {
+        "serverPort": "8081",
+        "applicationIndex": 1
+      }
+    },
+    "entities": ["Profile", "Weight", "Height", "HumorHistory", "Nap", "BreastFeed"],
+    "skipCheckLengthOfIdentifier": false,
+    "skipFakeData": false,
+    "blueprints": [],
+    "otherModules": [],
+    "pages": [],
+    "nativeLanguage": "en",
+    "creationTimestamp": 1631030694326,
+    "devServerPort": 4200
+  }
+}

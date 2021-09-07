@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="profile">
+      <h2 data-cy="profileDetailsHeading"><span jhiTranslate="gatewayApp.profileProfile.detail.title">Profile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ profile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileProfile.name">Name</span></dt>
+        <dd>
+          <span>{{ profile.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileProfile.picture">Picture</span></dt>
+        <dd>
+          <div *ngIf="profile.picture">
+            <a (click)="openFile(profile.picture, profile.pictureContentType)" jhiTranslate="entity.action.open">open</a>
+            {{ profile.pictureContentType }}, {{ byteSize(profile.picture) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileProfile.birthday">Birthday</span></dt>
+        <dd>
+          <span>{{ profile.birthday | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileProfile.sign">Sign</span></dt>
+        <dd>
+          <span>{{ profile.sign }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileProfile.user">User</span></dt>
+        <dd>
+          <span>{{ profile.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/profile', profile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

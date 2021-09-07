@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="height">
+      <h2 data-cy="heightDetailsHeading"><span jhiTranslate="gatewayApp.profileHeight.detail.title">Height</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ height.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileHeight.value">Value</span></dt>
+        <dd>
+          <span>{{ height.value }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileHeight.date">Date</span></dt>
+        <dd>
+          <span>{{ height.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileHeight.idealWight">Ideal Wight</span></dt>
+        <dd>
+          <span>{{ height.idealWight }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profileHeight.profile">Profile</span></dt>
+        <dd>
+          <div *ngIf="height.profile">
+            <a [routerLink]="['/profile', height.profile?.id, 'view']">{{ height.profile?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/height', height.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
