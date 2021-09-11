@@ -14,23 +14,23 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "profile",
+      "otherEntityName": "babyProfile",
       "otherEntityRelationshipName": "humorHistory",
-      "relationshipName": "profile",
+      "relationshipName": "babyProfile",
       "otherEntityField": "name"
     }
   ],
   "entityTableName": "humor_history",
   "dto": "mapstruct",
-  "pagination": "no",
+  "pagination": "infinite-scroll",
   "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,
-  "applications": ["gateway", "profile"],
-  "microserviceName": "profile",
-  "changelogDate": "20210907152500",
-  "clientRootFolder": "profile",
-  "databaseType": "sql"
+  "applications": ["gateway", "babyprofile"],
+  "microserviceName": "babyprofile",
+  "clientRootFolder": "babyprofile",
+  "databaseType": "sql",
+  "changelogDate": "20210911143751"
 }

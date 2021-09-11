@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="babyProfile">
+      <h2 data-cy="babyProfileDetailsHeading"><span jhiTranslate="gatewayApp.babyprofileBabyProfile.detail.title">Baby Profile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ babyProfile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.babyprofileBabyProfile.name">Name</span></dt>
+        <dd>
+          <span>{{ babyProfile.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.babyprofileBabyProfile.picture">Picture</span></dt>
+        <dd>
+          <div *ngIf="babyProfile.picture">
+            <a (click)="openFile(babyProfile.picture, babyProfile.pictureContentType)" jhiTranslate="entity.action.open">open</a>
+            {{ babyProfile.pictureContentType }}, {{ byteSize(babyProfile.picture) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.babyprofileBabyProfile.birthday">Birthday</span></dt>
+        <dd>
+          <span>{{ babyProfile.birthday | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.babyprofileBabyProfile.sign">Sign</span></dt>
+        <dd>
+          <span>{{ babyProfile.sign }}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.babyprofileBabyProfile.userId">User Id</span></dt>
+        <dd>
+          <span>{{ babyProfile.userId }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/baby-profile', babyProfile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

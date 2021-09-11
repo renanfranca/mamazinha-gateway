@@ -2,7 +2,6 @@ package com.mamazinha.gateway;
 
 import com.mamazinha.gateway.GatewayApp;
 import com.mamazinha.gateway.ReactiveSqlTestContainerExtension;
-import com.mamazinha.gateway.config.TestSecurityConfiguration;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { GatewayApp.class, TestSecurityConfiguration.class })
+@SpringBootTest(classes = GatewayApp.class)
 @ExtendWith(ReactiveSqlTestContainerExtension.class)
 public @interface IntegrationTest {
 }

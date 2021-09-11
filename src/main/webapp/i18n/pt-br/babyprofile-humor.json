@@ -1,0 +1,12 @@
+{
+  "gatewayApp": {
+    "Humor": {
+      "null": "",
+      "ANGRY": "ANGRY",
+      "SAD": "SAD",
+      "CALM": "CALM",
+      "HAPPY": "HAPPY",
+      "EXCITED": "EXCITED"
+    }
+  }
+}

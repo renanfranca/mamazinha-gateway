@@ -1,7 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import locale from '@angular/common/locales/en';
+import locale from '@angular/common/locales/pt';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -55,7 +55,7 @@ import { ErrorComponent } from './layouts/error/error.component';
   ],
   providers: [
     Title,
-    { provide: LOCALE_ID, useValue: 'en' },
+    { provide: LOCALE_ID, useValue: 'pt' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
@@ -74,9 +74,9 @@ export class AppModule {
     registerLocaleData(locale);
     iconLibrary.addIcons(...fontAwesomeIcons);
     dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
-    translateService.setDefaultLang('en');
+    translateService.setDefaultLang('pt-br');
     // if user have changed language and navigates away from the application and back to the application then use previously choosed language
-    const langKey = sessionStorageService.retrieve('locale') ?? 'en';
+    const langKey = sessionStorageService.retrieve('locale') ?? 'pt-br';
     translateService.use(langKey);
   }
 }

@@ -1,12 +1,12 @@
 export interface IUser {
-  id?: string;
+  id?: number;
   login?: string;
 }
 
 export class User implements IUser {
-  constructor(public id: string, public login: string) {}
+  constructor(public id: number, public login: string) {}
 }
 
-export function getUserIdentifier(user: IUser): string | undefined {
+export function getUserIdentifier(user: IUser): number | undefined {
   return user.id;
 }

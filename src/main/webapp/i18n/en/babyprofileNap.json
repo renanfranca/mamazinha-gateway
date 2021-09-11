@@ -1,0 +1,32 @@
+{
+  "gatewayApp": {
+    "babyprofileNap": {
+      "home": {
+        "title": "Naps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Nap",
+        "createOrEditLabel": "Create or edit a Nap",
+        "notFound": "No Naps found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Nap {{ id }}?"
+      },
+      "detail": {
+        "title": "Nap"
+      },
+      "id": "ID",
+      "start": "Start",
+      "end": "End",
+      "humor": "Humor",
+      "place": "Place",
+      "babyProfile": "Baby Profile"
+    }
+  },
+  "babyprofileApp": {
+    "babyprofileNap": {
+      "created": "A new Nap is created with identifier {{ param }}",
+      "updated": "A Nap is updated with identifier {{ param }}",
+      "deleted": "A Nap is deleted with identifier {{ param }}"
+    }
+  }
+}

@@ -59,12 +59,12 @@ describe('Component Tests', () => {
       const childRoutePageTitle = 'childTitle';
       const navigationEnd = new NavigationEnd(1, '', '');
       const navigationStart = new NavigationStart(1, '');
-      const langChangeEvent: LangChangeEvent = { lang: 'en', translations: null };
+      const langChangeEvent: LangChangeEvent = { lang: 'pt-br', translations: null };
 
       beforeEach(() => {
         routerState.snapshot.root = { data: {} };
         jest.spyOn(translateService, 'get').mockImplementation((key: string | string[]) => of(`${key as string} translated`));
-        translateService.currentLang = 'en';
+        translateService.currentLang = 'pt-br';
         jest.spyOn(titleService, 'setTitle');
         comp.ngOnInit();
       });

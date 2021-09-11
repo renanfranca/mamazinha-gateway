@@ -1,10 +1,10 @@
 {
   "generator-jhipster": {
-    "authenticationType": "oauth2",
+    "authenticationType": "jwt",
     "clientFramework": "angularX",
     "serverPort": "8080",
     "serviceDiscoveryType": "eureka",
-    "skipUserManagement": true,
+    "skipUserManagement": false,
     "withAdminUi": true,
     "baseName": "gateway",
     "buildTool": "maven",
@@ -15,7 +15,7 @@
     "enableSwaggerCodegen": false,
     "enableTranslation": true,
     "jhiPrefix": "jhi",
-    "languages": ["en"],
+    "languages": ["pt-br", "en"],
     "messageBroker": false,
     "prodDatabaseType": "postgresql",
     "searchEngine": false,
@@ -25,6 +25,7 @@
     "applicationType": "gateway",
     "packageName": "com.mamazinha.gateway",
     "packageFolder": "com/mamazinha/gateway",
+    "nativeLanguage": "pt-br",
     "jhipsterVersion": "7.1.0",
     "skipServer": false,
     "clientPackageManager": "npm",
@@ -35,19 +36,20 @@
     "clientThemeVariant": "",
     "applicationIndex": 0,
     "applications": {
-      "profile": {
+      "babyprofile": {
         "serverPort": "8081",
         "applicationIndex": 1
       }
     },
-    "entities": ["Profile", "Weight", "Height", "HumorHistory", "Nap", "BreastFeed"],
     "skipCheckLengthOfIdentifier": false,
     "skipFakeData": false,
     "blueprints": [],
     "otherModules": [],
     "pages": [],
-    "nativeLanguage": "en",
-    "creationTimestamp": 1631030694326,
-    "devServerPort": 4200
+    "creationTimestamp": 1631370831815,
+    "jwtSecretKey": "ZGVmNWUyNmQ5NGM4NDA5MTJhZjVmZDQ3NjhlNDRmNDMxY2M5YjJmYzU1ZmVmODY3YjM5MDQ5ZWFhZGNhNzNiOGUxMDhlOGE4Y2ViMzBiZGFjYTRmMzJmNTkxMDAxYzQyZTkyNmRkMTExNzY1ZGQzNTM5ZjhhNzA1MTliNjZjZDM=",
+    "devServerPort": 4200,
+    "entities": ["BabyProfile", "BreastFeed", "Height", "HumorHistory", "Nap", "Weight"],
+    "lastLiquibaseTimestamp": 1631371191000
   }
 }

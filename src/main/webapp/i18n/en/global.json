@@ -7,12 +7,12 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "profileBreastFeed": "Breast Feed",
-        "profileHeight": "Height",
-        "profileHumorHistory": "Humor History",
-        "profileNap": "Nap",
-        "profileProfile": "Profile",
-        "profileWeight": "Weight",
+        "babyprofileBabyProfile": "Baby Profile",
+        "babyprofileBreastFeed": "Breast Feed",
+        "babyprofileHeight": "Height",
+        "babyprofileHumorHistory": "Humor History",
+        "babyprofileNap": "Nap",
+        "babyprofileWeight": "Weight",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
