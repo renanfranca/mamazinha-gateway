@@ -36,7 +36,7 @@
     "clientThemeVariant": "",
     "applicationIndex": 0,
     "applications": {
-      "babyprofile": {
+      "baby": {
         "serverPort": "8081",
         "applicationIndex": 1
       }
@@ -46,10 +46,10 @@
     "blueprints": [],
     "otherModules": [],
     "pages": [],
-    "creationTimestamp": 1631370831815,
-    "jwtSecretKey": "ZGVmNWUyNmQ5NGM4NDA5MTJhZjVmZDQ3NjhlNDRmNDMxY2M5YjJmYzU1ZmVmODY3YjM5MDQ5ZWFhZGNhNzNiOGUxMDhlOGE4Y2ViMzBiZGFjYTRmMzJmNTkxMDAxYzQyZTkyNmRkMTExNzY1ZGQzNTM5ZjhhNzA1MTliNjZjZDM=",
+    "creationTimestamp": 1631387347607,
+    "jwtSecretKey": "Mzk1NzQ1YzM1ZjhkOTMwYTNkMDllMzJkZTNlZWIzMjhjNDUwOGFhNzNjZDUzZTgwMDE4MGI1ZGM1ZGY4YzhiYzYwOWEwMDU1NWUyYjBhNTdlMjdjNjFiZWRmMWZhMjM3Y2UxYTcyMWRjYWYzNjFlYjYxNWU1NTQxZjViM2M3NzI=",
     "devServerPort": 4200,
-    "entities": ["BabyProfile", "BreastFeed", "Height", "HumorHistory", "Nap", "Weight"],
-    "lastLiquibaseTimestamp": 1631371191000
+    "entities": ["BabyProfile", "BreastFeed", "Height", "Humor", "HumorHistory", "Nap", "Weight"],
+    "lastLiquibaseTimestamp": 1631387767000
   }
 }

@@ -6,33 +6,38 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'baby-profile',
-        data: { pageTitle: 'gatewayApp.babyprofileBabyProfile.home.title' },
-        loadChildren: () => import('./babyprofile/baby-profile/baby-profile.module').then(m => m.BabyprofileBabyProfileModule),
+        data: { pageTitle: 'gatewayApp.babyBabyProfile.home.title' },
+        loadChildren: () => import('./baby/baby-profile/baby-profile.module').then(m => m.BabyBabyProfileModule),
       },
       {
         path: 'breast-feed',
-        data: { pageTitle: 'gatewayApp.babyprofileBreastFeed.home.title' },
-        loadChildren: () => import('./babyprofile/breast-feed/breast-feed.module').then(m => m.BabyprofileBreastFeedModule),
+        data: { pageTitle: 'gatewayApp.babyBreastFeed.home.title' },
+        loadChildren: () => import('./baby/breast-feed/breast-feed.module').then(m => m.BabyBreastFeedModule),
       },
       {
         path: 'height',
-        data: { pageTitle: 'gatewayApp.babyprofileHeight.home.title' },
-        loadChildren: () => import('./babyprofile/height/height.module').then(m => m.BabyprofileHeightModule),
+        data: { pageTitle: 'gatewayApp.babyHeight.home.title' },
+        loadChildren: () => import('./baby/height/height.module').then(m => m.BabyHeightModule),
+      },
+      {
+        path: 'humor',
+        data: { pageTitle: 'gatewayApp.humor.home.title' },
+        loadChildren: () => import('./humor/humor.module').then(m => m.HumorModule),
       },
       {
         path: 'humor-history',
-        data: { pageTitle: 'gatewayApp.babyprofileHumorHistory.home.title' },
-        loadChildren: () => import('./babyprofile/humor-history/humor-history.module').then(m => m.BabyprofileHumorHistoryModule),
+        data: { pageTitle: 'gatewayApp.babyHumorHistory.home.title' },
+        loadChildren: () => import('./baby/humor-history/humor-history.module').then(m => m.BabyHumorHistoryModule),
       },
       {
         path: 'nap',
-        data: { pageTitle: 'gatewayApp.babyprofileNap.home.title' },
-        loadChildren: () => import('./babyprofile/nap/nap.module').then(m => m.BabyprofileNapModule),
+        data: { pageTitle: 'gatewayApp.babyNap.home.title' },
+        loadChildren: () => import('./baby/nap/nap.module').then(m => m.BabyNapModule),
       },
       {
         path: 'weight',
-        data: { pageTitle: 'gatewayApp.babyprofileWeight.home.title' },
-        loadChildren: () => import('./babyprofile/weight/weight.module').then(m => m.BabyprofileWeightModule),
+        data: { pageTitle: 'gatewayApp.babyWeight.home.title' },
+        loadChildren: () => import('./baby/weight/weight.module').then(m => m.BabyWeightModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
