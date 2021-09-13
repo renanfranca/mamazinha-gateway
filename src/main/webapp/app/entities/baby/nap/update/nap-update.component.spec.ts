@@ -11,8 +11,8 @@ import { NapService } from '../service/nap.service';
 import { INap, Nap } from '../nap.model';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
-import { IHumor } from 'app/entities/humor/humor.model';
-import { HumorService } from 'app/entities/humor/service/humor.service';
+import { IHumor } from 'app/entities/baby/humor/humor.model';
+import { HumorService } from 'app/entities/baby/humor/service/humor.service';
 
 import { NapUpdateComponent } from './nap-update.component';
 

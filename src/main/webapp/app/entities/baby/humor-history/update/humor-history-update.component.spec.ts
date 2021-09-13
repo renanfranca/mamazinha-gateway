@@ -11,8 +11,8 @@ import { HumorHistoryService } from '../service/humor-history.service';
 import { IHumorHistory, HumorHistory } from '../humor-history.model';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
-import { IHumor } from 'app/entities/humor/humor.model';
-import { HumorService } from 'app/entities/humor/service/humor.service';
+import { IHumor } from 'app/entities/baby/humor/humor.model';
+import { HumorService } from 'app/entities/baby/humor/service/humor.service';
 
 import { HumorHistoryUpdateComponent } from './humor-history-update.component';
 

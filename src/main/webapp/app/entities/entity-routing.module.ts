@@ -5,6 +5,11 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule.forChild([
       {
+        path: 'humor',
+        data: { pageTitle: 'gatewayApp.babyHumor.home.title' },
+        loadChildren: () => import('./baby/humor/humor.module').then(m => m.BabyHumorModule),
+      },
+      {
         path: 'baby-profile',
         data: { pageTitle: 'gatewayApp.babyBabyProfile.home.title' },
         loadChildren: () => import('./baby/baby-profile/baby-profile.module').then(m => m.BabyBabyProfileModule),
@@ -18,11 +23,6 @@ import { RouterModule } from '@angular/router';
         path: 'height',
         data: { pageTitle: 'gatewayApp.babyHeight.home.title' },
         loadChildren: () => import('./baby/height/height.module').then(m => m.BabyHeightModule),
-      },
-      {
-        path: 'humor',
-        data: { pageTitle: 'gatewayApp.humor.home.title' },
-        loadChildren: () => import('./humor/humor.module').then(m => m.HumorModule),
       },
       {
         path: 'humor-history',

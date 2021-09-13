@@ -7,10 +7,10 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "babyHumor": "Humor",
         "babyBabyProfile": "Baby Profile",
         "babyBreastFeed": "Breast Feed",
         "babyHeight": "Height",
-        "humor": "Humor",
         "babyHumorHistory": "Humor History",
         "babyNap": "Nap",
         "babyWeight": "Weight",
