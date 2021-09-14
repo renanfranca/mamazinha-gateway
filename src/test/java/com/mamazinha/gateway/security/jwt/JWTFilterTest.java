@@ -43,7 +43,7 @@ class JWTFilterTest {
             "test-password",
             Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
         );
-        String jwt = tokenProvider.createToken(authentication, false);
+        String jwt = tokenProvider.createToken(authentication, false, 0l);
         MockServerHttpRequest.BaseBuilder request = MockServerHttpRequest
             .get("/api/test")
             .header(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
@@ -129,7 +129,7 @@ class JWTFilterTest {
             "test-password",
             Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
         );
-        String jwt = tokenProvider.createToken(authentication, false);
+        String jwt = tokenProvider.createToken(authentication, false, 0l);
         MockServerHttpRequest.BaseBuilder request = MockServerHttpRequest
             .get("/api/test")
             .header(JWTFilter.AUTHORIZATION_HEADER, "Basic " + jwt);

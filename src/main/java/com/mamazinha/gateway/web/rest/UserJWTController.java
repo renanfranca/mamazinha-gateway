@@ -1,8 +1,10 @@
 package com.mamazinha.gateway.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mamazinha.gateway.domain.User;
 import com.mamazinha.gateway.security.jwt.JWTFilter;
 import com.mamazinha.gateway.security.jwt.TokenProvider;
+import com.mamazinha.gateway.service.UserService;
 import com.mamazinha.gateway.web.rest.vm.LoginVM;
 import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -10,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 /**
  * Controller to authenticate users.
@@ -25,9 +29,12 @@ public class UserJWTController {
 
     private final ReactiveAuthenticationManager authenticationManager;
 
-    public UserJWTController(TokenProvider tokenProvider, ReactiveAuthenticationManager authenticationManager) {
+    private final UserService userService;
+
+    public UserJWTController(TokenProvider tokenProvider, ReactiveAuthenticationManager authenticationManager, UserService userService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @PostMapping("/authenticate")
@@ -37,7 +44,14 @@ public class UserJWTController {
                 login ->
                     authenticationManager
                         .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
-                        .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, login.isRememberMe())))
+                        .flatMap(
+                            auth -> {
+                                Mono<User> userMono = userService.getUserWithAuthoritiesByLogin(login.getUsername());
+                                return userMono.flatMap(
+                                    user -> Mono.fromCallable(() -> tokenProvider.createToken(auth, login.isRememberMe(), user.getId()))
+                                );
+                            }
+                        )
             )
             .map(
                 jwt -> {
