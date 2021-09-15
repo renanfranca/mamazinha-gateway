@@ -1,18 +1,16 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
+import * as dayjs from 'dayjs';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-
-import * as dayjs from 'dayjs';
-import { DATE_TIME_FORMAT } from 'app/config/input.constants';
-
-import { IBabyProfile, BabyProfile } from '../baby-profile.model';
+import { BabyProfile, IBabyProfile } from '../baby-profile.model';
 import { BabyProfileService } from '../service/baby-profile.service';
-import { AlertError } from 'app/shared/alert/alert-error.model';
-import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
-import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 
 @Component({
   selector: 'jhi-baby-profile-update',
@@ -29,7 +27,7 @@ export class BabyProfileUpdateComponent implements OnInit {
     birthday: [null, [Validators.required]],
     sign: [],
     main: [],
-    userId: [null, [Validators.required]],
+    userId: [null],
   });
 
   constructor(

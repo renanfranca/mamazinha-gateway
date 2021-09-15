@@ -8,7 +8,7 @@ export interface IBabyProfile {
   birthday?: dayjs.Dayjs;
   sign?: string | null;
   main?: boolean | null;
-  userId?: string;
+  userId?: string | null;
 }
 
 export class BabyProfile implements IBabyProfile {
@@ -20,7 +20,7 @@ export class BabyProfile implements IBabyProfile {
     public birthday?: dayjs.Dayjs,
     public sign?: string | null,
     public main?: boolean | null,
-    public userId?: string
+    public userId?: string | null
   ) {
     this.main = this.main ?? false;
   }

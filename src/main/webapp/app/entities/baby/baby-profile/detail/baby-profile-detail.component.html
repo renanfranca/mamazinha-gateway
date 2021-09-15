@@ -43,8 +43,8 @@
         <dd>
           <span>{{ babyProfile.main }}</span>
         </dd>
-        <dt><span jhiTranslate="gatewayApp.babyBabyProfile.userId">User Id</span></dt>
-        <dd>
+        <dt *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="gatewayApp.babyBabyProfile.userId">User Id</span></dt>
+        <dd *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <span>{{ babyProfile.userId }}</span>
         </dd>
       </dl>

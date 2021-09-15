@@ -48,7 +48,7 @@
           <th scope="col" jhiSortBy="main">
             <span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="userId">
+          <th scope="col" jhiSortBy="userId" *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <span jhiTranslate="gatewayApp.babyBabyProfile.userId">User Id</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
@@ -73,7 +73,7 @@
           <td>{{ babyProfile.birthday | formatMediumDatetime }}</td>
           <td>{{ babyProfile.sign }}</td>
           <td>{{ babyProfile.main }}</td>
-          <td>{{ babyProfile.userId }}</td>
+          <td *jhiHasAnyAuthority="'ROLE_ADMIN'">{{ babyProfile.userId }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button
