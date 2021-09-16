@@ -2,31 +2,31 @@
   "gatewayApp": {
     "babyNap": {
       "home": {
-        "title": "Naps",
+        "title": "Sonecas",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Nap",
-        "createOrEditLabel": "Criar ou editar Nap",
-        "notFound": "Nenhum Nap encontrado"
+        "createLabel": "Criar nova Soneca",
+        "createOrEditLabel": "Criar ou editar Soneca",
+        "notFound": "Nenhum Soneca encontrada"
       },
       "delete": {
-        "question": "Tem certeza de que deseja excluir Nap {{ id }}?"
+        "question": "Tem certeza de que deseja excluir Soneca {{ id }}?"
       },
       "detail": {
-        "title": "Nap"
+        "title": "Soneca"
       },
       "id": "ID",
-      "start": "Start",
-      "end": "End",
-      "place": "Place",
-      "babyProfile": "Baby Profile",
-      "humor": "Humor"
+      "start": "Início",
+      "end": "Fim",
+      "place": "Local",
+      "babyProfile": "Perfil do Bebê",
+      "humor": "Humor ao acordar"
     }
   },
   "babyApp": {
     "babyNap": {
-      "created": "Um novo Nap foi criado com o identificador {{ param }}",
-      "updated": "Um Nap foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Nap foi excluído com o identificador {{ param }}"
+      "created": "Uma nova Soneca foi criada com o identificador {{ param }}",
+      "updated": "Uma Soneca foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma Soneca foi excluída com o identificador {{ param }}"
     }
   }
 }

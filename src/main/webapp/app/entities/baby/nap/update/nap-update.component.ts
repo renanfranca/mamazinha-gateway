@@ -1,19 +1,17 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
-import * as dayjs from 'dayjs';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
-
-import { INap, Nap } from '../nap.model';
-import { NapService } from '../service/nap.service';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
 import { IHumor } from 'app/entities/baby/humor/humor.model';
 import { HumorService } from 'app/entities/baby/humor/service/humor.service';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { INap, Nap } from '../nap.model';
+import { NapService } from '../service/nap.service';
 
 @Component({
   selector: 'jhi-nap-update',
@@ -27,10 +25,10 @@ export class NapUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    start: [],
+    start: [null, [Validators.required]],
     end: [],
     place: [],
-    babyProfile: [],
+    babyProfile: [null, [Validators.required]],
     humor: [],
   });
 

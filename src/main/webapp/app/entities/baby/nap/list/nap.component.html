@@ -55,12 +55,28 @@
           <td jhiTranslate="{{ 'gatewayApp.Place.' + nap.place }}">{{ nap.place }}</td>
           <td>
             <div *ngIf="nap.babyProfile">
-              <a [routerLink]="['/baby-profile', nap.babyProfile?.id, 'view']">{{ nap.babyProfile?.name }}</a>
+              <a [routerLink]="['/baby-profile', nap.babyProfile?.id, 'view']">
+                (<fa-icon
+                  [icon]="nap.babyProfile?.main ? 'check' : 'window-minimize'"
+                  aria-hidden="true"
+                  class="{{ nap.babyProfile?.main ? 'text-success' : 'text-muted' }}"
+                ></fa-icon
+                >) {{ nap.babyProfile?.name }}
+              </a>
             </div>
           </td>
           <td>
-            <div *ngIf="nap.humor">
+            <div *ngIf="!nap.humor?.emotico">
               <a [routerLink]="['/humor', nap.humor?.id, 'view']">{{ nap.humor?.description }}</a>
+            </div>
+            <div *ngIf="nap.humor?.emotico">
+              <a [routerLink]="['/humor', nap.humor?.id, 'view']">
+                <img
+                  [src]="'data:' + nap.humor?.emoticoContentType + ';base64,' + nap.humor?.emotico"
+                  style="max-width: 50%"
+                  alt="humor image"
+                />
+              </a>
             </div>
           </td>
           <td class="text-right">
