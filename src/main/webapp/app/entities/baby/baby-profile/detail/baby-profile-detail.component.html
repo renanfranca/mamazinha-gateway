@@ -41,7 +41,11 @@
         </dd>
         <dt><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
         <dd>
-          <span>{{ babyProfile.main }}</span>
+          <fa-icon
+            [icon]="babyProfile.main ? 'check' : 'window-minimize'"
+            aria-hidden="true"
+            class="{{ babyProfile.main ? 'text-success' : 'text-muted' }}"
+          ></fa-icon>
         </dd>
         <dt *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="gatewayApp.babyBabyProfile.userId">User Id</span></dt>
         <dd *jhiHasAnyAuthority="'ROLE_ADMIN'">

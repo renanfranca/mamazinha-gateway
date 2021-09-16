@@ -72,7 +72,13 @@
           </td>
           <td>{{ babyProfile.birthday | formatMediumDatetime }}</td>
           <td>{{ babyProfile.sign }}</td>
-          <td>{{ babyProfile.main }}</td>
+          <td>
+            <fa-icon
+              [icon]="babyProfile.main ? 'check' : 'window-minimize'"
+              aria-hidden="true"
+              class="{{ babyProfile.main ? 'text-success' : 'text-muted' }}"
+            ></fa-icon>
+          </td>
           <td *jhiHasAnyAuthority="'ROLE_ADMIN'">{{ babyProfile.userId }}</td>
           <td class="text-right">
             <div class="btn-group">

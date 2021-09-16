@@ -101,9 +101,11 @@
           <input type="text" class="form-control" name="sign" id="field_sign" data-cy="sign" formControlName="sign" />
         </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gatewayApp.babyBabyProfile.main" for="field_main">Main</label>
-          <input type="checkbox" class="form-check" name="main" id="field_main" data-cy="main" formControlName="main" />
+        <div class="form-group form-check">
+          <label class="form-check-label" for="field_main">
+            <input type="checkbox" class="form-check-input" name="main" id="field_main" data-cy="main" formControlName="main" />
+            <span jhiTranslate="gatewayApp.babyBabyProfile.main" for="field_main"></span>
+          </label>
         </div>
 
         <div class="form-group" *jhiHasAnyAuthority="'ROLE_ADMIN'">

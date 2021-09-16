@@ -2,11 +2,11 @@
   "gatewayApp": {
     "babyBabyProfile": {
       "home": {
-        "title": "Baby Profiles",
+        "title": "Perfis de BeBês",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Baby Profile",
-        "createOrEditLabel": "Criar ou editar Baby Profile",
-        "notFound": "Nenhum Baby Profile encontrado"
+        "createLabel": "Criar novo Perfil de BeBê",
+        "createOrEditLabel": "Criar ou editar Perfil de BeBê",
+        "notFound": "Nenhum Perfil de BeBê encontrado"
       },
       "delete": {
         "question": "Tem certeza de que deseja excluir Baby Profile {{ id }}?"
@@ -15,11 +15,11 @@
         "title": "Baby Profile"
       },
       "id": "ID",
-      "name": "Name",
-      "picture": "Picture",
-      "birthday": "Birthday",
-      "sign": "Sign",
-      "main": "Main",
+      "name": "Nome",
+      "picture": "Foto",
+      "birthday": "Data de Nascimento",
+      "sign": "Signo",
+      "main": "Perfil Principal",
       "userId": "User Id"
     }
   },
