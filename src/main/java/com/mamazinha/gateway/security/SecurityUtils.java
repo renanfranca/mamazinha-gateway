@@ -1,5 +1,6 @@
 package com.mamazinha.gateway.security;
 
+import java.util.Arrays;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
@@ -65,16 +66,41 @@ public final class SecurityUtils {
     }
 
     /**
+     * Checks if the current user has any of the authorities.
+     *
+     * @param authorities the authorities to check.
+     * @return true if the current user has any of the authorities, false otherwise.
+     */
+    public static Mono<Boolean> hasCurrentUserAnyOfAuthorities(String... authorities) {
+        return ReactiveSecurityContextHolder
+            .getContext()
+            .map(SecurityContext::getAuthentication)
+            .map(Authentication::getAuthorities)
+            .map(authorityList ->
+                authorityList
+                    .stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .anyMatch(authority -> Arrays.asList(authorities).contains(authority))
+            );
+    }
+
+    /**
+     * Checks if the current user has none of the authorities.
+     *
+     * @param authorities the authorities to check.
+     * @return true if the current user has none of the authorities, false otherwise.
+     */
+    public static Mono<Boolean> hasCurrentUserNoneOfAuthorities(String... authorities) {
+        return hasCurrentUserAnyOfAuthorities(authorities).map(result -> !result);
+    }
+
+    /**
      * Checks if the current user has a specific authority.
      *
      * @param authority the authority to check.
      * @return true if the current user has the authority, false otherwise.
      */
     public static Mono<Boolean> hasCurrentUserThisAuthority(String authority) {
-        return ReactiveSecurityContextHolder
-            .getContext()
-            .map(SecurityContext::getAuthentication)
-            .map(Authentication::getAuthorities)
-            .map(authorities -> authorities.stream().map(GrantedAuthority::getAuthority).anyMatch(authority::equals));
+        return hasCurrentUserAnyOfAuthorities(authority);
     }
 }

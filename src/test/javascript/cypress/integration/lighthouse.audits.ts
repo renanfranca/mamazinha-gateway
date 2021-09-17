@@ -1,4 +1,4 @@
-describe('Lighthoyse Audits', () => {
+describe('Lighthouse Audits', () => {
   beforeEach(() => {
     cy.visit('/');
   });
