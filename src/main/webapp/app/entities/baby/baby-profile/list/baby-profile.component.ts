@@ -93,7 +93,7 @@ export class BabyProfileComponent implements OnInit {
   protected handleNavigation(): void {
     combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
       const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
+      const pageNumber = +(page ?? 1);
       const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
       const predicate = sort[0];
       const ascending = sort[1] === ASC;

@@ -12,7 +12,7 @@
 // the project's config changing)
 import fs = require('fs');
 import { lighthouse, pa11y, prepareAudit } from 'cypress-audit';
-import ReportGenerator = require('lighthouse/lighthouse-core/report/report-generator');
+import ReportGenerator = require('lighthouse/report/generator/report-generator');
 /**
  * @type {Cypress.PluginConfig}
  */

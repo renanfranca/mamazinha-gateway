@@ -26,7 +26,7 @@
     "packageName": "com.mamazinha.gateway",
     "packageFolder": "com/mamazinha/gateway",
     "nativeLanguage": "pt-br",
-    "jhipsterVersion": "7.1.0",
+    "jhipsterVersion": "7.2.0",
     "skipServer": false,
     "clientPackageManager": "npm",
     "dtoSuffix": "DTO",
@@ -50,6 +50,7 @@
     "creationTimestamp": 1631541197231,
     "jwtSecretKey": "OTg4ZDU5ZDNhYjgzZWQ2N2RmYmE3MGFhMjFmMzQ5NDU4MGM3MGY5YjY2NzJkN2FlOWM3M2UwMzZkNzFmZDllM2I4ZDJkMmRhZmJmOGY3YWI5NWNjNWJiMjE4MDE0MDYyY2RkMmJkODYyMTIyMWNkMzI0MWZlMTU4Y2JhOTY0OGE=",
     "devServerPort": 4200,
-    "lastLiquibaseTimestamp": 1631541614000
+    "lastLiquibaseTimestamp": 1631541614000,
+    "enableGradleEnterprise": false
   }
 }

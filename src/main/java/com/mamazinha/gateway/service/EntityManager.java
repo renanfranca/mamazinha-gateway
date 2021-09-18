@@ -196,22 +196,16 @@ public class EntityManager {
             .then(
                 Flux
                     .fromStream(referencedIds)
-                    .flatMap(
-                        (Long referenceId) -> {
-                            StatementMapper.InsertSpec insert = r2dbcEntityTemplate
-                                .getDataAccessStrategy()
-                                .getStatementMapper()
-                                .createInsert(table.tableName)
-                                .withColumn(table.idColumn, Parameter.from(entityId))
-                                .withColumn(table.referenceColumn, Parameter.from(referenceId));
+                    .flatMap((Long referenceId) -> {
+                        StatementMapper.InsertSpec insert = r2dbcEntityTemplate
+                            .getDataAccessStrategy()
+                            .getStatementMapper()
+                            .createInsert(table.tableName)
+                            .withColumn(table.idColumn, Parameter.from(entityId))
+                            .withColumn(table.referenceColumn, Parameter.from(referenceId));
 
-                            return r2dbcEntityTemplate
-                                .getDatabaseClient()
-                                .sql(statementMapper.getMappedObject(insert))
-                                .fetch()
-                                .rowsUpdated();
-                        }
-                    )
+                        return r2dbcEntityTemplate.getDatabaseClient().sql(statementMapper.getMappedObject(insert)).fetch().rowsUpdated();
+                    })
                     .collectList()
                     .map((List<Integer> updates) -> updates.stream().reduce(Integer::sum).orElse(0))
             );

@@ -120,36 +120,30 @@ public class UserResource {
         return userRepository
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .hasElement()
-            .flatMap(
-                loginExists -> {
-                    if (Boolean.TRUE.equals(loginExists)) {
-                        return Mono.error(new LoginAlreadyUsedException());
-                    }
-                    return userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+            .flatMap(loginExists -> {
+                if (Boolean.TRUE.equals(loginExists)) {
+                    return Mono.error(new LoginAlreadyUsedException());
                 }
-            )
+                return userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+            })
             .hasElement()
-            .flatMap(
-                emailExists -> {
-                    if (Boolean.TRUE.equals(emailExists)) {
-                        return Mono.error(new EmailAlreadyUsedException());
-                    }
-                    return userService.createUser(userDTO);
+            .flatMap(emailExists -> {
+                if (Boolean.TRUE.equals(emailExists)) {
+                    return Mono.error(new EmailAlreadyUsedException());
                 }
-            )
+                return userService.createUser(userDTO);
+            })
             .doOnSuccess(mailService::sendCreationEmail)
-            .map(
-                user -> {
-                    try {
-                        return ResponseEntity
-                            .created(new URI("/api/admin/users/" + user.getLogin()))
-                            .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", user.getLogin()))
-                            .body(user);
-                    } catch (URISyntaxException e) {
-                        throw new RuntimeException(e);
-                    }
+            .map(user -> {
+                try {
+                    return ResponseEntity
+                        .created(new URI("/api/admin/users/" + user.getLogin()))
+                        .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", user.getLogin()))
+                        .body(user);
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
                 }
-            );
+            });
     }
 
     /**
@@ -168,31 +162,26 @@ public class UserResource {
             .findOneByEmailIgnoreCase(userDTO.getEmail())
             .filter(user -> !user.getId().equals(userDTO.getId()))
             .hasElement()
-            .flatMap(
-                emailExists -> {
-                    if (Boolean.TRUE.equals(emailExists)) {
-                        return Mono.error(new EmailAlreadyUsedException());
-                    }
-                    return userRepository.findOneByLogin(userDTO.getLogin().toLowerCase());
+            .flatMap(emailExists -> {
+                if (Boolean.TRUE.equals(emailExists)) {
+                    return Mono.error(new EmailAlreadyUsedException());
                 }
-            )
+                return userRepository.findOneByLogin(userDTO.getLogin().toLowerCase());
+            })
             .filter(user -> !user.getId().equals(userDTO.getId()))
             .hasElement()
-            .flatMap(
-                loginExists -> {
-                    if (Boolean.TRUE.equals(loginExists)) {
-                        return Mono.error(new LoginAlreadyUsedException());
-                    }
-                    return userService.updateUser(userDTO);
+            .flatMap(loginExists -> {
+                if (Boolean.TRUE.equals(loginExists)) {
+                    return Mono.error(new LoginAlreadyUsedException());
                 }
-            )
+                return userService.updateUser(userDTO);
+            })
             .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
-            .map(
-                user ->
-                    ResponseEntity
-                        .ok()
-                        .headers(HeaderUtil.createAlert(applicationName, "userManagement.updated", userDTO.getLogin()))
-                        .body(user)
+            .map(user ->
+                ResponseEntity
+                    .ok()
+                    .headers(HeaderUtil.createAlert(applicationName, "userManagement.updated", userDTO.getLogin()))
+                    .body(user)
             );
     }
 
@@ -251,8 +240,7 @@ public class UserResource {
         log.debug("REST request to delete User: {}", login);
         return userService
             .deleteUser(login)
-            .map(
-                it -> ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build()
+            .map(it -> ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build()
             );
     }
 }

@@ -40,26 +40,21 @@ public class UserJWTController {
     @PostMapping("/authenticate")
     public Mono<ResponseEntity<JWTToken>> authorize(@Valid @RequestBody Mono<LoginVM> loginVM) {
         return loginVM
-            .flatMap(
-                login ->
-                    authenticationManager
-                        .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
-                        .flatMap(
-                            auth -> {
-                                Mono<User> userMono = userService.getUserWithAuthoritiesByLogin(login.getUsername());
-                                return userMono.flatMap(
-                                    user -> Mono.fromCallable(() -> tokenProvider.createToken(auth, login.isRememberMe(), user.getId()))
-                                );
-                            }
-                        )
+            .flatMap(login ->
+                authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
+                    .flatMap(auth -> {
+                        Mono<User> userMono = userService.getUserWithAuthoritiesByLogin(login.getUsername());
+                        return userMono.flatMap(user ->
+                            Mono.fromCallable(() -> tokenProvider.createToken(auth, login.isRememberMe(), user.getId()))
+                        );
+                    })
             )
-            .map(
-                jwt -> {
-                    HttpHeaders httpHeaders = new HttpHeaders();
-                    httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-                    return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
-                }
-            );
+            .map(jwt -> {
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+                return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+            });
     }
 
     /**

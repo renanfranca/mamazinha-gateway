@@ -40,7 +40,12 @@ public class WebConfigurer implements WebFluxConfigurer {
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
         this.jHipsterProperties = jHipsterProperties;
         if (env.acceptsProfiles(Profiles.of(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT))) {
-            H2ConfigurationHelper.initH2Console();
+            try {
+                H2ConfigurationHelper.initH2Console();
+            } catch (Exception e) {
+                // Console may already be running on another app or after a refresh.
+                e.printStackTrace();
+            }
         }
     }
 

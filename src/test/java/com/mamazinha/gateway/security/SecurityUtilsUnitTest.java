@@ -59,6 +59,48 @@ class SecurityUtilsUnitTest {
     }
 
     @Test
+    void testHasCurrentUserAnyOfAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
+        Context context = ReactiveSecurityContextHolder.withAuthentication(
+            new UsernamePasswordAuthenticationToken("admin", "admin", authorities)
+        );
+        Boolean hasCurrentUserThisAuthority = SecurityUtils
+            .hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)
+            .subscriberContext(context)
+            .block();
+        assertThat(hasCurrentUserThisAuthority).isTrue();
+
+        hasCurrentUserThisAuthority =
+            SecurityUtils
+                .hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.ADMIN)
+                .subscriberContext(context)
+                .block();
+        assertThat(hasCurrentUserThisAuthority).isFalse();
+    }
+
+    @Test
+    void testHasCurrentUserNoneOfAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
+        Context context = ReactiveSecurityContextHolder.withAuthentication(
+            new UsernamePasswordAuthenticationToken("admin", "admin", authorities)
+        );
+        Boolean hasCurrentUserThisAuthority = SecurityUtils
+            .hasCurrentUserNoneOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)
+            .subscriberContext(context)
+            .block();
+        assertThat(hasCurrentUserThisAuthority).isFalse();
+
+        hasCurrentUserThisAuthority =
+            SecurityUtils
+                .hasCurrentUserNoneOfAuthorities(AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.ADMIN)
+                .subscriberContext(context)
+                .block();
+        assertThat(hasCurrentUserThisAuthority).isTrue();
+    }
+
+    @Test
     void testHasCurrentUserThisAuthority() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));

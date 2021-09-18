@@ -6,7 +6,6 @@ import com.mamazinha.gateway.service.MailService;
 import com.mamazinha.gateway.service.UserService;
 import com.mamazinha.gateway.service.dto.AdminUserDTO;
 import com.mamazinha.gateway.service.dto.PasswordChangeDTO;
-import com.mamazinha.gateway.service.dto.UserDTO;
 import com.mamazinha.gateway.web.rest.errors.*;
 import com.mamazinha.gateway.web.rest.vm.KeyAndPasswordVM;
 import com.mamazinha.gateway.web.rest.vm.ManagedUserVM;
@@ -118,31 +117,27 @@ public class AccountResource {
         return SecurityUtils
             .getCurrentUserLogin()
             .switchIfEmpty(Mono.error(new AccountResourceException("Current user login not found")))
-            .flatMap(
-                userLogin ->
-                    userRepository
-                        .findOneByEmailIgnoreCase(userDTO.getEmail())
-                        .filter(existingUser -> !existingUser.getLogin().equalsIgnoreCase(userLogin))
-                        .hasElement()
-                        .flatMap(
-                            emailExists -> {
-                                if (emailExists) {
-                                    throw new EmailAlreadyUsedException();
-                                }
-                                return userRepository.findOneByLogin(userLogin);
-                            }
-                        )
+            .flatMap(userLogin ->
+                userRepository
+                    .findOneByEmailIgnoreCase(userDTO.getEmail())
+                    .filter(existingUser -> !existingUser.getLogin().equalsIgnoreCase(userLogin))
+                    .hasElement()
+                    .flatMap(emailExists -> {
+                        if (emailExists) {
+                            throw new EmailAlreadyUsedException();
+                        }
+                        return userRepository.findOneByLogin(userLogin);
+                    })
             )
             .switchIfEmpty(Mono.error(new AccountResourceException("User could not be found")))
-            .flatMap(
-                user ->
-                    userService.updateUser(
-                        userDTO.getFirstName(),
-                        userDTO.getLastName(),
-                        userDTO.getEmail(),
-                        userDTO.getLangKey(),
-                        userDTO.getImageUrl()
-                    )
+            .flatMap(user ->
+                userService.updateUser(
+                    userDTO.getFirstName(),
+                    userDTO.getLastName(),
+                    userDTO.getEmail(),
+                    userDTO.getLangKey(),
+                    userDTO.getImageUrl()
+                )
             );
     }
 
@@ -169,17 +164,15 @@ public class AccountResource {
     public Mono<Void> requestPasswordReset(@RequestBody String mail) {
         return userService
             .requestPasswordReset(mail)
-            .doOnSuccess(
-                user -> {
-                    if (Objects.nonNull(user)) {
-                        mailService.sendPasswordResetMail(user);
-                    } else {
-                        // Pretend the request has been successful to prevent checking which emails really exist
-                        // but log that an invalid attempt has been made
-                        log.warn("Password reset requested for non existing mail");
-                    }
+            .doOnSuccess(user -> {
+                if (Objects.nonNull(user)) {
+                    mailService.sendPasswordResetMail(user);
+                } else {
+                    // Pretend the request has been successful to prevent checking which emails really exist
+                    // but log that an invalid attempt has been made
+                    log.warn("Password reset requested for non existing mail");
                 }
-            )
+            })
             .then();
     }
 
