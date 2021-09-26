@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as dayjs from 'dayjs';
-
-import { isPresent } from 'app/core/util/operators';
+import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { INap, getNapIdentifier } from '../nap.model';
+import { isPresent } from 'app/core/util/operators';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { getNapIdentifier, INap } from '../nap.model';
 
 export type EntityResponseType = HttpResponse<INap>;
 export type EntityArrayResponseType = HttpResponse<INap[]>;
@@ -50,6 +49,12 @@ export class NapService {
     return this.http
       .get<INap[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  todayNapsInHourByBabyProfile(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<INap>(`${this.resourceUrl}/today-sum-naps-in-hours-by-baby-profile/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

@@ -3,7 +3,14 @@
     "title": "Bem vindo, Java Hipster!",
     "subtitle": "Esta é a página principal",
     "logged": {
-      "message": "Você está logado como \"{{username}}\"."
+      "message": "Você está logado como \"{{username}}\".",
+      "nap": {
+        "today": "Horas de sono hoje - {{date}}",
+        "todayMobile": "Horas de sono - {{date}}",
+        "addnap": "Soneca",
+        "progressbarTitle": "{{sleepHours}} / Objetivo: {{goal}}",
+        "noprogress": "{{name}} ainda não dormiu hoje?"
+      }
     },
     "question": "Em caso de dúvida sobre o JHipster:",
     "link": {

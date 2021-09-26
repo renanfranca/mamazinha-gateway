@@ -2,7 +2,6 @@
   <div class="col-md-3">
     <span class="hipster img-fluid rounded"></span>
   </div>
-
   <div class="col-md-9">
     <h1 class="display-4"><span jhiTranslate="home.title">Welcome, Java Hipster!</span> (Gateway)</h1>
 
@@ -10,9 +9,53 @@
 
     <div [ngSwitch]="account !== null">
       <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >You are logged in as user "{{ account.login }}".</span
-        >
+        <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }">
+          You are logged in as user "{{ account.login }}".
+        </span>
+      </div>
+      <div *ngSwitchCase="true">
+        <div class="row">
+          <div class="col-7">
+            <h4 jhiTranslate="home.logged.nap.today" class="mt-1 d-none d-md-inline" [translateValues]="{ date: '17/09/21' }">
+              <!-- [translateValues]="{date: '{{pointsThisWeek.week | date: 'longDate'}}'}"> -->
+              Naps hours for today - 17/09/21:
+            </h4>
+            <h4 jhiTranslate="home.logged.nap.todayMobile" class="mt-1 d-sm-none" [translateValues]="{ date: '17/09/21' }">
+              <!-- [translateValues]="{date: '{{pointsThisWeek.week | date: 'MMM d'}}'}"> -->
+              Naps hours for 17/09/21:
+            </h4>
+          </div>
+          <div class="col-5 col-md-4 text-right">
+            <a [routerLink]="['/nap/new']" class="btn btn-primary m-0 mb-1 text-white">
+              <fa-icon icon="plus"></fa-icon>
+              <span jhiTranslate="home.logged.nap.addnap"> Nap </span>
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-11 col-xs-12">
+            <ngb-progressbar
+              [max]="24"
+              [value]="napToday.sleepHours"
+              [striped]="true"
+              [type]="napToday.progress"
+              [hidden]="!napToday.sleepHours"
+            >
+              <span
+                *ngIf="napToday.sleepHours"
+                jhiTranslate="home.logged.nap.progressbarTitle"
+                [translateValues]="{ sleepHours: napToday.sleepHours, goal: napToday.sleepHoursGoal }"
+              >
+                {{ napToday.sleepHours }} / Goal: {{ napToday.sleepHoursGoal }}
+              </span>
+            </ngb-progressbar>
+            <div class="alert alert-warning" [hidden]="napToday.sleepHours">
+              <span jhiTranslate="home.logged.nap.noprogress" [translateValues]="{ name: babyProfile.name }">
+                No points yet this week, better get moving!</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="alert alert-warning" *ngSwitchCase="false">
