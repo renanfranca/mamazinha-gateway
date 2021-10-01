@@ -16,12 +16,14 @@
       <div *ngSwitchCase="true">
         <div class="row">
           <div class="col-7">
-            <h4 jhiTranslate="home.logged.nap.today" class="mt-1 d-none d-md-inline" [translateValues]="{ date: '17/09/21' }">
-              <!-- [translateValues]="{date: '{{pointsThisWeek.week | date: 'longDate'}}'}"> -->
+            <h4
+              jhiTranslate="home.logged.nap.today"
+              class="mt-1 d-none d-md-inline"
+              [translateValues]="{ date: currentDate | date: 'longDate' }"
+            >
               Naps hours for today - 17/09/21:
             </h4>
-            <h4 jhiTranslate="home.logged.nap.todayMobile" class="mt-1 d-sm-none" [translateValues]="{ date: '17/09/21' }">
-              <!-- [translateValues]="{date: '{{pointsThisWeek.week | date: 'MMM d'}}'}"> -->
+            <h4 jhiTranslate="home.logged.nap.todayMobile" class="mt-1 d-sm-none" [translateValues]="{ date: currentDate | date: 'MMM d' }">
               Naps hours for 17/09/21:
             </h4>
           </div>

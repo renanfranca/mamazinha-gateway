@@ -16,7 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-  isLoading = false;
+  currentDate = new Date();
   babyProfiles?: IBabyProfile[];
   napToday: any = {};
   babyProfile: IBabyProfile = {};
@@ -28,33 +28,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private babyProfileService: BabyProfileService,
     private napService: NapService
-  ) {
-    this.napToday.sleepHours = 0;
-    this.napToday.progress = 'success';
-    this.napToday.sleepHoursGoal = 16;
-
-    this.babyProfile.name = 'Marília';
-  }
+  ) {}
 
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(account => {
-        this.account = account;
-        if (account != null) {
-          this.getUserData();
-        }
-        return account;
-      });
+      .subscribe(account => (this.account = account));
+
+    this.accountService.identity().subscribe(() => {
+      if (this.accountService.isAuthenticated()) {
+        this.getUserData();
+      }
+    });
   }
 
   getUserData(): void {
-    this.isLoading = true;
-
     this.babyProfileService.query().subscribe(
       (res: HttpResponse<IBabyProfile[]>) => {
-        this.isLoading = false;
         this.babyProfiles = res.body ?? [];
         if (this.babyProfiles.length === 1) {
           this.babyProfile = this.babyProfiles[0];
@@ -62,17 +53,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
       () => {
-        this.isLoading = false;
         // this.onError();
       }
     );
   }
 
   getNapData(id: number): void {
-    this.isLoading = true;
     this.napService.todayNapsInHourByBabyProfile(id).subscribe(
       (res: HttpResponse<any>) => {
-        this.isLoading = false;
         this.napToday = res.body;
 
         // calculate success, warning, or danger
@@ -85,7 +73,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
       () => {
-        this.isLoading = false;
         // this.onError();
       }
     );
