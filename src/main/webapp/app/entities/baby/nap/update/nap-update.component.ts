@@ -19,6 +19,7 @@ import { NapService } from '../service/nap.service';
 })
 export class NapUpdateComponent implements OnInit {
   isSaving = false;
+  dateError = false;
 
   babyProfilesSharedCollection: IBabyProfile[] = [];
   humorsSharedCollection: IHumor[] = [];
@@ -59,13 +60,25 @@ export class NapUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
     const nap = this.createFromForm();
+    if (!this.validate(nap)) {
+      return;
+    }
+    this.isSaving = true;
     if (nap.id !== undefined) {
       this.subscribeToSaveResponse(this.napService.update(nap));
     } else {
       this.subscribeToSaveResponse(this.napService.create(nap));
     }
+  }
+
+  validate(nap: INap): boolean {
+    this.dateError = false;
+    if (nap.start && nap.end && nap.start.isAfter(nap.end)) {
+      this.dateError = true;
+      return false;
+    }
+    return true;
   }
 
   trackBabyProfileById(index: number, item: IBabyProfile): number {
