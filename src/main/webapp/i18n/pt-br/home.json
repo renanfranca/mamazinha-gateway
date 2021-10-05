@@ -1,9 +1,14 @@
 {
   "home": {
-    "title": "Bem vindo, Java Hipster!",
-    "subtitle": "Esta é a página principal",
+    "title": "Bem vindo!",
+    "titleWithName": "Bem vindo, {{username}}!",
+    "subtitle": "Mamazinha app lhe auxialará no cuidado do seu bebê. 👶",
     "logged": {
       "message": "Você está logado como \"{{username}}\".",
+      "babyProfile": {
+        "nobabyProfile": "O primeiro passo é criar um perfil para seu bebê",
+        "addbabyProfile": "Perfil do Bebê"
+      },
       "nap": {
         "today": "Horas de sono hoje - {{date}}",
         "todayMobile": "Horas de sono - {{date}}",

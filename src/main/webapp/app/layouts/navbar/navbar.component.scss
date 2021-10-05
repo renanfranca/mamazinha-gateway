@@ -40,3 +40,33 @@ Logo styles
   background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
   background-size: contain;
 }
+
+/* ==========================================================================
+custom styles for Mamazinha app
+========================================================================== */
+.navbar-dark .navbar-nav .nav-link {
+  // background-color: #b907f0;
+  background-color: #018671;
+}
+
+.bg-dark {
+  // background-color: #7b02a0 !important;
+  background-color: #018671 !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: white;
+  text-decoration: none;
+  // background-color: #b907f0;
+  background-color: #018671;
+}
+
+.logo-img {
+  height: 45px;
+  width: 45px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/mamazinha-logo-navbar.png') no-repeat center center;
+  background-size: contain;
+}

@@ -199,4 +199,31 @@ ui bootstrap tweaks
   white-space: nowrap;
 }
 
+/* ==========================================================================
+custom styles for Mamazinha app
+========================================================================== */
+body {
+  background-color: white;
+}
+.jh-card {
+  border: none !important;
+}
+.footer {
+  bottom: 0;
+  left: 0;
+  color: #666;
+  background: #eee;
+  border-top: 1px solid silver;
+  position: fixed;
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 0;
+  text-align: center;
+  z-index: 2;
+  font-size: 0.9em;
+
+  p {
+    margin-bottom: 7px;
+  }
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */
