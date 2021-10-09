@@ -3,8 +3,8 @@
     <span class="lollipop img-fluid rounded"></span>
   </div>
   <div class="col-md-9">
-    <h1 class="display-5" *ngIf="account === null"><span jhiTranslate="home.title">Welcome, Java Hipster!</span></h1>
-    <h1 class="display-5" *ngIf="account !== null">
+    <h1 class="display-4" *ngIf="account === null"><span jhiTranslate="home.title">Welcome, Java Hipster!</span></h1>
+    <h1 *ngIf="account !== null">
       <span id="home-logged-message" jhiTranslate="home.titleWithName" [translateValues]="{ username: account.firstName ?? account.login }"
         >Welcome, Java Hipster!</span
       >
@@ -30,7 +30,17 @@
           </div>
         </div>
         <div [hidden]="!babyProfile.name">
-          <div class="row">
+          <div class="row mt-4">
+            <div class="col-12 text-left">
+              <a [routerLink]="['/baby-profile', babyProfile.id, 'edit']" class="btn btn-primary m-0 mb-1 text-white">
+                <fa-icon icon="edit"></fa-icon>
+                <span jhiTranslate="home.logged.babyProfile.editbabyProfile" [translateValues]="{ name: babyProfile.name }">
+                  Baby Name
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="row mt-4">
             <div class="col-8">
               <h4
                 jhiTranslate="home.logged.nap.today"

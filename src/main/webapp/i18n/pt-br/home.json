@@ -7,7 +7,8 @@
       "message": "Você está logado como \"{{username}}\".",
       "babyProfile": {
         "nobabyProfile": "O primeiro passo é criar um perfil para seu bebê",
-        "addbabyProfile": "Perfil do Bebê"
+        "addbabyProfile": "Perfil do Bebê",
+        "editbabyProfile": "{{name}}"
       },
       "nap": {
         "today": "Horas de sono hoje - {{date}}",
