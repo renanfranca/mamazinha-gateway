@@ -1,7 +1,7 @@
 # Common configuration shared between all applications
 configserver:
   name: Docker JHipster Registry
-  status: You are Connected to the JHipster Registry running in Docker
+  status: You are LOCALHOST Connected to the JHipster Registry running in Docker
 
 jhipster:
   security:
