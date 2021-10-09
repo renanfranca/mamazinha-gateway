@@ -52,8 +52,9 @@ export class NapService {
   }
 
   todayNapsInHourByBabyProfile(id: number): Observable<EntityResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return this.http
-      .get<INap>(`${this.resourceUrl}/today-sum-naps-in-hours-by-baby-profile/${id}`, { observe: 'response' })
+      .get<INap>(`${this.resourceUrl}/today-sum-naps-in-hours-by-baby-profile/${id}?tz=${tz}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 

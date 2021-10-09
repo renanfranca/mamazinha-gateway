@@ -12,6 +12,10 @@
 
     <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
 
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
     <div [ngSwitch]="account !== null">
       <div *ngSwitchCase="true">
         <div [hidden]="babyProfile.name">

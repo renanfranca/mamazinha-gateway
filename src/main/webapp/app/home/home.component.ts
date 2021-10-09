@@ -44,38 +44,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getUserData(): void {
-    this.babyProfileService.query().subscribe(
-      (res: HttpResponse<IBabyProfile[]>) => {
-        this.babyProfiles = res.body ?? [];
-        if (this.babyProfiles.length === 1) {
-          this.babyProfile = this.babyProfiles[0];
-          this.getNapData(this.babyProfile.id!);
-        }
-      },
-      () => {
-        // this.onError();
+    this.babyProfileService.query().subscribe((res: HttpResponse<IBabyProfile[]>) => {
+      this.babyProfiles = res.body ?? [];
+      if (this.babyProfiles.length === 1) {
+        this.babyProfile = this.babyProfiles[0];
+        this.getNapData(this.babyProfile.id!);
       }
-    );
+    });
   }
 
   getNapData(id: number): void {
-    this.napService.todayNapsInHourByBabyProfile(id).subscribe(
-      (res: HttpResponse<any>) => {
-        this.napToday = res.body;
+    this.napService.todayNapsInHourByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+      this.napToday = res.body;
 
-        // calculate success, warning, or danger
-        if (this.napToday.sleepHours >= this.napToday.sleepHoursGoal) {
-          this.napToday.progress = 'success';
-        } else if (this.napToday.sleepHours < 10) {
-          this.napToday.progress = 'danger';
-        } else if (this.napToday.sleepHours > 10 && this.napToday.sleepHours < this.napToday.sleepHoursGoal) {
-          this.napToday.progress = 'warning';
-        }
-      },
-      () => {
-        // this.onError();
+      // calculate success, warning, or danger
+      if (this.napToday.sleepHours >= this.napToday.sleepHoursGoal) {
+        this.napToday.progress = 'success';
+      } else if (this.napToday.sleepHours < 10) {
+        this.napToday.progress = 'danger';
+      } else if (this.napToday.sleepHours > 10 && this.napToday.sleepHours < this.napToday.sleepHoursGoal) {
+        this.napToday.progress = 'warning';
       }
-    );
+    });
   }
 
   login(): void {
