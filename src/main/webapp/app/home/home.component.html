@@ -92,6 +92,27 @@
               </div>
             </div>
           </div>
+          <div class="row mt-1">
+            <div class="col-md-10 col-xs-12">
+              <span
+                *ngIf="
+                  (napLastCurrentWeek.lastWeekNaps && napLastCurrentWeek.lastWeekNaps.length) ||
+                  (napLastCurrentWeek.currentWeekNaps && napLastCurrentWeek.currentWeekNaps.length)
+                "
+              >
+                <nvd3 [options]="napOptions" [data]="napData"></nvd3>
+              </span>
+              <ngb-alert
+                [dismissible]="false"
+                [hidden]="
+                  (napLastCurrentWeek.lastWeekNaps && napLastCurrentWeek.lastWeekNaps.length) ||
+                  (napLastCurrentWeek.currentWeekNaps && napLastCurrentWeek.currentWeekNaps.length)
+                "
+              >
+                <span jhiTranslate="home.bloodPressure.noReadings"> Nenhuma soneca registrada. </span>
+              </ngb-alert>
+            </div>
+          </div>
         </div>
       </div>
       <!-- <div class="alert alert-success" *ngSwitchCase="true">
