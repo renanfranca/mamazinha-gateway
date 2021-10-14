@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "daysOfWeek": {
+      "long": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thusday": "Thusday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "short": {
+        "monday": "Mon",
+        "tuesday": "Tue",
+        "wednesday": "Wed",
+        "thusday": "Thu",
+        "friday": "Fri",
+        "saturday": "Sat",
+        "sunday": "Sun"
+      }
+    },
+    "lastWeek": "Last Week",
+    "currentWeek": "Current Week",
+    "goal": "Goal",
+    "dayOfWeek": "Day of Week",
+    "sleepHours": "Sleep Hours"
+  }
+}

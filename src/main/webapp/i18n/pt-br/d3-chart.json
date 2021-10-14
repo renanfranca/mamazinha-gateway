@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "daysOfWeek": {
+      "long": {
+        "monday": "Segunda",
+        "tuesday": "Terça",
+        "wednesday": "Quarta",
+        "thusday": "Quinta",
+        "friday": "Sexta",
+        "saturday": "Sábado",
+        "sunday": "Domingo"
+      },
+      "short": {
+        "monday": "Seg",
+        "tuesday": "Ter",
+        "wednesday": "Qua",
+        "thusday": "Qui",
+        "friday": "Sex",
+        "saturday": "Sáb",
+        "sunday": "Dom"
+      }
+    },
+    "lastWeek": "Semana Anterior",
+    "currentWeek": "Semana Atual",
+    "goal": "Objetivo",
+    "dayOfWeek": "Dia da Semana",
+    "sleepHours": "Horas de Sono"
+  }
+}

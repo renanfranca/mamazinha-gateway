@@ -2,16 +2,16 @@
  * ChartService to define the chart config for D3
  */
 export class D3ChartService {
-  static getChartConfig(dayOfWeek: any): any {
+  static getChartConfig(d3ChartTranslate: any): any {
     return {
       chart: {
         type: 'lineChart',
-        height: 300,
+        height: 200,
         margin: {
           top: 20,
           right: 20,
-          bottom: 40,
-          left: 55,
+          bottom: 45,
+          left: 45,
         },
         x(d: any): unknown {
           return d.x;
@@ -26,36 +26,34 @@ export class D3ChartService {
         useInteractiveGuideline: true,
         dispatch: {},
         xAxis: {
-          axisLabel: 'Semanas',
           axisLabelDistance: 3,
           showMaxMin: false,
           tickFormat(d: any): any {
             if (d === 1) {
-              return dayOfWeek.monday;
-              // return 'Monday';
+              return d3ChartTranslate.monday;
             }
             if (d === 2) {
-              return 'Tuesday';
+              return d3ChartTranslate.tuesday;
             }
             if (d === 3) {
-              return 'Wednesday';
+              return d3ChartTranslate.wednesday;
             }
             if (d === 4) {
-              return 'Thusday';
+              return d3ChartTranslate.thusday;
             }
             if (d === 5) {
-              return 'Friday';
+              return d3ChartTranslate.friday;
             }
             if (d === 6) {
-              return 'Saturday';
+              return d3ChartTranslate.saturday;
             }
-            return 'Sunday';
+            return d3ChartTranslate.sunday;
           },
         },
         xDomain: [1, 7],
         yAxis: {
           axisLabel: '',
-          axisLabelDistance: -10,
+          axisLabelDistance: -25,
         },
         transitionDuration: 250,
       },

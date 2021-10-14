@@ -44,8 +44,8 @@
               </a>
             </div>
           </div>
-          <div class="row mt-4">
-            <div class="col-8">
+          <div class="row mt-4 align-items-center">
+            <div class="col-7">
               <h4
                 jhiTranslate="home.logged.nap.today"
                 class="mt-1 d-none d-md-inline"
@@ -56,12 +56,12 @@
               <h4
                 jhiTranslate="home.logged.nap.todayMobile"
                 class="mt-1 d-sm-none"
-                [translateValues]="{ date: currentDate | date: 'MMM d' }"
+                [translateValues]="{ date: currentDate | date: 'd MMM' }"
               >
                 Naps hours for 17/09/21:
               </h4>
             </div>
-            <div class="col-4 col-md-4 text-right">
+            <div class="col-5 col-md-5 text-right">
               <a [routerLink]="['/nap/new']" class="btn btn-primary m-0 mb-1 text-white">
                 <fa-icon icon="plus"></fa-icon>
                 <span jhiTranslate="home.logged.nap.addnap"> Nap </span>
@@ -92,25 +92,9 @@
               </div>
             </div>
           </div>
-          <div class="row mt-1">
-            <div class="col-md-10 col-xs-12">
-              <span
-                *ngIf="
-                  (napLastCurrentWeek.lastWeekNaps && napLastCurrentWeek.lastWeekNaps.length) ||
-                  (napLastCurrentWeek.currentWeekNaps && napLastCurrentWeek.currentWeekNaps.length)
-                "
-              >
-                <nvd3 [options]="napOptions" [data]="napData"></nvd3>
-              </span>
-              <ngb-alert
-                [dismissible]="false"
-                [hidden]="
-                  (napLastCurrentWeek.lastWeekNaps && napLastCurrentWeek.lastWeekNaps.length) ||
-                  (napLastCurrentWeek.currentWeekNaps && napLastCurrentWeek.currentWeekNaps.length)
-                "
-              >
-                <span jhiTranslate="home.bloodPressure.noReadings"> Nenhuma soneca registrada. </span>
-              </ngb-alert>
+          <div class="row mt-4" *ngIf="isShowWeekNapGraphic(napLastCurrentWeek)">
+            <div class="col-md-12 col-xs-12">
+              <nvd3 [options]="napOptions" [data]="napData"></nvd3>
             </div>
           </div>
         </div>

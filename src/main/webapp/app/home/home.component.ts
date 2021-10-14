@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   napOptions: any;
   napData: any;
   babyProfile: IBabyProfile = {};
-  dayOfWeek: any = {};
+  d3ChartTranslate: any = {};
 
   private readonly destroy$ = new Subject<void>();
 
@@ -38,10 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.dayOfWeek = { monday: 'Mondayy' };
-    this.translateService.get('gatewayApp.Place.LAP').subscribe((res: string) => {
-      this.dayOfWeek = { monday: res };
-    });
+    this.translateD3Chart(false);
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
@@ -52,6 +49,79 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getUserData();
       }
     });
+  }
+
+  translateD3Chart(short: boolean): void {
+    this.d3ChartTranslate.monday = 'Monday';
+    this.d3ChartTranslate.tuesday = 'Tuesday';
+    this.d3ChartTranslate.wednesday = 'Wednesday';
+    this.d3ChartTranslate.thusday = 'Thusday';
+    this.d3ChartTranslate.friday = 'Friday';
+    this.d3ChartTranslate.saturday = 'Saturday';
+    this.d3ChartTranslate.sunday = 'Sunday';
+    this.d3ChartTranslate.lastWeek = 'Last Week';
+    this.d3ChartTranslate.currentWeek = 'Current Week';
+    this.d3ChartTranslate.goal = 'Goal';
+    this.d3ChartTranslate.dayOfWeek = 'Day of Week';
+    this.d3ChartTranslate.sleepHours = 'Sleep Hours';
+    this.translateService.get('gatewayApp.lastWeek').subscribe((res: string) => {
+      this.d3ChartTranslate.lastWeek = res;
+    });
+    this.translateService.get('gatewayApp.currentWeek').subscribe((res: string) => {
+      this.d3ChartTranslate.currentWeek = res;
+    });
+    this.translateService.get('gatewayApp.goal').subscribe((res: string) => {
+      this.d3ChartTranslate.goal = res;
+    });
+    this.translateService.get('gatewayApp.dayOfWeek').subscribe((res: string) => {
+      this.d3ChartTranslate.dayOfWeek = res;
+    });
+    this.translateService.get('gatewayApp.sleepHours').subscribe((res: string) => {
+      this.d3ChartTranslate.sleepHours = res;
+    });
+    let translateParameter = 'gatewayApp.daysOfWeek.long';
+    if (short) {
+      translateParameter = 'gatewayApp.daysOfWeek.short';
+    }
+    this.translateService.get(translateParameter + '.tuesday').subscribe((res: string) => {
+      this.d3ChartTranslate.tuesday = res;
+    });
+    this.translateService.get(translateParameter + '.monday').subscribe((res: string) => {
+      this.d3ChartTranslate.monday = res;
+    });
+    this.translateService.get(translateParameter + '.wednesday').subscribe((res: string) => {
+      this.d3ChartTranslate.wednesday = res;
+    });
+    this.translateService.get(translateParameter + '.thusday').subscribe((res: string) => {
+      this.d3ChartTranslate.thusday = res;
+    });
+    this.translateService.get(translateParameter + '.friday').subscribe((res: string) => {
+      this.d3ChartTranslate.friday = res;
+    });
+    this.translateService.get(translateParameter + '.saturday').subscribe((res: string) => {
+      this.d3ChartTranslate.saturday = res;
+    });
+    this.translateService.get(translateParameter + '.sunday').subscribe((res: string) => {
+      this.d3ChartTranslate.sunday = res;
+    });
+  }
+
+  isShowWeekNapGraphic(napLastCurrentWeek: any): boolean {
+    let isShow: boolean = napLastCurrentWeek.lastWeekNaps.some((item: any) => {
+      if (item.sleepHours > 0) {
+        return true;
+      }
+      return false;
+    });
+    if (!isShow) {
+      isShow = napLastCurrentWeek.currentWeekNaps.some((item: any) => {
+        if (item.sleepHours > 0) {
+          return true;
+        }
+        return false;
+      });
+    }
+    return isShow;
   }
 
   getUserData(): void {
@@ -81,14 +151,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.napService.lastWeekCurrentWeekSNapsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.napLastCurrentWeek = res.body;
       // https://stackoverflow.com/a/34694155/65681
-      this.napOptions = { ...D3ChartService.getChartConfig(this.dayOfWeek) };
+      this.napOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
       if (this.napLastCurrentWeek.lastWeekNaps.length || this.napLastCurrentWeek.currentWeekNaps.length) {
-        this.napOptions.title.text = 'Semanas';
-        this.napOptions.chart.yAxis.axisLabel = 'Horas de Sono';
-        // this.napOptions.chart.xAxis.tickFormat = this.tickFormat;
+        this.napOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
+        this.napOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.sleepHours;
 
         const lastWeek: { x: any; y: any }[] = [],
           currentWeek: { x: any; y: any }[] = [],
+          sleepHoursGoal: { x: any; y: any }[] = [],
           upperValues: any[] = [],
           lowerValues: any[] = [];
 
@@ -97,6 +167,11 @@ export class HomeComponent implements OnInit, OnDestroy {
             x: item.dayOfWeek,
             y: item.sleepHours,
           });
+          sleepHoursGoal.push({
+            x: item.dayOfWeek,
+            y: this.napLastCurrentWeek.sleepHoursGoal,
+          });
+
           upperValues.push(item.sleepHours);
           lowerValues.push(item.sleepHours);
         });
@@ -110,18 +185,23 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
         this.napData = [
           {
+            values: sleepHoursGoal,
+            key: this.d3ChartTranslate.goal,
+            color: '#91f1a2',
+          },
+          {
             values: lastWeek,
-            key: 'Last Week',
-            color: '#673ab7',
+            key: this.d3ChartTranslate.lastWeek,
+            color: '#eb00ff',
           },
           {
             values: currentWeek,
-            key: 'Current Week',
-            color: '#03a9f4',
+            key: this.d3ChartTranslate.currentWeek,
+            color: '#0077ff',
           },
         ];
         // set y scale to be 10 more than max and min
-        this.napOptions.chart.yDomain = [Math.min(...lowerValues), Math.max(...upperValues)];
+        this.napOptions.chart.yDomain = [0, 24];
       } else {
         this.napLastCurrentWeek.lastWeekNaps = [];
         this.napLastCurrentWeek.currentWeekNaps = [];
