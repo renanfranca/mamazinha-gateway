@@ -107,6 +107,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   isShowWeekNapGraphic(napLastCurrentWeek: any): boolean {
+    if (Object.keys(napLastCurrentWeek).length === 0) {
+      return false;
+    }
     let isShow: boolean = napLastCurrentWeek.lastWeekNaps.some((item: any) => {
       if (item.sleepHours > 0) {
         return true;
