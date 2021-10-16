@@ -9,7 +9,7 @@ export class D3ChartService {
         height: 200,
         margin: {
           top: 20,
-          right: 20,
+          right: 25,
           bottom: 45,
           left: 45,
         },
