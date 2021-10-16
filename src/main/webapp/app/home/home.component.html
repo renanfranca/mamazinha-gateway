@@ -46,8 +46,8 @@
         <div [hidden]="!babyProfile.name">
           <div class="row">
             <div class="col-12 text-left">
-              <a [routerLink]="['/baby-profile', babyProfile.id, 'edit']" class="btn btn-primary m-0 mb-1 text-white">
-                <fa-icon icon="edit"></fa-icon>
+              <a [routerLink]="['/baby-profile', babyProfile.id, 'view']" class="btn btn-primary m-0 mb-1 text-white">
+                <fa-icon icon="eye"></fa-icon>
                 <span jhiTranslate="home.logged.babyProfile.editbabyProfile" [translateValues]="{ name: babyProfile.name }">
                   Baby Name
                 </span>
