@@ -134,7 +134,14 @@ export class NapUpdateComponent implements OnInit {
           this.babyProfileService.addBabyProfileToCollectionIfMissing(babyProfiles, this.editForm.get('babyProfile')!.value)
         )
       )
-      .subscribe((babyProfiles: IBabyProfile[]) => (this.babyProfilesSharedCollection = babyProfiles));
+      .subscribe((babyProfiles: IBabyProfile[]) => {
+        this.babyProfilesSharedCollection = babyProfiles;
+        if (babyProfiles.length === 1) {
+          this.editForm.patchValue({
+            babyProfile: babyProfiles[0],
+          });
+        }
+      });
 
     this.humorService
       .query()
