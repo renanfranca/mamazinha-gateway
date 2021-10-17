@@ -1,4 +1,5 @@
 import {
+  faAngry,
   faArrowLeft,
   faAsterisk,
   faBan,
@@ -13,10 +14,13 @@ import {
   faEdit,
   faEye,
   faFlag,
+  faFrown,
   faHeart,
   faHome,
+  faLaugh,
   faList,
   faLock,
+  faMeh,
   faPencilAlt,
   faPlus,
   faRoad,
@@ -24,6 +28,7 @@ import {
   faSearch,
   faSignInAlt,
   faSignOutAlt,
+  faSmile,
   faSort,
   faSortDown,
   faSortUp,
@@ -82,5 +87,10 @@ export const fontAwesomeIcons = [
   faWrench,
   faWindowMinimize,
   faEdit,
+  faAngry,
+  faFrown,
+  faMeh,
+  faSmile,
+  faLaugh,
   // jhipster-needle-add-icon-import
 ];

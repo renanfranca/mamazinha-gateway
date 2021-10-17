@@ -227,4 +227,37 @@ body {
     margin-bottom: 7px;
   }
 }
+.emoji {
+  font-size: 2.9em;
+}
+.emoji.angry {
+  color: rgba(252, 6, 6, 0.322);
+}
+.emoji.angry.select {
+  color: red;
+}
+.emoji.frown {
+  color: rgba(128, 0, 128, 0.322);
+}
+.emoji.frown.select {
+  color: purple;
+}
+.emoji.meh {
+  color: rgb(245, 158, 46, 0.322);
+}
+.emoji.meh.select {
+  color: rgb(245, 158, 46);
+}
+.emoji.smile {
+  color: rgba(0, 0, 255, 0.322);
+}
+.emoji.smile.select {
+  color: blue;
+}
+.emoji.laugh {
+  color: rgba(172, 255, 47, 0.322);
+}
+.emoji.laugh.select {
+  color: green;
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */

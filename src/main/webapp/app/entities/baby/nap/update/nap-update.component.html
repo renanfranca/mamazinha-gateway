@@ -72,7 +72,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="form-control-label" jhiTranslate="gatewayApp.babyNap.humor" for="field_humor">Humor</label>
           <select class="form-control" id="field_humor" data-cy="humor" name="humor" formControlName="humor">
             <option [ngValue]="null"></option>
@@ -83,6 +83,56 @@
               {{ humorOption.description }}
             </option>
           </select>
+        </div> -->
+
+        <div class="form-group">
+          <label class="form-control-label d-block" jhiTranslate="gatewayApp.babyNap.humor" for="field_humor">Humor</label>
+          <div class="d-inline" *ngFor="let humorOption of humorsSharedCollection; trackBy: trackHumorById">
+            <input
+              id="humor_{{ humorOption.id }}"
+              type="radio"
+              formControlName="humor"
+              data-cy="humor"
+              name="humor"
+              [value]="humorOption"
+              [checked]="humorOption.id === editForm.get('humor')!.value?.id"
+              class="d-none"
+            />
+            <label for="humor_{{ humorOption.id }}">
+              <div [ngSwitch]="humorOption.value">
+                <fa-icon
+                  *ngSwitchCase="1"
+                  icon="angry"
+                  class="emoji angry"
+                  [ngClass]="humorOption.id === editForm.get('humor')!.value?.id ? 'select' : ''"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="2"
+                  icon="frown"
+                  class="emoji frown"
+                  [ngClass]="humorOption.id === editForm.get('humor')!.value?.id ? 'select' : ''"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="3"
+                  icon="meh"
+                  class="emoji meh"
+                  [ngClass]="humorOption.id === editForm.get('humor')!.value?.id ? 'select' : ''"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="4"
+                  icon="smile"
+                  class="emoji smile"
+                  [ngClass]="humorOption.id === editForm.get('humor')!.value?.id ? 'select' : ''"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="5"
+                  icon="laugh"
+                  class="emoji laugh"
+                  [ngClass]="humorOption.id === editForm.get('humor')!.value?.id ? 'select' : ''"
+                ></fa-icon>
+              </div>
+            </label>
+          </div>
         </div>
       </div>
 
