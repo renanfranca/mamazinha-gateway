@@ -47,13 +47,13 @@
       </thead>
       <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
         <tr *ngFor="let nap of naps; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <td class="align-middle">
             <a [routerLink]="['/nap', nap.id, 'view']">{{ nap.id }}</a>
           </td>
-          <td>{{ nap.start | formatMediumDatetime }}</td>
-          <td>{{ nap.end | formatMediumDatetime }}</td>
-          <td jhiTranslate="{{ 'gatewayApp.Place.' + nap.place }}">{{ nap.place }}</td>
-          <td>
+          <td class="align-middle">{{ nap.start | formatMediumDatetime }}</td>
+          <td class="align-middle">{{ nap.end | formatMediumDatetime }}</td>
+          <td class="align-middle" jhiTranslate="{{ 'gatewayApp.Place.' + nap.place }}">{{ nap.place }}</td>
+          <td class="align-middle">
             <div *ngIf="nap.babyProfile">
               <a [routerLink]="['/baby-profile', nap.babyProfile?.id, 'view']">
                 (<fa-icon
@@ -65,7 +65,7 @@
               </a>
             </div>
           </td>
-          <td>
+          <td class="align-middle">
             <div *ngIf="!nap.humor?.emotico">
               <div [ngSwitch]="nap.humor?.value">
                 <fa-icon *ngSwitchCase="1" icon="angry" class="emoji angry select"></fa-icon>
@@ -85,7 +85,7 @@
               </a>
             </div>
           </td>
-          <td class="text-right">
+          <td class="text-right align-middle">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/nap', nap.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>

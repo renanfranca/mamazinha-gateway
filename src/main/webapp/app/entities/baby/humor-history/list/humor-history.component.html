@@ -47,21 +47,27 @@
       </thead>
       <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
         <tr *ngFor="let humorHistory of humorHistories; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <td class="align-middle">
             <a [routerLink]="['/humor-history', humorHistory.id, 'view']">{{ humorHistory.id }}</a>
           </td>
-          <td>{{ humorHistory.date | formatMediumDatetime }}</td>
-          <td>
+          <td class="align-middle">{{ humorHistory.date | formatMediumDatetime }}</td>
+          <td class="align-middle">
             <div *ngIf="humorHistory.babyProfile">
               <a [routerLink]="['/baby-profile', humorHistory.babyProfile?.id, 'view']">{{ humorHistory.babyProfile?.name }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="humorHistory.humor">
-              <a [routerLink]="['/humor', humorHistory.humor?.id, 'view']">{{ humorHistory.humor?.description }}</a>
+              <div [ngSwitch]="humorHistory.humor?.value">
+                <fa-icon *ngSwitchCase="1" icon="angry" class="emoji angry select"></fa-icon>
+                <fa-icon *ngSwitchCase="2" icon="frown" class="emoji frown select"></fa-icon>
+                <fa-icon *ngSwitchCase="3" icon="meh" class="emoji meh select"></fa-icon>
+                <fa-icon *ngSwitchCase="4" icon="smile" class="emoji smile select"></fa-icon>
+                <fa-icon *ngSwitchCase="5" icon="laugh" class="emoji laugh select"></fa-icon>
+              </div>
             </div>
           </td>
-          <td class="text-right">
+          <td class="text-right align-middle">
             <div class="btn-group">
               <button
                 type="submit"

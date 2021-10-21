@@ -1,19 +1,17 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
-import * as dayjs from 'dayjs';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
-
-import { IHumorHistory, HumorHistory } from '../humor-history.model';
-import { HumorHistoryService } from '../service/humor-history.service';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
 import { IHumor } from 'app/entities/baby/humor/humor.model';
 import { HumorService } from 'app/entities/baby/humor/service/humor.service';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { HumorHistory, IHumorHistory } from '../humor-history.model';
+import { HumorHistoryService } from '../service/humor-history.service';
 
 @Component({
   selector: 'jhi-humor-history-update',
@@ -43,7 +41,7 @@ export class HumorHistoryUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ humorHistory }) => {
       if (humorHistory.id === undefined) {
-        const today = dayjs().startOf('day');
+        const today = dayjs();
         humorHistory.date = today;
       }
 
@@ -118,7 +116,14 @@ export class HumorHistoryUpdateComponent implements OnInit {
           this.babyProfileService.addBabyProfileToCollectionIfMissing(babyProfiles, this.editForm.get('babyProfile')!.value)
         )
       )
-      .subscribe((babyProfiles: IBabyProfile[]) => (this.babyProfilesSharedCollection = babyProfiles));
+      .subscribe((babyProfiles: IBabyProfile[]) => {
+        this.babyProfilesSharedCollection = babyProfiles;
+        if (babyProfiles.length === 1) {
+          this.editForm.patchValue({
+            babyProfile: babyProfiles[0],
+          });
+        }
+      });
 
     this.humorService
       .query()
