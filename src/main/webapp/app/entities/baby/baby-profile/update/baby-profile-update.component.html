@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <label class="form-control-label" jhiTranslate="gatewayApp.babyBabyProfile.picture" for="field_picture">Picture</label>
           <div>
             <img

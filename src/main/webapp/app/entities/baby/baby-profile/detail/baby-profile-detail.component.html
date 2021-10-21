@@ -18,8 +18,8 @@
         <dd>
           <span>{{ babyProfile.name }}</span>
         </dd>
-        <dt><span jhiTranslate="gatewayApp.babyBabyProfile.picture">Picture</span></dt>
-        <dd>
+        <dt *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="gatewayApp.babyBabyProfile.picture">Picture</span></dt>
+        <dd *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <div *ngIf="babyProfile.picture">
             <a (click)="openFile(babyProfile.picture, babyProfile.pictureContentType)">
               <img
@@ -39,7 +39,7 @@
         <dd>
           <span>{{ babyProfile.sign }}</span>
         </dd>
-        <dt><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
+        <dt class="align-self-center"><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
         <dd>
           <fa-icon
             [icon]="babyProfile.main ? 'check' : 'window-minimize'"
