@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { INap } from '../nap.model';
-
 import { ASC, DESC, ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { NapService } from '../service/nap.service';
-import { NapDeleteDialogComponent } from '../delete/nap-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { NapDeleteDialogComponent } from '../delete/nap-delete-dialog.component';
+import { INap } from '../nap.model';
+import { NapService } from '../service/nap.service';
 
 @Component({
   selector: 'jhi-nap',
@@ -31,6 +29,10 @@ export class NapComponent implements OnInit {
     };
     this.predicate = 'id';
     this.ascending = true;
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 
   loadAll(): void {

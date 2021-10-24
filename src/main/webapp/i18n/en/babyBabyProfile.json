@@ -12,7 +12,7 @@
         "question": "Are you sure you want to delete Baby Profile {{ id }}?"
       },
       "detail": {
-        "title": "Baby Profile"
+        "title": "Perfil (Today, {{date}})"
       },
       "id": "ID",
       "name": "Name",
@@ -20,6 +20,10 @@
       "birthday": "Birthday",
       "sign": "Sign",
       "main": "Main",
+      "humorAverageHumorHistory": "Humor <br/> (today average)",
+      "addHumorHistory": "Humor",
+      "humorAverageNap": "Humor after Nap <br/> (today average)",
+      "addNap": "Nap",
       "userId": "User Id"
     }
   },

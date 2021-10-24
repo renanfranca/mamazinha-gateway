@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as dayjs from 'dayjs';
-
-import { isPresent } from 'app/core/util/operators';
+import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IHumorHistory, getHumorHistoryIdentifier } from '../humor-history.model';
+import { isPresent } from 'app/core/util/operators';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { getHumorHistoryIdentifier, IHumorHistory } from '../humor-history.model';
 
 export type EntityResponseType = HttpResponse<IHumorHistory>;
 export type EntityArrayResponseType = HttpResponse<IHumorHistory[]>;
@@ -50,6 +49,13 @@ export class HumorHistoryService {
     return this.http
       .get<IHumorHistory[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  todayAverageHumorHistoryByBabyProfile(id: number): Observable<EntityResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<IHumorHistory>(`${this.resourceUrl}/today-average-humor-history-by-baby-profile/${id}?tz=${tz}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

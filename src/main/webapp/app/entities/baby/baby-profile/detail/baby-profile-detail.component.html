@@ -1,7 +1,11 @@
 <div class="row justify-content-center">
   <div class="col-md-8 col-sm-12">
     <div *ngIf="babyProfile">
-      <h2 data-cy="babyProfileDetailsHeading"><span jhiTranslate="gatewayApp.babyBabyProfile.detail.title">Baby Profile</span></h2>
+      <h2 data-cy="babyProfileDetailsHeading">
+        <span jhiTranslate="gatewayApp.babyBabyProfile.detail.title" [translateValues]="{ date: currentDate | date: 'd MMM' }"
+          >Baby Profile</span
+        >
+      </h2>
 
       <hr />
 
@@ -38,6 +42,62 @@
         <dt><span jhiTranslate="gatewayApp.babyBabyProfile.sign">Sign</span></dt>
         <dd>
           <span>{{ babyProfile.sign }}</span>
+        </dd>
+        <dt class="align-self-center">
+          <span jhiTranslate="gatewayApp.babyBabyProfile.humorAverageHumorHistory">Humor after Nap (average)</span>
+        </dt>
+        <dd>
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0">
+              <a [routerLink]="['/humor-history']">
+                <div *ngIf="humorAverageHumorHistory">
+                  <div [ngSwitch]="humorAverageHumorHistory?.humorAverage">
+                    <fa-icon *ngSwitchCase="1" icon="angry" class="emoji angry select"></fa-icon>
+                    <fa-icon *ngSwitchCase="2" icon="frown" class="emoji frown select"></fa-icon>
+                    <fa-icon *ngSwitchCase="3" icon="meh" class="emoji meh select"></fa-icon>
+                    <fa-icon *ngSwitchCase="4" icon="smile" class="emoji smile select"></fa-icon>
+                    <fa-icon *ngSwitchCase="5" icon="laugh" class="emoji laugh select"></fa-icon>
+                  </div>
+                </div>
+                <div *ngIf="!humorAverageHumorHistory">
+                  <fa-icon icon="window-minimize" class="text-muted"></fa-icon>
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 col-sm-9 col-6 text-left">
+              <a [routerLink]="['/humor-history/new']" class="btn btn-primary m-0 text-white">
+                <fa-icon icon="plus"></fa-icon>
+                <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addHumorHistory"> Humor </span>
+              </a>
+            </div>
+          </div>
+        </dd>
+        <dt class="align-self-center"><span jhiTranslate="gatewayApp.babyBabyProfile.humorAverageNap">Humor after Nap (average)</span></dt>
+        <dd>
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0">
+              <a [routerLink]="['/nap']">
+                <div *ngIf="humorAverageNap">
+                  <div [ngSwitch]="humorAverageNap?.humorAverage">
+                    <fa-icon *ngSwitchCase="1" icon="angry" class="emoji angry select"></fa-icon>
+                    <fa-icon *ngSwitchCase="2" icon="frown" class="emoji frown select"></fa-icon>
+                    <fa-icon *ngSwitchCase="3" icon="meh" class="emoji meh select"></fa-icon>
+                    <fa-icon *ngSwitchCase="4" icon="smile" class="emoji smile select"></fa-icon>
+                    <fa-icon *ngSwitchCase="5" icon="laugh" class="emoji laugh select"></fa-icon>
+                  </div>
+                </div>
+                <div *ngIf="!humorAverageNap">
+                  <fa-icon icon="window-minimize" class="text-muted"></fa-icon>
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 col-sm-9 col-6 text-left">
+              <a [routerLink]="['/nap/new']" class="btn btn-primary m-0 text-white">
+                <fa-icon icon="plus"></fa-icon>
+                <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addNap"> Nap </span>
+              </a>
+            </div>
+          </div>
         </dd>
         <dt class="align-self-center"><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
         <dd>

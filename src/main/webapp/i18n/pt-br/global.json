@@ -8,12 +8,12 @@
       "entities": {
         "main": "Entidades",
         "babyHumor": "Humor",
-        "babyBabyProfile": "Baby Profile",
+        "babyBabyProfile": "Perfil",
         "babyBreastFeed": "Breast Feed",
-        "babyHeight": "Height",
-        "babyHumorHistory": "Humor History",
-        "babyNap": "Nap",
-        "babyWeight": "Weight",
+        "babyHeight": "Altura",
+        "babyHumorHistory": "Humores",
+        "babyNap": "Soneca",
+        "babyWeight": "Peso",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

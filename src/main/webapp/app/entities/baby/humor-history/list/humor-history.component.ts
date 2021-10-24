@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { IHumorHistory } from '../humor-history.model';
-
 import { ASC, DESC, ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { HumorHistoryService } from '../service/humor-history.service';
-import { HumorHistoryDeleteDialogComponent } from '../delete/humor-history-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { HumorHistoryDeleteDialogComponent } from '../delete/humor-history-delete-dialog.component';
+import { IHumorHistory } from '../humor-history.model';
+import { HumorHistoryService } from '../service/humor-history.service';
 
 @Component({
   selector: 'jhi-humor-history',
@@ -31,6 +29,10 @@ export class HumorHistoryComponent implements OnInit {
     };
     this.predicate = 'id';
     this.ascending = true;
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 
   loadAll(): void {
