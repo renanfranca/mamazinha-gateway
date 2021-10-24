@@ -6,4 +6,6 @@ export enum Place {
   CART = 'CART',
 
   BABY_CONFORT = 'BABY_CONFORT',
+
+  BED = 'BED',
 }
