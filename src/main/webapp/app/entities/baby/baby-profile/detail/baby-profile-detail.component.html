@@ -99,7 +99,47 @@
             </div>
           </div>
         </dd>
-        <dt class="align-self-center"><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
+        <dt>
+          <span jhiTranslate="gatewayApp.babyBabyProfile.favoriteNapPlace" class="d-block align-self-center"
+            >Favorite Nap Place (from last {{ favoriteNapPlace?.periodInDays }} days)</span
+          >
+          <span
+            jhiTranslate="gatewayApp.babyBabyProfile.favoriteNapPlaceLastDays"
+            [translateValues]="{ lastDays: favoriteNapPlace?.periodInDays }"
+            class="d-block align-self-center"
+            >Favorite Nap Place (from last {{ favoriteNapPlace?.periodInDays }} days)</span
+          >
+        </dt>
+        <dd>
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0">
+              <a [routerLink]="['/nap']">
+                <div *ngIf="favoriteNapPlace?.favoritePlace">
+                  <span jhiTranslate="{{ 'gatewayApp.Place.' + favoriteNapPlace?.favoritePlace }}" class="d-block text-center">{{
+                    favoriteNapPlace?.favoritePlace
+                  }}</span>
+                  <span
+                    jhiTranslate="gatewayApp.babyBabyProfile.favoriteNapPlaceAmountOfTimes"
+                    [translateValues]="{ amountOfTimes: favoriteNapPlace?.amountOfTimes }"
+                    class="d-block text-center"
+                  >
+                    ({{ favoriteNapPlace?.amountOfTimes }} times)</span
+                  >
+                </div>
+                <div *ngIf="!favoriteNapPlace?.favoritePlace">
+                  <fa-icon icon="window-minimize" class="text-muted"></fa-icon>
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 col-sm-9 col-6 text-left">
+              <a [routerLink]="['/nap/new']" class="btn btn-primary m-0 text-white">
+                <fa-icon icon="plus"></fa-icon>
+                <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addNap"> Nap </span>
+              </a>
+            </div>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
         <dd>
           <fa-icon
             [icon]="babyProfile.main ? 'check' : 'window-minimize'"

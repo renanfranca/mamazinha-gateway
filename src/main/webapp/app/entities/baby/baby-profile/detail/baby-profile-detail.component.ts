@@ -15,6 +15,7 @@ export class BabyProfileDetailComponent implements OnInit {
   babyProfile: IBabyProfile | null = null;
   humorAverageNap?: any;
   humorAverageHumorHistory?: any;
+  favoriteNapPlace?: any;
   currentDate = new Date();
 
   constructor(
@@ -30,12 +31,6 @@ export class BabyProfileDetailComponent implements OnInit {
       this.babyProfile = babyProfile;
       this.getUserData(this.babyProfile!.id!);
     });
-
-    // this.accountService.identity().subscribe(() => {
-    //   if (this.accountService.isAuthenticated()) {
-    //     this.getUserData();
-    //   }
-    // });
   }
 
   getUserData(id: number): void {
@@ -46,6 +41,9 @@ export class BabyProfileDetailComponent implements OnInit {
   getNapData(id: number): void {
     this.napService.todayAverageNapHumorByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.humorAverageNap = res.body;
+    });
+    this.napService.favoriteNapPlaceFromLastDaysByBabyProfile(id, 30).subscribe((res: HttpResponse<any>) => {
+      this.favoriteNapPlace = res.body;
     });
   }
 

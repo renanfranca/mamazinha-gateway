@@ -74,6 +74,15 @@ export class NapService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  favoriteNapPlaceFromLastDaysByBabyProfile(id: number, lastDays: number): Observable<EntityResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<INap>(`${this.resourceUrl}/favorite-nap-place-from-last-days-by-baby-profile/${id}?lastDays=${lastDays}&tz=${tz}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

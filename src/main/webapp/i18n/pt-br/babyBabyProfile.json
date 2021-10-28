@@ -24,6 +24,9 @@
       "addHumorHistory": "Humor",
       "humorAverageNap": "Humor após Soneca <br/> (média de hoje)",
       "addNap": "Soneca",
+      "favoriteNapPlace": "Local Favorito da Soneca",
+      "favoriteNapPlaceLastDays": "(dos últimos {{lastDays}} dias)",
+      "favoriteNapPlaceAmountOfTimes": " ({{amountOfTimes}} vezes)",
       "userId": "User Id"
     }
   },
