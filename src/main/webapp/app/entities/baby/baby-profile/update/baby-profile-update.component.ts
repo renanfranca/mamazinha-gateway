@@ -42,7 +42,7 @@ export class BabyProfileUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ babyProfile }) => {
       if (babyProfile.id === undefined) {
-        const today = dayjs().startOf('day');
+        const today = dayjs();
         babyProfile.birthday = today;
       }
 
