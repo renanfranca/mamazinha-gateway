@@ -27,6 +27,10 @@
       "favoriteNapPlace": "Local Favorito da Soneca",
       "favoriteNapPlaceLastDays": "(dos últimos {{lastDays}} dias)",
       "favoriteNapPlaceAmountOfTimes": " ({{amountOfTimes}} vezes)",
+      "weight": "Peso",
+      "latestWeight": "{{weight}} Kg",
+      "addWight": "Peso",
+      "latestHeigh": "Altura",
       "userId": "User Id"
     }
   },

@@ -23,10 +23,14 @@
       "humorAverageHumorHistory": "Humor <br/> (today average)",
       "addHumorHistory": "Humor",
       "humorAverageNap": "Humor after Nap <br/> (today average)",
+      "addNap": "Nap",
       "favoriteNapPlace": "Favorite Nap Place",
       "favoriteNapPlaceLastDays": "(from the last {{lastDays}} days)",
       "favoriteNapPlaceAmountOfTimes": " ({{amountOfTimes}} times)",
-      "addNap": "Nap",
+      "weight": "Weight",
+      "latestWeight": "{{weight}} Kg",
+      "addWight": "Weight",
+      "latestHeigh": "Height",
       "userId": "User Id"
     }
   },

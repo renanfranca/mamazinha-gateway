@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as dayjs from 'dayjs';
-
-import { isPresent } from 'app/core/util/operators';
+import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IWeight, getWeightIdentifier } from '../weight.model';
+import { isPresent } from 'app/core/util/operators';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { getWeightIdentifier, IWeight } from '../weight.model';
 
 export type EntityResponseType = HttpResponse<IWeight>;
 export type EntityArrayResponseType = HttpResponse<IWeight[]>;
@@ -50,6 +49,12 @@ export class WeightService {
     return this.http
       .get<IWeight[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  latestWeightByBabyProfile(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IWeight>(`${this.resourceUrl}/latest-weight-by-baby-profile/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

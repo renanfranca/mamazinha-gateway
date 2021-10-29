@@ -5,6 +5,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { HumorHistoryService } from 'app/entities/baby/humor-history/service/humor-history.service';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
+import { WeightService } from 'app/entities/baby/weight/service/weight.service';
 import { IBabyProfile } from '../baby-profile.model';
 
 @Component({
@@ -15,6 +16,7 @@ export class BabyProfileDetailComponent implements OnInit {
   babyProfile: IBabyProfile | null = null;
   humorAverageNap?: any;
   humorAverageHumorHistory?: any;
+  latestWeight?: any;
   favoriteNapPlace?: any;
   currentDate = new Date();
 
@@ -23,7 +25,8 @@ export class BabyProfileDetailComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected accountService: AccountService,
     protected napService: NapService,
-    protected humorHistoryService: HumorHistoryService
+    protected humorHistoryService: HumorHistoryService,
+    protected weightService: WeightService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +39,7 @@ export class BabyProfileDetailComponent implements OnInit {
   getUserData(id: number): void {
     this.getNapData(id);
     this.getHumorHistoryData(id);
+    this.getWeightData(id);
   }
 
   getNapData(id: number): void {
@@ -50,6 +54,12 @@ export class BabyProfileDetailComponent implements OnInit {
   getHumorHistoryData(id: number): void {
     this.humorHistoryService.todayAverageHumorHistoryByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.humorAverageHumorHistory = res.body;
+    });
+  }
+
+  getWeightData(id: number): void {
+    this.weightService.latestWeightByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+      this.latestWeight = res.body;
     });
   }
 

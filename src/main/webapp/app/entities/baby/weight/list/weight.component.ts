@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { IWeight } from '../weight.model';
-
 import { ASC, DESC, ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { WeightService } from '../service/weight.service';
-import { WeightDeleteDialogComponent } from '../delete/weight-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { WeightDeleteDialogComponent } from '../delete/weight-delete-dialog.component';
+import { WeightService } from '../service/weight.service';
+import { IWeight } from '../weight.model';
 
 @Component({
   selector: 'jhi-weight',
@@ -29,8 +27,12 @@ export class WeightComponent implements OnInit {
     this.links = {
       last: 0,
     };
-    this.predicate = 'id';
-    this.ascending = true;
+    this.predicate = 'date';
+    this.ascending = false;
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 
   loadAll(): void {
@@ -85,8 +87,8 @@ export class WeightComponent implements OnInit {
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
-    if (this.predicate !== 'id') {
-      result.push('id');
+    if (this.predicate !== 'date') {
+      result.push('date');
     }
     return result;
   }
