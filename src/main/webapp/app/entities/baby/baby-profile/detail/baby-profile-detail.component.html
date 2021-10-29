@@ -48,7 +48,7 @@
         </dt>
         <dd>
           <div class="row align-items-center">
-            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0 text-center">
               <a [routerLink]="['/humor-history']">
                 <div *ngIf="humorAverageHumorHistory">
                   <div [ngSwitch]="humorAverageHumorHistory?.humorAverage">
@@ -75,7 +75,7 @@
         <dt class="align-self-center"><span jhiTranslate="gatewayApp.babyBabyProfile.humorAverageNap">Humor after Nap (average)</span></dt>
         <dd>
           <div class="row align-items-center">
-            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0 text-center">
               <a [routerLink]="['/nap']">
                 <div *ngIf="humorAverageNap">
                   <div [ngSwitch]="humorAverageNap?.humorAverage">
@@ -112,7 +112,7 @@
         </dt>
         <dd>
           <div class="row align-items-center">
-            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0 text-center">
               <a [routerLink]="['/nap']">
                 <div *ngIf="favoriteNapPlace?.favoritePlace">
                   <span jhiTranslate="{{ 'gatewayApp.Place.' + favoriteNapPlace?.favoritePlace }}" class="d-block text-center">{{
@@ -141,11 +141,15 @@
         </dd>
         <dt><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
         <dd>
-          <fa-icon
-            [icon]="babyProfile.main ? 'check' : 'window-minimize'"
-            aria-hidden="true"
-            class="{{ babyProfile.main ? 'text-success' : 'text-muted' }}"
-          ></fa-icon>
+          <div class="row">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0 text-center">
+              <fa-icon
+                [icon]="babyProfile.main ? 'check' : 'window-minimize'"
+                aria-hidden="true"
+                class="{{ babyProfile.main ? 'text-success' : 'text-muted' }}"
+              ></fa-icon>
+            </div>
+          </div>
         </dd>
         <dt *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="gatewayApp.babyBabyProfile.userId">User Id</span></dt>
         <dd *jhiHasAnyAuthority="'ROLE_ADMIN'">
