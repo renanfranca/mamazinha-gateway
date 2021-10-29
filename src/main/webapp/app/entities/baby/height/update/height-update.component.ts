@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
-import * as dayjs from 'dayjs';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
-
-import { IHeight, Height } from '../height.model';
-import { HeightService } from '../service/height.service';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { Height, IHeight } from '../height.model';
+import { HeightService } from '../service/height.service';
 
 @Component({
   selector: 'jhi-height-update',
@@ -39,7 +37,7 @@ export class HeightUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ height }) => {
       if (height.id === undefined) {
-        const today = dayjs().startOf('day');
+        const today = dayjs();
         height.date = today;
       }
 
@@ -109,7 +107,14 @@ export class HeightUpdateComponent implements OnInit {
           this.babyProfileService.addBabyProfileToCollectionIfMissing(babyProfiles, this.editForm.get('babyProfile')!.value)
         )
       )
-      .subscribe((babyProfiles: IBabyProfile[]) => (this.babyProfilesSharedCollection = babyProfiles));
+      .subscribe((babyProfiles: IBabyProfile[]) => {
+        this.babyProfilesSharedCollection = babyProfiles;
+        if (babyProfiles.length === 1) {
+          this.editForm.patchValue({
+            babyProfile: babyProfiles[0],
+          });
+        }
+      });
   }
 
   protected createFromForm(): IHeight {

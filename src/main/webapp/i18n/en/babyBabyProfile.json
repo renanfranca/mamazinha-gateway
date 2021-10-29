@@ -30,7 +30,9 @@
       "weight": "Weight",
       "latestWeight": "{{weight}} Kg",
       "addWight": "Weight",
-      "latestHeigh": "Height",
+      "height": "Height",
+      "latestHeight": "{{height}} cm",
+      "addHight": "Height",
       "userId": "User Id"
     }
   },

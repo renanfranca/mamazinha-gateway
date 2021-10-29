@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as dayjs from 'dayjs';
-
-import { isPresent } from 'app/core/util/operators';
+import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IHeight, getHeightIdentifier } from '../height.model';
+import { isPresent } from 'app/core/util/operators';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { getHeightIdentifier, IHeight } from '../height.model';
 
 export type EntityResponseType = HttpResponse<IHeight>;
 export type EntityArrayResponseType = HttpResponse<IHeight[]>;
@@ -50,6 +49,12 @@ export class HeightService {
     return this.http
       .get<IHeight[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  latestHeightByBabyProfile(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IHeight>(`${this.resourceUrl}/latest-height-by-baby-profile/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

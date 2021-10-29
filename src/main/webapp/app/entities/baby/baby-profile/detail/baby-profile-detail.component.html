@@ -148,7 +148,7 @@
               <a [routerLink]="['/weight']">
                 <div *ngIf="latestWeight">
                   <span jhiTranslate="gatewayApp.babyBabyProfile.latestWeight" [translateValues]="{ weight: latestWeight?.value }"
-                    >{{ latestWeight?.value }} g</span
+                    >{{ latestWeight?.value }} Kg</span
                   >
                 </div>
                 <div *ngIf="!latestWeight">
@@ -160,6 +160,31 @@
               <a [routerLink]="['/weight/new']" class="btn btn-primary m-0 text-white">
                 <fa-icon icon="plus"></fa-icon>
                 <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addWight"> Weight </span>
+              </a>
+            </div>
+          </div>
+        </dd>
+        <dt class="align-self-center">
+          <span jhiTranslate="gatewayApp.babyBabyProfile.height" class="align-self-center">Height</span>
+        </dt>
+        <dd>
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0 text-center">
+              <a [routerLink]="['/height']">
+                <div *ngIf="latestHeight">
+                  <span jhiTranslate="gatewayApp.babyBabyProfile.latestHeight" [translateValues]="{ height: latestHeight?.value }"
+                    >{{ latestHeight?.value }} cm</span
+                  >
+                </div>
+                <div *ngIf="!latestHeight">
+                  <fa-icon icon="window-minimize" class="text-muted"></fa-icon>
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 col-sm-9 col-6 text-left">
+              <a [routerLink]="['/height/new']" class="btn btn-primary m-0 text-white">
+                <fa-icon icon="plus"></fa-icon>
+                <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addHight"> Height </span>
               </a>
             </div>
           </div>
