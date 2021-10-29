@@ -27,8 +27,8 @@ export class NapComponent implements OnInit {
     this.links = {
       last: 0,
     };
-    this.predicate = 'id';
-    this.ascending = true;
+    this.predicate = 'start';
+    this.ascending = false;
   }
 
   previousState(): void {
@@ -87,8 +87,8 @@ export class NapComponent implements OnInit {
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
-    if (this.predicate !== 'id') {
-      result.push('id');
+    if (this.predicate !== 'start') {
+      result.push('start');
     }
     return result;
   }
