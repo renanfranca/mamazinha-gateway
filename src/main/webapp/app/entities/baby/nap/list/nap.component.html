@@ -62,12 +62,15 @@
           <td class="align-middle">
             <div *ngIf="nap.babyProfile">
               <a [routerLink]="['/baby-profile', nap.babyProfile?.id, 'view']">
-                (<fa-icon
-                  [icon]="nap.babyProfile?.main ? 'check' : 'window-minimize'"
-                  aria-hidden="true"
-                  class="{{ nap.babyProfile?.main ? 'text-success' : 'text-muted' }}"
-                ></fa-icon
-                >) {{ nap.babyProfile?.name }}
+                <span *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                  >(<fa-icon
+                    [icon]="nap.babyProfile?.main ? 'check' : 'window-minimize'"
+                    aria-hidden="true"
+                    class="{{ nap.babyProfile?.main ? 'text-success' : 'text-muted' }}"
+                  ></fa-icon
+                  >)</span
+                >
+                {{ nap.babyProfile?.name }}
               </a>
             </div>
           </td>

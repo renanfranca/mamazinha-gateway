@@ -189,8 +189,8 @@
             </div>
           </div>
         </dd>
-        <dt><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
-        <dd>
+        <dt *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span></dt>
+        <dd *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <div class="row">
             <div class="col-lg-2 col-sm-3 col-6 m-0 pr-0 text-center">
               <fa-icon

@@ -101,7 +101,7 @@
           <input type="text" class="form-control" name="sign" id="field_sign" data-cy="sign" formControlName="sign" />
         </div>
 
-        <div class="form-group form-check">
+        <div class="form-group form-check" *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <label class="form-check-label" for="field_main">
             <input type="checkbox" class="form-check-input" name="main" id="field_main" data-cy="main" formControlName="main" />
             <span jhiTranslate="gatewayApp.babyBabyProfile.main" for="field_main"></span>

@@ -45,7 +45,7 @@
           <th scope="col" jhiSortBy="sign">
             <span jhiTranslate="gatewayApp.babyBabyProfile.sign">Sign</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="main">
+          <th scope="col" jhiSortBy="main" *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <span jhiTranslate="gatewayApp.babyBabyProfile.main">Main</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="userId" *jhiHasAnyAuthority="'ROLE_ADMIN'">
@@ -72,7 +72,7 @@
           </td>
           <td class="align-middle">{{ babyProfile.birthday | formatMediumDatetime }}</td>
           <td class="align-middle">{{ babyProfile.sign }}</td>
-          <td class="align-middle">
+          <td class="align-middle" *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <fa-icon
               [icon]="babyProfile.main ? 'check' : 'window-minimize'"
               aria-hidden="true"
