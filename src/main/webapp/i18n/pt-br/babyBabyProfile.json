@@ -28,7 +28,7 @@
       "favoriteNapPlaceLastDays": "(dos últimos {{lastDays}} dias)",
       "favoriteNapPlaceAmountOfTimes": " ({{amountOfTimes}} vezes)",
       "weight": "Peso",
-      "latestWeight": "{{weight}} Kg",
+      "latestWeight": "{{weight}} kg",
       "addWight": "Peso",
       "height": "Altura",
       "latestHeight": "{{height}} cm",
