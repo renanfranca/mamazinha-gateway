@@ -210,3 +210,6 @@ jhipster:
 # ===================================================================
 
 # application:
+logging:
+  file:
+    name: target/gateway-log
