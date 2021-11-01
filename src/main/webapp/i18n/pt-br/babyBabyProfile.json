@@ -9,7 +9,7 @@
         "notFound": "Nenhum Perfil de BeBê encontrado"
       },
       "delete": {
-        "question": "Tem certeza de que deseja excluir Baby Profile {{ id }}?"
+        "question": "Tem certeza de que deseja excluir Profil de Bebê {{ id }}?"
       },
       "detail": {
         "title": "Perfil (Hoje, {{date}})"
@@ -38,9 +38,9 @@
   },
   "babyApp": {
     "babyBabyProfile": {
-      "created": "Um novo Baby Profile foi criado com o identificador {{ param }}",
-      "updated": "Um Baby Profile foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Baby Profile foi excluído com o identificador {{ param }}"
+      "created": "Um novo Profil de Bebê foi criado com o identificador {{ param }}",
+      "updated": "Um Profil de Bebê foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Profil de Bebê foi excluído com o identificador {{ param }}"
     }
   }
 }
