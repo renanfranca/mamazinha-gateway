@@ -24,7 +24,7 @@ export class HeightUpdateComponent implements OnInit {
     id: [],
     value: [null, [Validators.required]],
     date: [null, [Validators.required]],
-    babyProfile: [],
+    babyProfile: [null, [Validators.required]],
   });
 
   constructor(

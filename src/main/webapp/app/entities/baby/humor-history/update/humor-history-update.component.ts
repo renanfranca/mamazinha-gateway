@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
@@ -26,8 +26,8 @@ export class HumorHistoryUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     date: [],
-    babyProfile: [],
-    humor: [],
+    babyProfile: [null, [Validators.required]],
+    humor: [null, [Validators.required]],
   });
 
   constructor(
