@@ -145,5 +145,5 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Este é o rodapé da página"
+  "footer": "Desenvolvido por <a href='https://www.linkedin.com/in/renan-af/' target='_blank'>Renan Franca</a>"
 }
