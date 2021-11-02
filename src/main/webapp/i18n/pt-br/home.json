@@ -2,7 +2,7 @@
   "home": {
     "title": "Bem vindo!",
     "titleWithName": "Bem vindo, {{username}}!",
-    "subtitle": "Mamazinha app lhe auxialará no cuidado do seu bebê. 👶",
+    "subtitle": "Mamazinha Baby Care lhe auxiliará no cuidado do seu bebê. 👶",
     "logged": {
       "message": "Você está logado como \"{{username}}\".",
       "babyProfile": {
@@ -11,7 +11,7 @@
         "editbabyProfile": "{{name}}"
       },
       "nap": {
-        "today": "Horas de sono hoje - {{date}}",
+        "today": "Horas de sono, hoje - {{date}}",
         "todayMobile": "Horas de sono - {{date}}",
         "addnap": "Soneca",
         "progressbarTitle": "{{sleepHours}} / Objetivo: {{goal}}",

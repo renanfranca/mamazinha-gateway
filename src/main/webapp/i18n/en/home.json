@@ -1,9 +1,22 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
-    "subtitle": "This is your homepage",
+    "title": "Welcome!",
+    "titleWithName": "Welcome, {{username}}!",
+    "subtitle": "Mamazinha Baby Care will help you take care of your baby. 👶",
     "logged": {
-      "message": "You are logged in as user \"{{username}}\"."
+      "message": "You are logged in as user \"{{username}}\".",
+      "babyProfile": {
+        "nobabyProfile": "The first step is create an baby profile",
+        "addbabyProfile": "Baby Profile",
+        "editbabyProfile": "{{name}}"
+      },
+      "nap": {
+        "today": "Sleep hours, today - {{date}}",
+        "todayMobile": "Sleep hours - {{date}}",
+        "addnap": "Nap",
+        "progressbarTitle": "{{sleepHours}} / Goal: {{goal}}",
+        "noprogress": "{{name}} didn't sleep today?"
+      }
     },
     "question": "If you have any question on JHipster:",
     "link": {

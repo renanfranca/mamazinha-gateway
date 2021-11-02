@@ -1,12 +1,12 @@
 {
   "global": {
-    "title": "Mamazinha",
+    "title": "Mamazinha Baby Care",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
-        "main": "Entities",
+        "main": "My Baby",
         "babyHumor": "Humor",
         "babyBabyProfile": "Baby Profile",
         "babyBreastFeed": "Breast Feed",
@@ -55,9 +55,9 @@
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "If you want to ",
-          "link": "sign in",
-          "suffix": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
+          "prefix": "Please login, ",
+          "link": "Sign in",
+          "suffix": ""
         },
         "register": {
           "noaccount": "You don't have an account yet?",

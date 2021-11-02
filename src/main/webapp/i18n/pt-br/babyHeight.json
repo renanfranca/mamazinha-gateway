@@ -12,7 +12,7 @@
         "question": "Tem certeza de que deseja excluir Altura {{ id }}?"
       },
       "detail": {
-        "title": "Height"
+        "title": "Altura"
       },
       "id": "ID",
       "value": "Altura (cm)",

@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Mamazinha",
+    "title": "Mamazinha Baby Care",
     "browsehappy": "Você está usando um navegador <strong>desatualizado</strong>. Favor <a href=\"http://browsehappy.com/?locale=pt_BR\">atualize o seu navegador</a> para ter uma experiência melhor.",
     "menu": {
       "home": "Início",
@@ -55,9 +55,9 @@
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "Se deseja ",
-          "link": "entrar",
-          "suffix": ", utilize as seguintes contas padrões:<br/>- Administrador (usuário=\"admin\" and senha=\"admin\") <br/>- Usuário (usuário=\"user\" e senha=\"user\")."
+          "prefix": "Faça o login, por favor, ",
+          "link": "Entrar",
+          "suffix": ""
         },
         "register": {
           "noaccount": "Não possui uma conta ainda?",
