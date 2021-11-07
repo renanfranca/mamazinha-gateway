@@ -6,6 +6,9 @@ import com.mamazinha.gateway.security.AuthoritiesConstants;
 import com.mamazinha.gateway.security.jwt.JWTFilter;
 import com.mamazinha.gateway.security.jwt.TokenProvider;
 import com.mamazinha.gateway.web.filter.SpaWebFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -30,6 +33,8 @@ import tech.jhipster.config.JHipsterProperties;
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration {
 
+    private final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
+
     private final JHipsterProperties jHipsterProperties;
 
     private final ReactiveUserDetailsService userDetailsService;
@@ -37,6 +42,9 @@ public class SecurityConfiguration {
     private final TokenProvider tokenProvider;
 
     private final SecurityProblemSupport problemSupport;
+
+    @Value("${application.enviromment.force-https.enabled:false}")
+    private boolean applicationEnvirommentForceHttpsEnabled;
 
     public SecurityConfiguration(
         ReactiveUserDetailsService userDetailsService,
@@ -107,6 +115,13 @@ public class SecurityConfiguration {
             .pathMatchers("/management/info").permitAll()
             .pathMatchers("/management/prometheus").permitAll()
             .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
+
+        log.debug("application.enviromment.force-https.enabled: {}", applicationEnvirommentForceHttpsEnabled);
+        if (applicationEnvirommentForceHttpsEnabled) {
+                http.redirectToHttps(redirect -> redirect
+                    .httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"))
+                );
+        }
         // @formatter:on
         return http.build();
     }

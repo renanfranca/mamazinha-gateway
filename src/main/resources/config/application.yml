@@ -200,6 +200,10 @@ jhipster:
     license-url:
   security:
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
+
+logging:
+  file:
+    name: target/gateway-log
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
@@ -208,8 +212,7 @@ jhipster:
 # More documentation is available at:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
-# application:
-logging:
-  file:
-    name: target/gateway-log
+#application:
+enviromment:
+  force-https:
+    enabled: false

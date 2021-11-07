@@ -17,3 +17,8 @@ server:
     enabled-protocols: TLSv1.2
   http2:
     enabled: true
+
+#application:
+enviromment:
+  force-https:
+    enabled: true
