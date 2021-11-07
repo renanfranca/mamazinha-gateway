@@ -21,5 +21,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "preserveWhitespaces": true
-  }
+  },
+  "exclude": ["src/main/webapp/**/*.spec.ts"]
 }

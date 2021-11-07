@@ -44,7 +44,7 @@ export class NapUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ nap }) => {
       if (nap.id === undefined) {
-        const today = dayjs();
+        const today = dayjs(Date.now());
         nap.start = today;
         nap.end = today;
       }

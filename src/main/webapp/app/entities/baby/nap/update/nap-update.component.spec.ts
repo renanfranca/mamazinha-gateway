@@ -1,19 +1,17 @@
 jest.mock('@angular/router');
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
-
-import { NapService } from '../service/nap.service';
+import { IBabyProfile } from '../../../baby/baby-profile/baby-profile.model';
+import { BabyProfileService } from '../../../baby/baby-profile/service/baby-profile.service';
+import { IHumor } from '../../../baby/humor/humor.model';
+import { HumorService } from '../../../baby/humor/service/humor.service';
 import { INap, Nap } from '../nap.model';
-import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
-import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
-import { IHumor } from 'app/entities/baby/humor/humor.model';
-import { HumorService } from 'app/entities/baby/humor/service/humor.service';
-
+import { NapService } from '../service/nap.service';
 import { NapUpdateComponent } from './nap-update.component';
 
 describe('Component Tests', () => {
@@ -123,12 +121,13 @@ describe('Component Tests', () => {
         expect(comp.isSaving).toEqual(false);
       });
 
-      it('Should call create service on save for new entity', () => {
+      fit('Should call create service on save for new entity', () => {
         // GIVEN
         const saveSubject = new Subject<HttpResponse<Nap>>();
         const nap = new Nap();
         jest.spyOn(napService, 'create').mockReturnValue(saveSubject);
         jest.spyOn(comp, 'previousState');
+        jest.spyOn(global.Date, 'now').mockImplementationOnce(() => new Date('2021-11-07T08:07:10.000Z').getMilliseconds());
         activatedRoute.data = of({ nap });
         comp.ngOnInit();
 
