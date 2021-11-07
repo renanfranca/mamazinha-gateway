@@ -121,7 +121,7 @@ describe('Component Tests', () => {
         expect(comp.isSaving).toEqual(false);
       });
 
-      fit('Should call create service on save for new entity', () => {
+      it('Should call create service on save for new entity', () => {
         // GIVEN
         const saveSubject = new Subject<HttpResponse<Nap>>();
         const nap = new Nap();
