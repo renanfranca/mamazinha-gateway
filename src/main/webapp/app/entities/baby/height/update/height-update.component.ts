@@ -37,7 +37,7 @@ export class HeightUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ height }) => {
       if (height.id === undefined) {
-        const today = dayjs();
+        const today = dayjs(Date.now());
         height.date = today;
       }
 

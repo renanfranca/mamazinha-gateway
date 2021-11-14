@@ -1,17 +1,15 @@
 jest.mock('@angular/router');
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
-
+import { IBabyProfile } from '../../../baby/baby-profile/baby-profile.model';
+import { BabyProfileService } from '../../../baby/baby-profile/service/baby-profile.service';
+import { Height, IHeight } from '../height.model';
 import { HeightService } from '../service/height.service';
-import { IHeight, Height } from '../height.model';
-import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
-import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
-
 import { HeightUpdateComponent } from './height-update.component';
 
 describe('Component Tests', () => {
@@ -103,6 +101,7 @@ describe('Component Tests', () => {
         const height = new Height();
         jest.spyOn(heightService, 'create').mockReturnValue(saveSubject);
         jest.spyOn(comp, 'previousState');
+        jest.spyOn(global.Date, 'now').mockImplementationOnce(() => new Date('2021-11-13T08:07:10.000Z').getMilliseconds());
         activatedRoute.data = of({ height });
         comp.ngOnInit();
 

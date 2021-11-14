@@ -1,19 +1,17 @@
 jest.mock('@angular/router');
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
-
+import { IBabyProfile } from '../../../baby/baby-profile/baby-profile.model';
+import { BabyProfileService } from '../../../baby/baby-profile/service/baby-profile.service';
+import { IHumor } from '../../../baby/humor/humor.model';
+import { HumorService } from '../../../baby/humor/service/humor.service';
+import { HumorHistory, IHumorHistory } from '../humor-history.model';
 import { HumorHistoryService } from '../service/humor-history.service';
-import { IHumorHistory, HumorHistory } from '../humor-history.model';
-import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
-import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
-import { IHumor } from 'app/entities/baby/humor/humor.model';
-import { HumorService } from 'app/entities/baby/humor/service/humor.service';
-
 import { HumorHistoryUpdateComponent } from './humor-history-update.component';
 
 describe('Component Tests', () => {
@@ -129,6 +127,7 @@ describe('Component Tests', () => {
         const humorHistory = new HumorHistory();
         jest.spyOn(humorHistoryService, 'create').mockReturnValue(saveSubject);
         jest.spyOn(comp, 'previousState');
+        jest.spyOn(global.Date, 'now').mockImplementationOnce(() => new Date('2021-11-13T08:07:10.000Z').getMilliseconds());
         activatedRoute.data = of({ humorHistory });
         comp.ngOnInit();
 

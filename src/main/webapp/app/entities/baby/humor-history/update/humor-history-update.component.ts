@@ -41,7 +41,7 @@ export class HumorHistoryUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ humorHistory }) => {
       if (humorHistory.id === undefined) {
-        const today = dayjs();
+        const today = dayjs(Date.now());
         humorHistory.date = today;
       }
 

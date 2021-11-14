@@ -37,7 +37,7 @@ export class WeightUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ weight }) => {
       if (weight.id === undefined) {
-        const today = dayjs();
+        const today = dayjs(Date.now());
         weight.date = today;
       }
 

@@ -1,15 +1,13 @@
 jest.mock('@angular/router');
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
-
+import { BabyProfile, IBabyProfile } from '../baby-profile.model';
 import { BabyProfileService } from '../service/baby-profile.service';
-import { IBabyProfile, BabyProfile } from '../baby-profile.model';
-
 import { BabyProfileUpdateComponent } from './baby-profile-update.component';
 
 describe('Component Tests', () => {
@@ -74,6 +72,7 @@ describe('Component Tests', () => {
         const babyProfile = new BabyProfile();
         jest.spyOn(babyProfileService, 'create').mockReturnValue(saveSubject);
         jest.spyOn(comp, 'previousState');
+        jest.spyOn(global.Date, 'now').mockImplementationOnce(() => new Date('2021-11-13T08:07:10.000Z').getMilliseconds());
         activatedRoute.data = of({ babyProfile });
         comp.ngOnInit();
 
