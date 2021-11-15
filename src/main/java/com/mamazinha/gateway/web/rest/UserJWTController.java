@@ -42,9 +42,9 @@ public class UserJWTController {
         return loginVM
             .flatMap(login ->
                 authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
+                    .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername().toLowerCase(), login.getPassword()))
                     .flatMap(auth -> {
-                        Mono<User> userMono = userService.getUserWithAuthoritiesByLogin(login.getUsername());
+                        Mono<User> userMono = userService.getUserWithAuthoritiesByLogin(login.getUsername().toLowerCase());
                         return userMono.flatMap(user ->
                             Mono.fromCallable(() -> tokenProvider.createToken(auth, login.isRememberMe(), user.getId()))
                         );
