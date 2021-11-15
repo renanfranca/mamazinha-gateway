@@ -62,14 +62,6 @@ interface DeleteExtended<T> {
     Mono<Void> delete(T user);
 }
 
-interface UserRepositoryInternal extends DeleteExtended<User> {
-    Mono<User> findOneWithAuthoritiesByLogin(String login);
-
-    Mono<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
-
-    Flux<User> findAllWithAuthorities(Pageable pageable);
-}
-
 class UserRepositoryInternalImpl implements UserRepositoryInternal {
 
     private final DatabaseClient db;
