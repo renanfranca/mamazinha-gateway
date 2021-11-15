@@ -43,8 +43,8 @@ public class SecurityConfiguration {
 
     private final SecurityProblemSupport problemSupport;
 
-    @Value("${application.enviromment.force-https.enabled:false}")
-    private boolean applicationEnvirommentForceHttpsEnabled;
+    @Value("${application.force-https.enabled}")
+    private boolean applicationForceHttpsEnabled;
 
     public SecurityConfiguration(
         ReactiveUserDetailsService userDetailsService,
@@ -116,8 +116,8 @@ public class SecurityConfiguration {
             .pathMatchers("/management/prometheus").permitAll()
             .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
 
-        log.debug("application.enviromment.force-https.enabled: {}", applicationEnvirommentForceHttpsEnabled);
-        if (applicationEnvirommentForceHttpsEnabled) {
+        log.info("application.force-https.enabled: {}", applicationForceHttpsEnabled);
+        if (applicationForceHttpsEnabled) {
                 http.redirectToHttps(redirect -> redirect
                     .httpsRedirectWhen(e -> e.getRequest().getHeaders().containsKey("X-Forwarded-Proto"))
                 );
