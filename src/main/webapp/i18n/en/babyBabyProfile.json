@@ -12,7 +12,7 @@
         "question": "Are you sure you want to delete Baby Profile {{ id }}?"
       },
       "detail": {
-        "title": "Perfil (Today, {{date}})"
+        "title": "Profile (Today, {{date}})"
       },
       "id": "ID",
       "name": "Name",

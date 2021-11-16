@@ -14,6 +14,9 @@
       "detail": {
         "title": "Nap"
       },
+      "validate": {
+        "dateError": "Start date cannot be greater than End date!"
+      },
       "id": "ID",
       "start": "Start",
       "end": "End",
