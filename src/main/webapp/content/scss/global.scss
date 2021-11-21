@@ -207,7 +207,7 @@ body {
 }
 .jh-card {
   border: none !important;
-  padding-bottom: 35px;
+  padding-bottom: 65px;
 }
 .footer {
   bottom: 0;
@@ -217,14 +217,14 @@ body {
   border-top: 1px solid silver;
   position: fixed;
   width: 100%;
-  padding: 1px;
+  padding: 10px;
   padding-bottom: 0;
   text-align: center;
-  z-index: 2;
+  z-index: 3;
   font-size: 0.9em;
 
   p {
-    margin-bottom: 7px;
+    margin-bottom: 10px;
   }
 }
 .emoji {

@@ -145,5 +145,5 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Desenvolvido por <a href='https://www.linkedin.com/in/renan-af/' target='_blank'>Renan Franca</a>"
+  "footer": "Desenvolvido por <a href='https://www.linkedin.com/in/renan-af/' target='_blank'>Renan Franca</a> | <a href='https://renan-af.medium.com/web-app-angular-spring-boot-and-kubernetes-90cabcaf8417' target='_blank'>Porque criei este aplicativo?</a>"
 }
