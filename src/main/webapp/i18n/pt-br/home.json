@@ -1,0 +1,32 @@
+{
+  "home": {
+    "title": "Bem vindo!",
+    "titleWithName": "Bem vindo, {{username}}!",
+    "subtitle": "Mamazinha Baby Care lhe auxiliará no cuidado do seu bebê. 👶",
+    "logged": {
+      "message": "Você está logado como \"{{username}}\".",
+      "babyProfile": {
+        "nobabyProfile": "O primeiro passo é criar um perfil para seu bebê",
+        "addbabyProfile": "Perfil do Bebê",
+        "editbabyProfile": "{{name}}"
+      },
+      "nap": {
+        "today": "Horas de sono, hoje - {{date}}",
+        "todayMobile": "Horas de sono - {{date}}",
+        "addnap": "Soneca",
+        "progressbarTitle": "{{sleepHours}} / Objetivo: {{goal}}",
+        "noprogress": "{{name}} ainda não dormiu hoje?"
+      }
+    },
+    "question": "Em caso de dúvida sobre o JHipster:",
+    "link": {
+      "homepage": "Página principal JHipster",
+      "stackoverflow": "JHipster no Stack Overflow",
+      "bugtracker": "JHipster bug tracker",
+      "chat": "Sala de bate-papo pública JHipster",
+      "follow": "siga @jhipster no Twitter"
+    },
+    "like": "Se você gosta do JHipster, não se esqueça de avaliar no",
+    "github": "GitHub"
+  }
+}
