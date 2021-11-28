@@ -10,7 +10,6 @@ import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-
 import { NapDeleteDialogComponent } from 'app/entities/baby/nap/delete/nap-delete-dialog.component';
 import { INap } from 'app/entities/baby/nap/nap.model';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
-// import { FormatMediumDatePipe } from 'app/shared/date/format-medium-date.pipe';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { D3ChartService } from './d3-chart.service';

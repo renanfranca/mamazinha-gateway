@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-// import { FormatMediumDatePipe } from 'app/shared/date/format-medium-date.pipe';
 import { SharedModule } from 'app/shared/shared.module';
 import 'd3';
 import { NvD3Module } from 'ng2-nvd3';
