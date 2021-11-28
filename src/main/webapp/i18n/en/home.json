@@ -12,7 +12,7 @@
       },
       "nap": {
         "incompleteNaps": {
-          "title": "Did {{name}} awake from the following nap(s)?",
+          "title": "Did {{name}} awake from the following nap?",
           "yes": "Add the awake time",
           "no": "Remove this nap"
         },

@@ -75,7 +75,14 @@
                         <a [routerLink]="['/nap', nap.id, 'view']">{{ nap.id }}</a>
                       </td>
                       <td class="align-middle">{{ nap.start | formatMediumDatetime }}</td>
-                      <td class="align-middle" jhiTranslate="{{ 'gatewayApp.Place.' + nap.place }}">{{ nap.place }}</td>
+                      <td class="align-middle">
+                        <span *ngIf="nap.place" jhiTranslate="{{ 'gatewayApp.Place.' + nap.place }}">
+                          {{ nap.place }}
+                        </span>
+                        <div *ngIf="!nap.place" class="text-center">
+                          <fa-icon icon="window-minimize" class="text-muted"></fa-icon>
+                        </div>
+                      </td>
                       <td class="text-right align-middle">
                         <div class="btn-group">
                           <button

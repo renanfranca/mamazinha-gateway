@@ -12,7 +12,7 @@
       },
       "nap": {
         "incompleteNaps": {
-          "title": "{{name}} já acordou da(s) soneca(s) a seguir?",
+          "title": "{{name}} já acordou da soneca a seguir?",
           "yes": "Adicionar horário que acordou",
           "no": "Remover esta soneca"
         },
