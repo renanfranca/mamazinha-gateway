@@ -83,6 +83,14 @@ export class NapService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  incompleteNapsByBabyProfile(id: number): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<INap[]>(`${this.resourceUrl}/incomplete-naps-by-baby-profile/${id}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

@@ -1,16 +1,19 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
+import { NapDeleteDialogComponent } from 'app/entities/baby/nap/delete/nap-delete-dialog.component';
+import { INap } from 'app/entities/baby/nap/nap.model';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
+// import { FormatMediumDatePipe } from 'app/shared/date/format-medium-date.pipe';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { D3ChartService } from './d3-chart.service';
-
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',
@@ -22,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   babyProfiles?: IBabyProfile[];
   napToday: any = {};
   napLastCurrentWeek: any = {};
+  napsIncompletes: INap[] = [];
   napOptions: any;
   napData: any;
   babyProfile: IBabyProfile = {};
@@ -34,7 +38,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private babyProfileService: BabyProfileService,
     private napService: NapService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -127,6 +132,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     return isShow;
   }
 
+  trackIncompleteNapsId(index: number, item: INap): number {
+    return item.id!;
+  }
+
+  deleteIncompleteNap(nap: INap): void {
+    const modalRef = this.modalService.open(NapDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.nap = nap;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.getNapData(this.babyProfile.id!);
+      }
+    });
+  }
+
   getUserData(): void {
     this.babyProfileService.query().subscribe((res: HttpResponse<IBabyProfile[]>) => {
       this.babyProfiles = res.body ?? [];
@@ -149,6 +169,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       } else if (this.napToday.sleepHours > 10 && this.napToday.sleepHours < this.napToday.sleepHoursGoal) {
         this.napToday.progress = 'warning';
       }
+    });
+
+    this.napService.incompleteNapsByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+      this.napsIncompletes = res.body ?? [];
     });
 
     this.napService.lastWeekCurrentWeekSNapsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {

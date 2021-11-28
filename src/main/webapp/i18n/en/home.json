@@ -11,11 +11,16 @@
         "editbabyProfile": "{{name}}"
       },
       "nap": {
+        "incompleteNaps": {
+          "title": "Did {{name}} awake from the following nap(s)?",
+          "yes": "Add the awake time",
+          "no": "Remove this nap"
+        },
         "today": "Sleep hours, today - {{date}}",
         "todayMobile": "Sleep hours - {{date}}",
         "addnap": "Nap",
         "progressbarTitle": "{{sleepHours}} / Goal: {{goal}}",
-        "noprogress": "{{name}} didn't sleep today?"
+        "noprogress": "Did {{name}} sleep today?"
       }
     },
     "question": "If you have any question on JHipster:",

@@ -36,6 +36,7 @@ import {
   faTachometerAlt,
   faTasks,
   faThList,
+  faThumbsUp,
   faTimes,
   faTrashAlt,
   faUser,
@@ -92,5 +93,6 @@ export const fontAwesomeIcons = [
   faMeh,
   faSmile,
   faLaugh,
+  faThumbsUp,
   // jhipster-needle-add-icon-import
 ];
