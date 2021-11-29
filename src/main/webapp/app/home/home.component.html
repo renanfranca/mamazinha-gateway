@@ -54,6 +54,63 @@
               </a>
             </div>
           </div>
+          <div class="row mt-4" [hidden]="napsIncompletes?.length === 0">
+            <div class="col-md-12 col-xs-12">
+              <h4 jhiTranslate="home.logged.nap.incompleteNaps.title" [translateValues]="{ name: babyProfile.name }"></h4>
+            </div>
+            <div class="col-md-12 col-xs-12">
+              <div class="table-responsive" id="entities" *ngIf="napsIncompletes && napsIncompletes.length > 0">
+                <table class="table table-striped" aria-describedby="page-heading">
+                  <thead>
+                    <tr>
+                      <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+                      <th scope="col"><span jhiTranslate="gatewayApp.babyNap.start">Start</span></th>
+                      <th scope="col" class="text-center"><span jhiTranslate="gatewayApp.babyNap.place">Place</span></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let nap of napsIncompletes; trackBy: trackIncompleteNapsId" data-cy="entityTable">
+                      <td class="align-middle">
+                        <a [routerLink]="['/nap', nap.id, 'view']">{{ nap.id }}</a>
+                      </td>
+                      <td class="align-middle">{{ nap.start | formatMediumDatetime }}</td>
+                      <td class="align-middle">
+                        <span *ngIf="nap.place" jhiTranslate="{{ 'gatewayApp.Place.' + nap.place }}">
+                          {{ nap.place }}
+                        </span>
+                        <div *ngIf="!nap.place" class="text-center">
+                          <fa-icon icon="window-minimize" class="text-muted"></fa-icon>
+                        </div>
+                      </td>
+                      <td class="text-right align-middle">
+                        <div class="btn-group">
+                          <button
+                            type="submit"
+                            [routerLink]="['/nap', nap.id, 'edit']"
+                            class="btn btn-primary btn-sm"
+                            data-cy="entityEditButton"
+                          >
+                            <fa-icon icon="thumbs-up"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="home.logged.nap.incompleteNaps.yes">Yes</span>
+                          </button>
+                          <button
+                            type="submit"
+                            (click)="deleteIncompleteNap(nap)"
+                            class="btn btn-danger btn-sm"
+                            data-cy="entityDeleteButton"
+                          >
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="home.logged.nap.incompleteNaps.no">Remove this nap</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="row mt-4 align-items-center">
             <div class="col-7">
               <h4

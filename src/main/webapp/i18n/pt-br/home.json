@@ -11,6 +11,11 @@
         "editbabyProfile": "{{name}}"
       },
       "nap": {
+        "incompleteNaps": {
+          "title": "{{name}} já acordou da soneca a seguir?",
+          "yes": "Adicionar horário que acordou",
+          "no": "Remover esta soneca"
+        },
         "today": "Horas de sono, hoje - {{date}}",
         "todayMobile": "Horas de sono - {{date}}",
         "addnap": "Soneca",
