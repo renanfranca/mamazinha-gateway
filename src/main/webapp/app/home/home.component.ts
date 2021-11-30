@@ -7,6 +7,9 @@ import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
+import { IBreastFeed } from 'app/entities/baby/breast-feed/breast-feed.model';
+import { BreastFeedDeleteDialogComponent } from 'app/entities/baby/breast-feed/delete/breast-feed-delete-dialog.component';
+import { BreastFeedService } from 'app/entities/baby/breast-feed/service/breast-feed.service';
 import { NapDeleteDialogComponent } from 'app/entities/baby/nap/delete/nap-delete-dialog.component';
 import { INap } from 'app/entities/baby/nap/nap.model';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
@@ -27,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   napsIncompletes: INap[] = [];
   napOptions: any;
   napData: any;
+  breastFeedsIncompletes: INap[] = [];
   babyProfile: IBabyProfile = {};
   d3ChartTranslate: any = {};
 
@@ -37,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private babyProfileService: BabyProfileService,
     private napService: NapService,
+    private breastFeedService: BreastFeedService,
     private translateService: TranslateService,
     protected modalService: NgbModal
   ) {}
@@ -146,12 +151,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  trackIncompleteBreastFeedsId(index: number, item: IBreastFeed): number {
+    return item.id!;
+  }
+
+  deleteIncompleteBreastFeed(breastFeed: IBreastFeed): void {
+    const modalRef = this.modalService.open(BreastFeedDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.breastFeed = breastFeed;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.getBreastFeedData(this.babyProfile.id!);
+      }
+    });
+  }
+
   getUserData(): void {
     this.babyProfileService.query().subscribe((res: HttpResponse<IBabyProfile[]>) => {
       this.babyProfiles = res.body ?? [];
       if (this.babyProfiles.length === 1) {
         this.babyProfile = this.babyProfiles[0];
         this.getNapData(this.babyProfile.id!);
+        this.getBreastFeedData(this.babyProfile.id!);
       }
     });
   }
@@ -232,6 +253,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.napLastCurrentWeek.lastWeekNaps = [];
         this.napLastCurrentWeek.currentWeekNaps = [];
       }
+    });
+  }
+
+  getBreastFeedData(id: number): void {
+    this.breastFeedService.incompleteBreastFeedsByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+      this.breastFeedsIncompletes = res.body ?? [];
     });
   }
 

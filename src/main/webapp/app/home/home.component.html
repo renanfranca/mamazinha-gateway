@@ -92,7 +92,7 @@
                             data-cy="entityEditButton"
                           >
                             <fa-icon icon="thumbs-up"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="home.logged.nap.incompleteNaps.yes">Yes</span>
+                            <span class="d-none d-md-inline" jhiTranslate="home.logged.nap.incompleteNaps.yes">Add the awake time</span>
                           </button>
                           <button
                             type="submit"
@@ -102,6 +102,61 @@
                           >
                             <fa-icon icon="times"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="home.logged.nap.incompleteNaps.no">Remove this nap</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4" [hidden]="breastFeedsIncompletes?.length === 0">
+            <div class="col-md-12 col-xs-12">
+              <h4 jhiTranslate="home.logged.breastFeed.incompletebreastFeeds.title" [translateValues]="{ name: babyProfile.name }"></h4>
+            </div>
+            <div class="col-md-12 col-xs-12">
+              <div class="table-responsive" id="entities" *ngIf="breastFeedsIncompletes && breastFeedsIncompletes.length > 0">
+                <table class="table table-striped" aria-describedby="page-heading">
+                  <thead>
+                    <tr>
+                      <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+                      <th scope="col">
+                        <span jhiTranslate="gatewayApp.babyBreastFeed.start">Start</span>
+                      </th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let breastFeed of breastFeedsIncompletes; trackBy: trackIncompleteBreastFeedsId" data-cy="entityTable">
+                      <td>
+                        <a [routerLink]="['/breast-feed', breastFeed.id, 'view']">{{ breastFeed.id }}</a>
+                      </td>
+                      <td>{{ breastFeed.start | formatMediumDatetime }}</td>
+                      <td class="text-right">
+                        <div class="btn-group">
+                          <button
+                            type="submit"
+                            [routerLink]="['/breast-feed', breastFeed.id, 'edit']"
+                            class="btn btn-primary btn-sm"
+                            data-cy="entityEditButton"
+                          >
+                            <fa-icon icon="thumbs-up"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="home.logged.breastFeed.incompletebreastFeeds.yes"
+                              >Add the end time</span
+                            >
+                          </button>
+
+                          <button
+                            type="submit"
+                            (click)="deleteIncompleteBreastFeed(breastFeed)"
+                            class="btn btn-danger btn-sm"
+                            data-cy="entityDeleteButton"
+                          >
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="home.logged.breastFeed.incompletebreastFeeds.no"
+                              >Remove this breast/formula feeding</span
+                            >
                           </button>
                         </div>
                       </td>

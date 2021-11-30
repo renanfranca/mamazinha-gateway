@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <label class="form-control-label" jhiTranslate="gatewayApp.babyBreastFeed.pain" for="field_pain">Pain</label>
           <select class="form-control" name="pain" formControlName="pain" id="field_pain" data-cy="pain">
             <option [ngValue]="null">{{ 'gatewayApp.Pain.null' | translate }}</option>

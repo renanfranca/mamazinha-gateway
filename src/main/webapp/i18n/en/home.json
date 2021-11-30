@@ -21,6 +21,13 @@
         "addnap": "Nap",
         "progressbarTitle": "{{sleepHours}} / Goal: {{goal}}",
         "noprogress": "Did {{name}} sleep today?"
+      },
+      "breastFeed": {
+        "incompletebreastFeeds": {
+          "title": "Did {{name}} done the following breast/formula feeding?",
+          "yes": "Add the end time",
+          "no": "Remove this breast/formula feeding"
+        }
       }
     },
     "question": "If you have any question on JHipster:",
