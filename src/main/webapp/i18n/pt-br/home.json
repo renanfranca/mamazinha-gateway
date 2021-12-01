@@ -27,7 +27,8 @@
           "title": "{{name}} terminou de amamentar/fórmula a seguir?",
           "yes": "Adicionar horário de fim",
           "no": "Remover esta amamentação/fórmula"
-        }
+        },
+        "addBreastFeed": "Amamentação/Fórmula"
       }
     },
     "question": "Em caso de dúvida sobre o JHipster:",

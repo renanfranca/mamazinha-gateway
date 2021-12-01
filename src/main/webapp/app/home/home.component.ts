@@ -30,7 +30,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   napsIncompletes: INap[] = [];
   napOptions: any;
   napData: any;
+  breastFeedLastCurrentWeek: any = {};
   breastFeedsIncompletes: INap[] = [];
+  breastFeedOptions: any;
+  breastFeedData: any;
   babyProfile: IBabyProfile = {};
   d3ChartTranslate: any = {};
 
@@ -73,6 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.d3ChartTranslate.goal = 'Goal';
     this.d3ChartTranslate.dayOfWeek = 'Day of Week';
     this.d3ChartTranslate.sleepHours = 'Sleep Hours';
+    this.d3ChartTranslate.averageFeedHours = 'Sleep Average Feeding Time (Hours)';
     this.translateService.get('gatewayApp.lastWeek').subscribe((res: string) => {
       this.d3ChartTranslate.lastWeek = res;
     });
@@ -87,6 +91,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     this.translateService.get('gatewayApp.sleepHours').subscribe((res: string) => {
       this.d3ChartTranslate.sleepHours = res;
+    });
+    this.translateService.get('gatewayApp.averageFeedHours').subscribe((res: string) => {
+      this.d3ChartTranslate.averageFeedHours = res;
     });
     let translateParameter = 'gatewayApp.daysOfWeek.long';
     if (short) {
@@ -119,19 +126,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (Object.keys(napLastCurrentWeek).length === 0) {
       return false;
     }
-    let isShow: boolean = napLastCurrentWeek.lastWeekNaps.some((item: any) => {
-      if (item.sleepHours > 0) {
-        return true;
-      }
-      return false;
-    });
+    let isShow: boolean = napLastCurrentWeek.lastWeekNaps.some((item: any) => item.sleepHours > 0);
     if (!isShow) {
-      isShow = napLastCurrentWeek.currentWeekNaps.some((item: any) => {
-        if (item.sleepHours > 0) {
-          return true;
-        }
-        return false;
-      });
+      isShow = napLastCurrentWeek.currentWeekNaps.some((item: any) => item.sleepHours > 0);
     }
     return isShow;
   }
@@ -149,6 +146,17 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getNapData(this.babyProfile.id!);
       }
     });
+  }
+
+  isShowWeekBreastFeedGraphic(breastFeedLastCurrentWeek: any): boolean {
+    if (Object.keys(breastFeedLastCurrentWeek).length === 0) {
+      return false;
+    }
+    let isShow: boolean = breastFeedLastCurrentWeek.lastWeekBreastFeeds.some((item: any) => item.averageFeedHours > 0);
+    if (!isShow) {
+      isShow = breastFeedLastCurrentWeek.currentWeekBreastFeeds.some((item: any) => item.averageFeedHours > 0);
+    }
+    return isShow;
   }
 
   trackIncompleteBreastFeedsId(index: number, item: IBreastFeed): number {
@@ -195,7 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.napsIncompletes = res.body ?? [];
     });
 
-    this.napService.lastWeekCurrentWeekSNapsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+    this.napService.lastWeekCurrentWeekNapsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.napLastCurrentWeek = res.body;
       // https://stackoverflow.com/a/34694155/65681
       this.napOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
@@ -259,6 +267,56 @@ export class HomeComponent implements OnInit, OnDestroy {
   getBreastFeedData(id: number): void {
     this.breastFeedService.incompleteBreastFeedsByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.breastFeedsIncompletes = res.body ?? [];
+    });
+
+    this.breastFeedService.lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+      this.breastFeedLastCurrentWeek = res.body;
+      // https://stackoverflow.com/a/34694155/65681
+      this.breastFeedOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
+      if (this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.length || this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.length) {
+        this.breastFeedOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
+        this.breastFeedOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.averageFeedHours;
+
+        const lastWeek: { x: any; y: any }[] = [],
+          currentWeek: { x: any; y: any }[] = [],
+          upperValues: any[] = [],
+          lowerValues: any[] = [];
+
+        this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.forEach((item: any) => {
+          lastWeek.push({
+            x: item.dayOfWeek,
+            y: item.averageFeedHours,
+          });
+
+          upperValues.push(item.averageFeedHours);
+          lowerValues.push(item.averageFeedHours);
+        });
+        this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.forEach((item: any) => {
+          currentWeek.push({
+            x: item.dayOfWeek,
+            y: item.averageFeedHours,
+          });
+          upperValues.push(item.averageFeedHours);
+          lowerValues.push(item.averageFeedHours);
+        });
+        this.breastFeedData = [
+          {
+            values: lastWeek,
+            key: this.d3ChartTranslate.lastWeek,
+            color: '#eb00ff',
+          },
+          {
+            values: currentWeek,
+            key: this.d3ChartTranslate.currentWeek,
+            color: '#0077ff',
+          },
+        ];
+        // set y scale to be 10 more than max and min
+        this.breastFeedOptions.chart.yDomain = [Math.min(...lowerValues) - 2, Math.max(...upperValues) + 2];
+      } else {
+        this.breastFeedLastCurrentWeek.lastWeekBreastFeeds = [];
+        this.breastFeedLastCurrentWeek.currentWeekBreastFeeds = [];
+      }
     });
   }
 

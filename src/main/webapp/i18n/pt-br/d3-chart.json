@@ -24,6 +24,7 @@
     "currentWeek": "Semana Atual",
     "goal": "Objetivo",
     "dayOfWeek": "Dia da Semana",
-    "sleepHours": "Horas de Sono"
+    "sleepHours": "Horas de Sono",
+    "averageFeedHours": "Tempo médio de Alimentação (Horas)"
   }
 }

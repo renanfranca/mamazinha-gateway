@@ -27,7 +27,8 @@
           "title": "Did {{name}} done the following breast/formula feeding?",
           "yes": "Add the end time",
           "no": "Remove this breast/formula feeding"
-        }
+        },
+        "addBreastFeed": "Breast/Formula Feeding"
       }
     },
     "question": "If you have any question on JHipster:",

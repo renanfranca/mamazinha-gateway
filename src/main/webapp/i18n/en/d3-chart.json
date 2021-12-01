@@ -24,6 +24,7 @@
     "currentWeek": "Current Week",
     "goal": "Goal",
     "dayOfWeek": "Day of Week",
-    "sleepHours": "Sleep Hours"
+    "sleepHours": "Sleep Hours",
+    "averageFeedHours": "Average Feeding Time (Hours)"
   }
 }

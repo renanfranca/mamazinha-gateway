@@ -51,6 +51,15 @@ export class BreastFeedService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id: number): Observable<EntityResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<IBreastFeed>(`${this.resourceUrl}/lastweek-currentweek-average-breast-feeds-in-hours-eachday-by-baby-profile/${id}?tz=${tz}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   incompleteBreastFeedsByBabyProfile(id: number): Observable<EntityArrayResponseType> {
     return this.http
       .get<IBreastFeed[]>(`${this.resourceUrl}/incomplete-breast-feeds-by-baby-profile/${id}`, {
