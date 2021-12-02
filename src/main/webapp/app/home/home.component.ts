@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   napOptions: any;
   napData: any;
   breastFeedLastCurrentWeek: any = {};
+  breastFeedsToday: INap[] = [];
   breastFeedsIncompletes: INap[] = [];
   breastFeedOptions: any;
   breastFeedData: any;
@@ -269,6 +270,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.breastFeedsIncompletes = res.body ?? [];
     });
 
+    this.breastFeedService.todayBreastFeedsByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
+      this.breastFeedsToday = res.body ?? [];
+    });
+
     this.breastFeedService.lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.breastFeedLastCurrentWeek = res.body;
       // https://stackoverflow.com/a/34694155/65681
@@ -276,6 +281,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.length || this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.length) {
         this.breastFeedOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
         this.breastFeedOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.averageFeedHours;
+        this.breastFeedOptions.chart.yAxis.axisLabelDistance = -20;
 
         const lastWeek: { x: any; y: any }[] = [],
           currentWeek: { x: any; y: any }[] = [],
@@ -312,7 +318,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           },
         ];
         // set y scale to be 10 more than max and min
-        this.breastFeedOptions.chart.yDomain = [Math.min(...lowerValues) - 2, Math.max(...upperValues) + 2];
+        this.breastFeedOptions.chart.yDomain = [0, Math.max(...upperValues) + 2];
       } else {
         this.breastFeedLastCurrentWeek.lastWeekBreastFeeds = [];
         this.breastFeedLastCurrentWeek.currentWeekBreastFeeds = [];

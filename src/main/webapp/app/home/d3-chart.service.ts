@@ -6,7 +6,7 @@ export class D3ChartService {
     return {
       chart: {
         type: 'lineChart',
-        height: 200,
+        height: 250,
         margin: {
           top: 20,
           right: 25,

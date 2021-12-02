@@ -51,6 +51,14 @@ export class BreastFeedService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  todayBreastFeedsByBabyProfile(id: number): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IBreastFeed[]>(`${this.resourceUrl}/today-breast-feeds-by-baby-profile/${id}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id: number): Observable<EntityResponseType> {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return this.http

@@ -24,11 +24,12 @@
       },
       "breastFeed": {
         "incompletebreastFeeds": {
-          "title": "Did {{name}} done the following breast/formula feeding?",
+          "title": "Did {{name}} finish the following breastfeeding/formula feeding?",
           "yes": "Add the end time",
           "no": "Remove this breast/formula feeding"
         },
-        "addBreastFeed": "Breast/Formula Feeding"
+        "addBreastFeed": "Breast/Formula Feeding",
+        "today": "Did you already breastfeed/formula feed {{name}}, today?"
       }
     },
     "question": "If you have any question on JHipster:",

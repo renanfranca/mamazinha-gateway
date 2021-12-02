@@ -228,6 +228,15 @@
               </a>
             </div>
           </div>
+          <div class="row" [hidden]="breastFeedsToday && breastFeedsToday.length > 0">
+            <div class="col-md-12 col-xs-12">
+              <div class="alert alert-warning" [hidden]="napToday.sleepHours">
+                <span jhiTranslate="home.logged.breastFeed.today" [translateValues]="{ name: babyProfile.name }">
+                  Did you already breastfeed/formula feed {{ babyProfile.name }}, today?</span
+                >
+              </div>
+            </div>
+          </div>
           <div class="row mt-4" *ngIf="isShowWeekBreastFeedGraphic(breastFeedLastCurrentWeek)">
             <div class="col-md-12 col-xs-12">
               <nvd3 [options]="breastFeedOptions" [data]="breastFeedData"></nvd3>
@@ -235,11 +244,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }">
-          You are logged in as user "{{ account.login }}".
-        </span>
-      </div> -->
 
       <div class="alert alert-warning mt-2" *ngSwitchCase="false">
         <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
@@ -261,50 +265,5 @@
         </a>
       </div>
     </div>
-
-    <!-- <p jhiTranslate="home.question">If you have any question on JHipster:</p>
-
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
-          >JHipster homepage</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.stackoverflow"
-          >JHipster on Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.bugtracker"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat"
-          >JHipster public chat room</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow"
-          >follow @jhipster on Twitter</a
-        >
-      </li>
-    </ul>
-
-    <p>
-      <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github"
-        >GitHub</a
-      >!
-    </p> -->
   </div>
 </div>
