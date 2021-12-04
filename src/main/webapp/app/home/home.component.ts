@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { BreastFeedService } from 'app/entities/baby/breast-feed/service/breast-
 import { NapDeleteDialogComponent } from 'app/entities/baby/nap/delete/nap-delete-dialog.component';
 import { INap } from 'app/entities/baby/nap/nap.model';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
+import { NvD3Component } from 'ng2-nvd3';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { D3ChartService } from './d3-chart.service';
@@ -21,7 +22,7 @@ import { D3ChartService } from './d3-chart.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   account: Account | null = null;
   currentDate = new Date();
   babyProfiles?: IBabyProfile[];
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   breastFeedData: any;
   babyProfile: IBabyProfile = {};
   d3ChartTranslate: any = {};
+  @ViewChild(NvD3Component) nvD3Component: NvD3Component | undefined;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -50,8 +52,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
+  @HostListener('touchmove') touchmove(): void {
+    d3.select(window).on('scroll', () => {
+      d3.selectAll('.nvtooltip').style('opacity', '0');
+    });
+  }
+
   ngOnInit(): void {
     this.translateD3Chart(false);
+
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
@@ -61,6 +70,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (this.accountService.isAuthenticated()) {
         this.getUserData();
       }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.changeChartLanguage();
+    });
+    this.translateService.onTranslationChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.changeChartLanguage();
     });
   }
 
@@ -175,7 +193,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getUserData(): void {
+  login(): void {
+    this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private getUserData(): void {
     this.babyProfileService.query().subscribe((res: HttpResponse<IBabyProfile[]>) => {
       this.babyProfiles = res.body ?? [];
       if (this.babyProfiles.length === 1) {
@@ -186,7 +213,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNapData(id: number): void {
+  private getNapData(id: number): void {
     this.napService.todayNapsInHourByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.napToday = res.body;
 
@@ -206,66 +233,66 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.napService.lastWeekCurrentWeekNapsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.napLastCurrentWeek = res.body;
-      // https://stackoverflow.com/a/34694155/65681
-      this.napOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
-      if (this.napLastCurrentWeek.lastWeekNaps.length || this.napLastCurrentWeek.currentWeekNaps.length) {
-        this.napOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
-        this.napOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.sleepHours;
-
-        const lastWeek: { x: any; y: any }[] = [],
-          currentWeek: { x: any; y: any }[] = [],
-          sleepHoursGoal: { x: any; y: any }[] = [],
-          upperValues: any[] = [],
-          lowerValues: any[] = [];
-
-        this.napLastCurrentWeek.lastWeekNaps.forEach((item: any) => {
-          lastWeek.push({
-            x: item.dayOfWeek,
-            y: item.sleepHours,
-          });
-          sleepHoursGoal.push({
-            x: item.dayOfWeek,
-            y: this.napLastCurrentWeek.sleepHoursGoal,
-          });
-
-          upperValues.push(item.sleepHours);
-          lowerValues.push(item.sleepHours);
-        });
-        this.napLastCurrentWeek.currentWeekNaps.forEach((item: any) => {
-          currentWeek.push({
-            x: item.dayOfWeek,
-            y: item.sleepHours,
-          });
-          upperValues.push(item.sleepHours);
-          lowerValues.push(item.sleepHours);
-        });
-        this.napData = [
-          {
-            values: sleepHoursGoal,
-            key: this.d3ChartTranslate.goal,
-            color: '#91f1a2',
-          },
-          {
-            values: lastWeek,
-            key: this.d3ChartTranslate.lastWeek,
-            color: '#eb00ff',
-          },
-          {
-            values: currentWeek,
-            key: this.d3ChartTranslate.currentWeek,
-            color: '#0077ff',
-          },
-        ];
-        // set y scale to be 10 more than max and min
-        this.napOptions.chart.yDomain = [0, 24];
-      } else {
-        this.napLastCurrentWeek.lastWeekNaps = [];
-        this.napLastCurrentWeek.currentWeekNaps = [];
-      }
+      this.createNapLastWeekCurrentWeekChart();
     });
   }
 
-  getBreastFeedData(id: number): void {
+  private createNapLastWeekCurrentWeekChart(): void {
+    if (Object.keys(this.napLastCurrentWeek).length === 0) {
+      return;
+    }
+    // https://stackoverflow.com/a/34694155/65681
+    this.napOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
+    if (this.napLastCurrentWeek.lastWeekNaps.length || this.napLastCurrentWeek.currentWeekNaps.length) {
+      this.napOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
+      this.napOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.sleepHours;
+
+      const lastWeek: { x: any; y: any }[] = [],
+        currentWeek: { x: any; y: any }[] = [],
+        sleepHoursGoal: { x: any; y: any }[] = [];
+
+      this.napLastCurrentWeek.lastWeekNaps.forEach((item: any) => {
+        lastWeek.push({
+          x: item.dayOfWeek,
+          y: item.sleepHours,
+        });
+        sleepHoursGoal.push({
+          x: item.dayOfWeek,
+          y: this.napLastCurrentWeek.sleepHoursGoal,
+        });
+      });
+      this.napLastCurrentWeek.currentWeekNaps.forEach((item: any) => {
+        currentWeek.push({
+          x: item.dayOfWeek,
+          y: item.sleepHours,
+        });
+      });
+      this.napData = [
+        {
+          values: sleepHoursGoal,
+          key: this.d3ChartTranslate.goal,
+          color: '#91f1a2',
+        },
+        {
+          values: lastWeek,
+          key: this.d3ChartTranslate.lastWeek,
+          color: '#eb00ff',
+        },
+        {
+          values: currentWeek,
+          key: this.d3ChartTranslate.currentWeek,
+          color: '#0077ff',
+        },
+      ];
+      // set y scale to be 10 more than max and min
+      this.napOptions.chart.yDomain = [0, 24];
+    } else {
+      this.napLastCurrentWeek.lastWeekNaps = [];
+      this.napLastCurrentWeek.currentWeekNaps = [];
+    }
+  }
+
+  private getBreastFeedData(id: number): void {
     this.breastFeedService.incompleteBreastFeedsByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.breastFeedsIncompletes = res.body ?? [];
     });
@@ -276,62 +303,66 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.breastFeedService.lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.breastFeedLastCurrentWeek = res.body;
-      // https://stackoverflow.com/a/34694155/65681
-      this.breastFeedOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
-      if (this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.length || this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.length) {
-        this.breastFeedOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
-        this.breastFeedOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.averageFeedHours;
-        this.breastFeedOptions.chart.yAxis.axisLabelDistance = -20;
-
-        const lastWeek: { x: any; y: any }[] = [],
-          currentWeek: { x: any; y: any }[] = [],
-          upperValues: any[] = [],
-          lowerValues: any[] = [];
-
-        this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.forEach((item: any) => {
-          lastWeek.push({
-            x: item.dayOfWeek,
-            y: item.averageFeedHours,
-          });
-
-          upperValues.push(item.averageFeedHours);
-          lowerValues.push(item.averageFeedHours);
-        });
-        this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.forEach((item: any) => {
-          currentWeek.push({
-            x: item.dayOfWeek,
-            y: item.averageFeedHours,
-          });
-          upperValues.push(item.averageFeedHours);
-          lowerValues.push(item.averageFeedHours);
-        });
-        this.breastFeedData = [
-          {
-            values: lastWeek,
-            key: this.d3ChartTranslate.lastWeek,
-            color: '#eb00ff',
-          },
-          {
-            values: currentWeek,
-            key: this.d3ChartTranslate.currentWeek,
-            color: '#0077ff',
-          },
-        ];
-        // set y scale to be 10 more than max and min
-        this.breastFeedOptions.chart.yDomain = [0, Math.max(...upperValues) + 2];
-      } else {
-        this.breastFeedLastCurrentWeek.lastWeekBreastFeeds = [];
-        this.breastFeedLastCurrentWeek.currentWeekBreastFeeds = [];
-      }
+      this.createBreastFeedLastWeekCurrentWeekChart();
     });
   }
 
-  login(): void {
-    this.router.navigate(['/login']);
+  private createBreastFeedLastWeekCurrentWeekChart(): void {
+    if (Object.keys(this.breastFeedLastCurrentWeek).length === 0) {
+      return;
+    }
+    // https://stackoverflow.com/a/34694155/65681
+    this.breastFeedOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
+    if (this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.length || this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.length) {
+      this.breastFeedOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
+      this.breastFeedOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.averageFeedHours;
+      this.breastFeedOptions.chart.yAxis.axisLabelDistance = -20;
+
+      const lastWeek: { x: any; y: any }[] = [],
+        currentWeek: { x: any; y: any }[] = [],
+        upperValues: any[] = [];
+
+      this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.forEach((item: any) => {
+        lastWeek.push({
+          x: item.dayOfWeek,
+          y: item.averageFeedHours,
+        });
+
+        upperValues.push(item.averageFeedHours);
+      });
+      this.breastFeedLastCurrentWeek.currentWeekBreastFeeds.forEach((item: any) => {
+        currentWeek.push({
+          x: item.dayOfWeek,
+          y: item.averageFeedHours,
+        });
+        upperValues.push(item.averageFeedHours);
+      });
+      this.breastFeedData = [
+        {
+          values: lastWeek,
+          key: this.d3ChartTranslate.lastWeek,
+          color: '#eb00ff',
+        },
+        {
+          values: currentWeek,
+          key: this.d3ChartTranslate.currentWeek,
+          color: '#0077ff',
+        },
+      ];
+      // set y scale to be 10 more than max and min
+      this.breastFeedOptions.chart.yDomain = [0, Math.max(...upperValues) + 2];
+    } else {
+      this.breastFeedLastCurrentWeek.lastWeekBreastFeeds = [];
+      this.breastFeedLastCurrentWeek.currentWeekBreastFeeds = [];
+    }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  private changeChartLanguage(): void {
+    this.translateD3Chart(false);
+    this.createNapLastWeekCurrentWeekChart();
+    this.createBreastFeedLastWeekCurrentWeekChart();
+    if (this.nvD3Component !== undefined) {
+      this.nvD3Component.chart.update();
+    }
   }
 }
