@@ -58,6 +58,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  @HostListener('touchstart') touchstart(): void {
+    d3.selectAll('.nvtooltip').style('opacity', '0');
+  }
+
   ngOnInit(): void {
     this.translateD3Chart(false);
 
