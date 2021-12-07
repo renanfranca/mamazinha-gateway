@@ -25,6 +25,9 @@
     "goal": "Goal",
     "dayOfWeek": "Day of Week",
     "sleepHours": "Sleep Hours",
-    "averageFeedHours": "Average Feeding Time (Hours)"
+    "averageFeedHours": "Average Feeding Time (Hours)",
+    "feedingDurationHours": "Feeding duration (Hours)",
+    "feedingTimesToday": "Today Breast/Formula feeding",
+    "amountOfTimes": "Amount of times"
   }
 }

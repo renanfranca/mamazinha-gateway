@@ -25,6 +25,9 @@
     "goal": "Objetivo",
     "dayOfWeek": "Dia da Semana",
     "sleepHours": "Horas de Sono",
-    "averageFeedHours": "Tempo médio de Alimentação (Horas)"
+    "averageFeedHours": "Tempo médio de Alimentação (Horas)",
+    "feedingDurationHours": "Duração da Alimentação (Horas)",
+    "feedingTimesToday": "Amamentação/Fórmula de Hoje",
+    "amountOfTimes": "Quantidade de vezes"
   }
 }

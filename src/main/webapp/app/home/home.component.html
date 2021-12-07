@@ -228,13 +228,14 @@
               </a>
             </div>
           </div>
-          <div class="row" [hidden]="breastFeedsToday && breastFeedsToday.length > 0">
+          <div class="row">
             <div class="col-md-12 col-xs-12">
-              <div class="alert alert-warning" [hidden]="napToday.sleepHours">
+              <div class="alert alert-warning" [hidden]="breastFeedsToday && breastFeedsToday.length > 0">
                 <span jhiTranslate="home.logged.breastFeed.today" [translateValues]="{ name: babyProfile.name }">
                   Did you already breastfeed/formula feed {{ babyProfile.name }}, today?</span
                 >
               </div>
+              <nvd3 [options]="breastFeedTodayOptions" [data]="breastFeedTodayData" [hidden]="breastFeedsToday.length === 0"></nvd3>
             </div>
           </div>
           <div class="row mt-4" *ngIf="isShowWeekBreastFeedGraphic(breastFeedLastCurrentWeek)">

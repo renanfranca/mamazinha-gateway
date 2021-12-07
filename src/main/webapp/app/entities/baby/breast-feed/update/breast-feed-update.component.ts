@@ -17,6 +17,7 @@ import { BreastFeedService } from '../service/breast-feed.service';
 })
 export class BreastFeedUpdateComponent implements OnInit {
   isSaving = false;
+  dateError = false;
 
   babyProfilesSharedCollection: IBabyProfile[] = [];
 
@@ -55,13 +56,25 @@ export class BreastFeedUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
     const breastFeed = this.createFromForm();
+    if (!this.validate(breastFeed)) {
+      return;
+    }
+    this.isSaving = true;
     if (breastFeed.id !== undefined) {
       this.subscribeToSaveResponse(this.breastFeedService.update(breastFeed));
     } else {
       this.subscribeToSaveResponse(this.breastFeedService.create(breastFeed));
     }
+  }
+
+  validate(breastFeed: IBreastFeed): boolean {
+    this.dateError = false;
+    if (breastFeed.start && breastFeed.end && breastFeed.start.isAfter(breastFeed.end)) {
+      this.dateError = true;
+      return false;
+    }
+    return true;
   }
 
   trackBabyProfileById(index: number, item: IBabyProfile): number {

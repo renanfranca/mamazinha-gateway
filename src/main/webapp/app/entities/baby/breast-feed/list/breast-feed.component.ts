@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { IBreastFeed } from '../breast-feed.model';
-
 import { ASC, DESC, ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { BreastFeedService } from '../service/breast-feed.service';
-import { BreastFeedDeleteDialogComponent } from '../delete/breast-feed-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
+import { IBreastFeed } from '../breast-feed.model';
+import { BreastFeedDeleteDialogComponent } from '../delete/breast-feed-delete-dialog.component';
+import { BreastFeedService } from '../service/breast-feed.service';
 
 @Component({
   selector: 'jhi-breast-feed',
@@ -29,8 +27,8 @@ export class BreastFeedComponent implements OnInit {
     this.links = {
       last: 0,
     };
-    this.predicate = 'id';
-    this.ascending = true;
+    this.predicate = 'start';
+    this.ascending = false;
   }
 
   loadAll(): void {
@@ -85,8 +83,8 @@ export class BreastFeedComponent implements OnInit {
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
-    if (this.predicate !== 'id') {
-      result.push('id');
+    if (this.predicate !== 'start') {
+      result.push('start');
     }
     return result;
   }

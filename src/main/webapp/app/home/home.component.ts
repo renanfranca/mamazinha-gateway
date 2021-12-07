@@ -32,7 +32,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   napOptions: any;
   napData: any;
   breastFeedLastCurrentWeek: any = {};
-  breastFeedsToday: INap[] = [];
+  breastFeedsToday: IBreastFeed[] = [];
+  breastFeedTodayOptions: any;
+  breastFeedTodayData: any;
   breastFeedsIncompletes: INap[] = [];
   breastFeedOptions: any;
   breastFeedData: any;
@@ -100,6 +102,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.d3ChartTranslate.dayOfWeek = 'Day of Week';
     this.d3ChartTranslate.sleepHours = 'Sleep Hours';
     this.d3ChartTranslate.averageFeedHours = 'Sleep Average Feeding Time (Hours)';
+    this.d3ChartTranslate.feedingDurationHours = 'Feeding duration (Hours)';
+    this.d3ChartTranslate.feedingTimesToday = 'Feeding duration (Hours)';
+    this.d3ChartTranslate.amountOfTimes = 'Amount of times';
     this.translateService.get('gatewayApp.lastWeek').subscribe((res: string) => {
       this.d3ChartTranslate.lastWeek = res;
     });
@@ -117,6 +122,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.translateService.get('gatewayApp.averageFeedHours').subscribe((res: string) => {
       this.d3ChartTranslate.averageFeedHours = res;
+    });
+    this.translateService.get('gatewayApp.feedingDurationHours').subscribe((res: string) => {
+      this.d3ChartTranslate.feedingDurationHours = res;
+    });
+    this.translateService.get('gatewayApp.feedingTimesToday').subscribe((res: string) => {
+      this.d3ChartTranslate.feedingTimesToday = res;
+    });
+    this.translateService.get('gatewayApp.amountOfTimes').subscribe((res: string) => {
+      this.d3ChartTranslate.amountOfTimes = res;
     });
     let translateParameter = 'gatewayApp.daysOfWeek.long';
     if (short) {
@@ -303,6 +317,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.breastFeedService.todayBreastFeedsByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.breastFeedsToday = res.body ?? [];
+      this.createBreastFeedsTodayChart();
     });
 
     this.breastFeedService.lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
@@ -361,10 +376,122 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  private createBreastFeedsTodayChart(): void {
+    if (this.breastFeedsToday.length === 0) {
+      return;
+    }
+    // https://stackoverflow.com/a/34694155/65681
+    this.breastFeedTodayOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
+    if (this.breastFeedsToday.length > 0) {
+      this.breastFeedTodayOptions.chart.type = 'discreteBarChart';
+      this.breastFeedTodayOptions.chart.x = function (d: { breastFeed: IBreastFeed; label: string; value: number }): any {
+        return d.label;
+      };
+      this.breastFeedTodayOptions.chart.y = function (d: { breastFeed: IBreastFeed; label: string; value: number }): any {
+        return d.value;
+      };
+      this.breastFeedTodayOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.amountOfTimes;
+      this.breastFeedTodayOptions.chart.xAxis.tickFormat = null;
+      // this.breastFeedTodayOptions.chart.xAxis.tickFormat = function (d: { breastFeed: IBreastFeed; label: string; value: number }): string {
+      //   return d.label;
+      // };
+      // this.breastFeedTodayOptions.chart.xAxis.valueFormat = function (d: {
+      //   breastFeed: IBreastFeed;
+      //   label: string;
+      //   value: number;
+      // }): string {
+      //   return d.label;
+      // };
+      this.breastFeedTodayOptions.chart.tooltip = { contentGenerator: null };
+      this.breastFeedTodayOptions.chart.tooltip.contentGenerator = function (e: any): any {
+        const series: { key: string; value: number | null; color: string } = e.series[0];
+        if (series.value === null) {
+          return;
+        }
+        const chartData: { breastFeed: IBreastFeed; label: string; value: number } = e.data;
+
+        let rows = `<tr>`;
+        rows += `<td class='key'>`;
+        rows += `Duração: `;
+        rows += `</td>`;
+        rows += `<td class='x-value'>${chartData.value}h</td>`;
+        rows += `</tr>`;
+        rows += `<tr>`;
+        rows += `<td class='key'>`;
+        rows += `Início: `;
+        rows += `</td>`;
+        rows += `<td class='x-value'>${chartData.breastFeed.start!.format('HH:mm')}h</td>`;
+        rows += `</tr>`;
+        rows += `<tr>`;
+        rows += `<td class='key'>`;
+        rows += `Fim: `;
+        rows += `</td>`;
+        rows += `<td class='x-value'>${chartData.breastFeed.end!.format('HH:mm')}h</td>`;
+        rows += `</tr>`;
+
+        // let header = `<thead><tr>`;
+        // header += `<td class='legend-color-guide'>`;
+        // header += `<div style='background-color: ${series.color};'></div>`;
+        // header += `</td>`;
+        // header += `<td class='key'><strong>${series.key} vez</strong></td>`;
+        // header += `</tr></thead>`;
+
+        let header = `<thead colspan="2"><tr>`;
+        header += `<td>`;
+        header += `<div class="legend-color-guide" style="
+                      float: left;
+                      vertical-align: middle;
+                      width: 12px;
+                      height: 12px;
+                      border: 1px solid #999;
+                      background-color: rgb(31, 119, 180);
+                  ">
+                  </div>&nbsp;<strong>${series.key} vez</strong>`;
+        header += `</td>`;
+        header += `</tr></thead>`;
+
+        return `<table>${header}<tbody>${rows}</tbody></table>`;
+      };
+      this.breastFeedTodayOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.feedingDurationHours;
+      this.breastFeedTodayOptions.chart.yAxis.axisLabelDistance = -20;
+
+      const breastFeedsTimesHours: { breastFeed: any; label: any; value: any }[] = [],
+        upperValuesY: any[] = [];
+
+      let countBreastFeeds = 1;
+      const suffix = 'º';
+      this.breastFeedsToday.forEach((item: any) => {
+        if (item.end !== undefined) {
+          const diffInHours = item.end.diff(item.start, 'hour');
+          breastFeedsTimesHours.push({
+            breastFeed: item,
+            label: `${countBreastFeeds}${suffix}`,
+            value: diffInHours,
+          });
+          upperValuesY.push(diffInHours);
+          countBreastFeeds++;
+        }
+      });
+      this.breastFeedTodayData = [
+        {
+          values: breastFeedsTimesHours,
+          key: 'Criar uma descrição',
+          // color: '#eb00ff',
+        },
+      ];
+      // set y scale to be 10 more than max and min
+      this.breastFeedTodayOptions.chart.yDomain = [0, Math.max(...upperValuesY) + 2];
+      this.breastFeedTodayOptions.chart.xDomain = null;
+    } else {
+      this.breastFeedsToday = [];
+    }
+  }
+
   private changeChartLanguage(): void {
     this.translateD3Chart(false);
     this.createNapLastWeekCurrentWeekChart();
     this.createBreastFeedLastWeekCurrentWeekChart();
+    this.createBreastFeedsTodayChart();
     if (this.nvD3Component !== undefined) {
       this.nvD3Component.chart.update();
     }
