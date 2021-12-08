@@ -32,6 +32,7 @@
     "time": "time",
     "duration": "Duration",
     "start": "Start",
-    "end": "End"
+    "end": "End",
+    "breastFeedTodayChartTitle": "Today"
   }
 }

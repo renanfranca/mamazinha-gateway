@@ -168,17 +168,13 @@
           </div>
           <div class="row mt-4 align-items-center">
             <div class="col-7">
-              <h4
-                jhiTranslate="home.logged.nap.today"
-                class="mt-1 d-none d-sm-inline"
-                [translateValues]="{ date: currentDate | date: 'mediumDate' }"
-              >
+              <h4 jhiTranslate="home.logged.nap.today" class="mt-1 d-none d-sm-inline" [translateValues]="{ date: currentTodayDateFormat }">
                 Naps hours for today - 17/09/21:
               </h4>
               <h4
                 jhiTranslate="home.logged.nap.todayMobile"
                 class="mt-1 d-sm-none"
-                [translateValues]="{ date: currentDate | date: 'd MMM' }"
+                [translateValues]="{ date: currentTodayDateShortFormat }"
               >
                 Naps hours for 17/09/21:
               </h4>
@@ -235,7 +231,10 @@
                   Did you already breastfeed/formula feed {{ babyProfile.name }}, today?</span
                 >
               </div>
-              <nvd3 [options]="breastFeedTodayOptions" [data]="breastFeedTodayData" [hidden]="breastFeedsToday.length === 0"></nvd3>
+              <div class="mt-2 nvd3-chart-title" [hidden]="breastFeedsToday.length === 0">
+                <span>{{ d3ChartTranslate.breastFeedTodayChartTitle }}</span>
+                <nvd3 [options]="breastFeedTodayOptions" [data]="breastFeedTodayData"></nvd3>
+              </div>
             </div>
           </div>
           <div class="row mt-4" *ngIf="isShowWeekBreastFeedGraphic(breastFeedLastCurrentWeek)">
