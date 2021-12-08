@@ -364,6 +364,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const lastWeek: { x: any; y: any }[] = [],
         currentWeek: { x: any; y: any }[] = [],
         upperValues: any[] = [];
+      upperValues.push(1);
 
       this.breastFeedLastCurrentWeek.lastWeekBreastFeeds.forEach((item: any) => {
         lastWeek.push({
@@ -393,7 +394,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         },
       ];
       // set y scale to be 10 more than max and min
-      this.breastFeedOptions.chart.yDomain = [0, Math.max(...upperValues) + 2];
+      this.breastFeedOptions.chart.yDomain = [0, Math.ceil(Math.max(...upperValues))];
     } else {
       this.breastFeedLastCurrentWeek.lastWeekBreastFeeds = [];
       this.breastFeedLastCurrentWeek.currentWeekBreastFeeds = [];
@@ -412,6 +413,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const breastFeedsTimesHours: { breastFeed: any; label: any; value: any }[] = [],
         upperValuesY: any[] = [];
+      upperValuesY.push(1);
 
       let countBreastFeeds = 1;
       const suffix = 'º';
@@ -434,7 +436,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         },
       ];
       // set y scale to be 10 more than max and min
-      this.breastFeedTodayOptions.chart.yDomain = [0, Math.max(...upperValuesY) + 2];
+      this.breastFeedTodayOptions.chart.yDomain = [0, Math.ceil(Math.max(...upperValuesY)).toFixed(0)];
       this.breastFeedTodayOptions.chart.xDomain = null;
     } else {
       this.breastFeedsToday = [];

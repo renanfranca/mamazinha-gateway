@@ -20,7 +20,7 @@ export class D3ChartService {
         y(d: any): unknown {
           return d.y;
         },
-        showValues: false,
+        showValues: true,
         // valueFormat(d: any): unknown {
         //   return d3.format(',.4f')(d);
         // },
@@ -28,7 +28,7 @@ export class D3ChartService {
         dispatch: {},
         xAxis: {
           axisLabelDistance: 3,
-          showMaxMin: false,
+          showMaxMin: true,
           tickFormat(d: any): any {
             if (d === 1) {
               return d3ChartTranslate.monday;
@@ -81,6 +81,9 @@ export class D3ChartService {
           return d.value;
         },
         showValues: false,
+        // valueFormat(d: any): unknown {
+        //   return d3.format(',.1f')(d);
+        // },
         tooltip: {
           contentGenerator(e: any): any {
             const series: { key: string; value: number | null; color: string } = e.series[0];
@@ -142,13 +145,15 @@ export class D3ChartService {
         },
         useInteractiveGuideline: true,
         dispatch: {},
+        duration: 500,
         xAxis: {
           axisLabelDistance: 3,
-          showMaxMin: false,
+          showMaxMin: true,
           tickFormat: null,
         },
         yAxis: {
           axisLabel: '',
+          showMaxMin: true,
           axisLabelDistance: -20,
         },
         transitionDuration: 250,
