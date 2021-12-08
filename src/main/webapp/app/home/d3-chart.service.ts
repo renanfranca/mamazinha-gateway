@@ -7,7 +7,7 @@ export class D3ChartService {
     return {
       chart: {
         type: 'lineChart',
-        height: 250,
+        height: 280,
         margin: {
           top: 20,
           right: 25,
@@ -67,7 +67,7 @@ export class D3ChartService {
     return {
       chart: {
         type: 'discreteBarChart',
-        height: 250,
+        height: 270,
         margin: {
           top: 20,
           right: 25,

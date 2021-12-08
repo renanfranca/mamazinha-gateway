@@ -24,7 +24,7 @@
       },
       "breastFeed": {
         "incompletebreastFeeds": {
-          "title": "{{name}} terminou a seguinte mamada / alimentação com fórmula??",
+          "title": "{{name}} terminou a seguinte mamada / alimentação com fórmula?",
           "yes": "Adicionar horário de fim",
           "no": "Remover esta amamentação/fórmula"
         },

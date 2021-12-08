@@ -107,13 +107,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.d3ChartTranslate.sleepHours = 'Sleep Hours';
     this.d3ChartTranslate.averageFeedHours = 'Sleep Average Feeding Time (Hours)';
     this.d3ChartTranslate.feedingDurationHours = 'Feeding duration (Hours)';
-    this.d3ChartTranslate.feedingTimesToday = 'Feeding duration (Hours)';
     this.d3ChartTranslate.amountOfTimes = 'Amount of times';
     this.d3ChartTranslate.time = 'time';
     this.d3ChartTranslate.duration = 'Duration';
     this.d3ChartTranslate.start = 'Start';
     this.d3ChartTranslate.end = 'End';
-    this.d3ChartTranslate.breastFeedTodayChartTitle = `Today (${dayjs(Date.now()).format('D MMM YYYY')})`;
+    this.d3ChartTranslate.breastFeedTodayChartTitle = `Today (${dayjs(Date.now()).format('D MMM')})`;
     this.translateService.get('gatewayApp.lastWeek').subscribe((res: string) => {
       this.d3ChartTranslate.lastWeek = res;
     });
@@ -135,9 +134,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.translateService.get('gatewayApp.feedingDurationHours').subscribe((res: string) => {
       this.d3ChartTranslate.feedingDurationHours = res;
     });
-    this.translateService.get('gatewayApp.feedingTimesToday').subscribe((res: string) => {
-      this.d3ChartTranslate.feedingTimesToday = res;
-    });
     this.translateService.get('gatewayApp.amountOfTimes').subscribe((res: string) => {
       this.d3ChartTranslate.amountOfTimes = res;
     });
@@ -154,7 +150,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.d3ChartTranslate.end = res;
     });
     this.translateService.get('gatewayApp.breastFeedTodayChartTitle').subscribe((res: string) => {
-      this.d3ChartTranslate.breastFeedTodayChartTitle = `${res} (${dayjs(Date.now()).format('D MMM YYYY')})`;
+      this.d3ChartTranslate.breastFeedTodayChartTitle = `${res} - ${dayjs(Date.now()).format('D MMM')}`;
     });
     let translateParameter = 'gatewayApp.daysOfWeek.long';
     if (short) {

@@ -173,7 +173,7 @@
               </h4>
               <h4
                 jhiTranslate="home.logged.nap.todayMobile"
-                class="mt-1 d-sm-none"
+                class="mobile mt-1 d-sm-none"
                 [translateValues]="{ date: currentTodayDateShortFormat }"
               >
                 Naps hours for 17/09/21:
@@ -215,7 +215,7 @@
               <nvd3 [options]="napOptions" [data]="napData"></nvd3>
             </div>
           </div>
-          <div class="row mt-4 align-items-center">
+          <div class="row mt-5 align-items-center">
             <div class="col-3"></div>
             <div class="col-9 col-md-9 text-right">
               <a [routerLink]="['/breast-feed/new']" class="btn btn-primary m-0 mb-1 text-white">
@@ -231,8 +231,8 @@
                   Did you already breastfeed/formula feed {{ babyProfile.name }}, today?</span
                 >
               </div>
-              <div class="mt-2 nvd3-chart-title" [hidden]="breastFeedsToday.length === 0">
-                <span>{{ d3ChartTranslate.breastFeedTodayChartTitle }}</span>
+              <div class="mt-3 nvd3-chart-title" [hidden]="breastFeedsToday.length === 0">
+                <h4 class="mobile">{{ d3ChartTranslate.breastFeedTodayChartTitle }}</h4>
                 <nvd3 [options]="breastFeedTodayOptions" [data]="breastFeedTodayData"></nvd3>
               </div>
             </div>

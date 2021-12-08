@@ -25,14 +25,13 @@
     "goal": "Objetivo",
     "dayOfWeek": "Dia da Semana",
     "sleepHours": "Horas de Sono",
-    "averageFeedHours": "Tempo médio de Alimentação (Horas)",
-    "feedingDurationHours": "Duração da Alimentação (Horas)",
-    "feedingTimesToday": "Amamentação/Fórmula de Hoje",
+    "averageFeedHours": "Tempo médio de Amamentação/Fórmula (Horas)",
+    "feedingDurationHours": "Duração da Amamentação/Fórmula (Horas)",
     "amountOfTimes": "Quantidade de vezes",
     "time": "vez",
     "duration": "Duração",
     "start": "Início",
     "end": "Fim",
-    "breastFeedTodayChartTitle": "Hoje"
+    "breastFeedTodayChartTitle": "Amamentação/Fórmula, hoje"
   }
 }
