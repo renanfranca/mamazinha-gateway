@@ -13,6 +13,7 @@ import { BreastFeedService } from 'app/entities/baby/breast-feed/service/breast-
 import { NapDeleteDialogComponent } from 'app/entities/baby/nap/delete/nap-delete-dialog.component';
 import { INap } from 'app/entities/baby/nap/nap.model';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
+import * as dayjs from 'dayjs';
 import { NvD3Component } from 'ng2-nvd3';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -105,6 +106,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.d3ChartTranslate.feedingDurationHours = 'Feeding duration (Hours)';
     this.d3ChartTranslate.feedingTimesToday = 'Feeding duration (Hours)';
     this.d3ChartTranslate.amountOfTimes = 'Amount of times';
+    this.d3ChartTranslate.time = 'time';
+    this.d3ChartTranslate.duration = 'Duration';
+    this.d3ChartTranslate.start = 'Start';
+    this.d3ChartTranslate.end = 'End';
     this.translateService.get('gatewayApp.lastWeek').subscribe((res: string) => {
       this.d3ChartTranslate.lastWeek = res;
     });
@@ -131,6 +136,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.translateService.get('gatewayApp.amountOfTimes').subscribe((res: string) => {
       this.d3ChartTranslate.amountOfTimes = res;
+    });
+    this.translateService.get('gatewayApp.time').subscribe((res: string) => {
+      this.d3ChartTranslate.time = res;
+    });
+    this.translateService.get('gatewayApp.duration').subscribe((res: string) => {
+      this.d3ChartTranslate.duration = res;
+    });
+    this.translateService.get('gatewayApp.start').subscribe((res: string) => {
+      this.d3ChartTranslate.start = res;
+    });
+    this.translateService.get('gatewayApp.end').subscribe((res: string) => {
+      this.d3ChartTranslate.end = res;
     });
     let translateParameter = 'gatewayApp.daysOfWeek.long';
     if (short) {
@@ -381,79 +398,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
     // https://stackoverflow.com/a/34694155/65681
-    this.breastFeedTodayOptions = { ...D3ChartService.getChartConfig(this.d3ChartTranslate) };
+    this.breastFeedTodayOptions = { ...D3ChartService.getDiscreteBarChartConfig(this.d3ChartTranslate) };
     if (this.breastFeedsToday.length > 0) {
-      this.breastFeedTodayOptions.chart.type = 'discreteBarChart';
-      this.breastFeedTodayOptions.chart.x = function (d: { breastFeed: IBreastFeed; label: string; value: number }): any {
-        return d.label;
-      };
-      this.breastFeedTodayOptions.chart.y = function (d: { breastFeed: IBreastFeed; label: string; value: number }): any {
-        return d.value;
-      };
       this.breastFeedTodayOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.amountOfTimes;
-      this.breastFeedTodayOptions.chart.xAxis.tickFormat = null;
-      // this.breastFeedTodayOptions.chart.xAxis.tickFormat = function (d: { breastFeed: IBreastFeed; label: string; value: number }): string {
-      //   return d.label;
-      // };
-      // this.breastFeedTodayOptions.chart.xAxis.valueFormat = function (d: {
-      //   breastFeed: IBreastFeed;
-      //   label: string;
-      //   value: number;
-      // }): string {
-      //   return d.label;
-      // };
-      this.breastFeedTodayOptions.chart.tooltip = { contentGenerator: null };
-      this.breastFeedTodayOptions.chart.tooltip.contentGenerator = function (e: any): any {
-        const series: { key: string; value: number | null; color: string } = e.series[0];
-        if (series.value === null) {
-          return;
-        }
-        const chartData: { breastFeed: IBreastFeed; label: string; value: number } = e.data;
-
-        let rows = `<tr>`;
-        rows += `<td class='key'>`;
-        rows += `Duração: `;
-        rows += `</td>`;
-        rows += `<td class='x-value'>${chartData.value}h</td>`;
-        rows += `</tr>`;
-        rows += `<tr>`;
-        rows += `<td class='key'>`;
-        rows += `Início: `;
-        rows += `</td>`;
-        rows += `<td class='x-value'>${chartData.breastFeed.start!.format('HH:mm')}h</td>`;
-        rows += `</tr>`;
-        rows += `<tr>`;
-        rows += `<td class='key'>`;
-        rows += `Fim: `;
-        rows += `</td>`;
-        rows += `<td class='x-value'>${chartData.breastFeed.end!.format('HH:mm')}h</td>`;
-        rows += `</tr>`;
-
-        // let header = `<thead><tr>`;
-        // header += `<td class='legend-color-guide'>`;
-        // header += `<div style='background-color: ${series.color};'></div>`;
-        // header += `</td>`;
-        // header += `<td class='key'><strong>${series.key} vez</strong></td>`;
-        // header += `</tr></thead>`;
-
-        let header = `<thead colspan="2"><tr>`;
-        header += `<td>`;
-        header += `<div class="legend-color-guide" style="
-                      float: left;
-                      vertical-align: middle;
-                      width: 12px;
-                      height: 12px;
-                      border: 1px solid #999;
-                      background-color: rgb(31, 119, 180);
-                  ">
-                  </div>&nbsp;<strong>${series.key} vez</strong>`;
-        header += `</td>`;
-        header += `</tr></thead>`;
-
-        return `<table>${header}<tbody>${rows}</tbody></table>`;
-      };
       this.breastFeedTodayOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.feedingDurationHours;
-      this.breastFeedTodayOptions.chart.yAxis.axisLabelDistance = -20;
 
       const breastFeedsTimesHours: { breastFeed: any; label: any; value: any }[] = [],
         upperValuesY: any[] = [];
@@ -462,7 +410,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const suffix = 'º';
       this.breastFeedsToday.forEach((item: any) => {
         if (item.end !== undefined) {
-          const diffInHours = item.end.diff(item.start, 'hour');
+          const diffInHours = this.diffHourMaxOneDecimalPlaces(item.start, item.end);
           breastFeedsTimesHours.push({
             breastFeed: item,
             label: `${countBreastFeeds}${suffix}`,
@@ -475,8 +423,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.breastFeedTodayData = [
         {
           values: breastFeedsTimesHours,
-          key: 'Criar uma descrição',
-          // color: '#eb00ff',
+          key: '',
         },
       ];
       // set y scale to be 10 more than max and min
@@ -485,6 +432,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.breastFeedsToday = [];
     }
+  }
+
+  private diffHourMaxOneDecimalPlaces(start: dayjs.Dayjs, end: dayjs.Dayjs): string {
+    const diff = end.diff(start, 'hour', true);
+    if (diff % 1 === 0) {
+      return diff.toString();
+    }
+    return diff.toFixed(1);
+  }
+
+  private diffHoursAndMinutes(start: dayjs.Dayjs, end: dayjs.Dayjs): string {
+    const diffTotalMinutes = end.diff(start, 'minute', true);
+    const diffHours = (diffTotalMinutes / 60).toFixed(0);
+    const diffMinutes = diffTotalMinutes % 60;
+    return `${diffHours}:${diffMinutes}`;
   }
 
   private changeChartLanguage(): void {

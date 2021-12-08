@@ -28,6 +28,10 @@
     "averageFeedHours": "Tempo médio de Alimentação (Horas)",
     "feedingDurationHours": "Duração da Alimentação (Horas)",
     "feedingTimesToday": "Amamentação/Fórmula de Hoje",
-    "amountOfTimes": "Quantidade de vezes"
+    "amountOfTimes": "Quantidade de vezes",
+    "time": "vez",
+    "duration": "Duração",
+    "start": "Início",
+    "end": "Fim"
   }
 }

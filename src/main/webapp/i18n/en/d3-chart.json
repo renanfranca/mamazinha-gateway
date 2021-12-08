@@ -26,8 +26,12 @@
     "dayOfWeek": "Day of Week",
     "sleepHours": "Sleep Hours",
     "averageFeedHours": "Average Feeding Time (Hours)",
-    "feedingDurationHours": "Feeding duration (Hours)",
+    "feedingDurationHours": "Feeding amount of time (Hours)",
     "feedingTimesToday": "Today Breast/Formula feeding",
-    "amountOfTimes": "Amount of times"
+    "amountOfTimes": "Amount of times",
+    "time": "time",
+    "duration": "Duration",
+    "start": "Start",
+    "end": "End"
   }
 }
