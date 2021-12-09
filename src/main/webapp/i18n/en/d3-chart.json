@@ -32,6 +32,12 @@
     "duration": "Duration",
     "start": "Start",
     "end": "End",
-    "breastFeedTodayChartTitle": "Breast/Formula feeding, today"
+    "breastFeedTodayChartTitle": "Breast/Formula feeding, today",
+    "averageNapHumor": "Average humor after nap",
+    "angry": "angry",
+    "sad": "sad",
+    "calm": "calm",
+    "happy": "happy",
+    "excited": "excited"
   }
 }

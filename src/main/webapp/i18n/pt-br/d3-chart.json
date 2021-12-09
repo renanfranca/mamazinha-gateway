@@ -32,6 +32,12 @@
     "duration": "Duração",
     "start": "Início",
     "end": "Fim",
-    "breastFeedTodayChartTitle": "Amamentação/Fórmula, hoje"
+    "breastFeedTodayChartTitle": "Amamentação/Fórmula, hoje",
+    "averageNapHumor": "Média do Humor ao Acordar",
+    "angry": "raiva",
+    "sad": "triste",
+    "calm": "calmo",
+    "happy": "feliz",
+    "excited": "empolgado"
   }
 }

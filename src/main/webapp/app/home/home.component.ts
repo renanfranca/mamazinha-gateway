@@ -17,7 +17,7 @@ import * as dayjs from 'dayjs';
 import { NvD3Component } from 'ng2-nvd3';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { D3ChartService } from './d3-chart.service';
+import { D3ChartService } from '../shared/d3-chart.service';
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',

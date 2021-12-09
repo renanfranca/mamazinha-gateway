@@ -99,6 +99,13 @@
             </div>
           </div>
         </dd>
+      </dl>
+      <div class="row mt-5" *ngIf="isShowWeekAverageNapHumorGraphic(averageNapHumorLastCurrentWeek)">
+        <div class="col-md-12 col-xs-12">
+          <nvd3 [options]="averageNapHumorOptions" [data]="averageNapHumorData"></nvd3>
+        </div>
+      </div>
+      <dl class="row-md jh-entity-details">
         <dt>
           <span jhiTranslate="gatewayApp.babyBabyProfile.favoriteNapPlace" class="d-block align-self-center"
             >Favorite Nap Place (from last {{ favoriteNapPlace?.periodInDays }} days)</span

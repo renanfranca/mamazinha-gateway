@@ -67,6 +67,15 @@ export class NapService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  lastWeekCurrentWeekAverageNapsHumorEachDayByBabyProfile(id: number): Observable<EntityResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<INap>(`${this.resourceUrl}/lastweek-currentweek-average-naps-humor-eachday-by-baby-profile/${id}?tz=${tz}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   todayAverageNapHumorByBabyProfile(id: number): Observable<EntityResponseType> {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return this.http
