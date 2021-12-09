@@ -52,8 +52,9 @@ export class BreastFeedService {
   }
 
   todayBreastFeedsByBabyProfile(id: number): Observable<EntityArrayResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return this.http
-      .get<IBreastFeed[]>(`${this.resourceUrl}/today-breast-feeds-by-baby-profile/${id}`, {
+      .get<IBreastFeed[]>(`${this.resourceUrl}/today-breast-feeds-by-baby-profile/${id}?tz=${tz}`, {
         observe: 'response',
       })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
