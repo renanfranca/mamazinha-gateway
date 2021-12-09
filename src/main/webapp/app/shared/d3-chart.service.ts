@@ -30,25 +30,7 @@ export class D3ChartService {
           axisLabelDistance: 3,
           showMaxMin: true,
           tickFormat(d: any): any {
-            if (d === 1) {
-              return d3ChartTranslate.monday;
-            }
-            if (d === 2) {
-              return d3ChartTranslate.tuesday;
-            }
-            if (d === 3) {
-              return d3ChartTranslate.wednesday;
-            }
-            if (d === 4) {
-              return d3ChartTranslate.thusday;
-            }
-            if (d === 5) {
-              return d3ChartTranslate.friday;
-            }
-            if (d === 6) {
-              return d3ChartTranslate.saturday;
-            }
-            return d3ChartTranslate.sunday;
+            return D3ChartService.dayOfWeekTickFormat(d, d3ChartTranslate);
           },
         },
         xDomain: [1, 7],
@@ -90,25 +72,7 @@ export class D3ChartService {
           axisLabelDistance: 3,
           showMaxMin: true,
           tickFormat(d: any): any {
-            if (d === 1) {
-              return d3ChartTranslate.monday;
-            }
-            if (d === 2) {
-              return d3ChartTranslate.tuesday;
-            }
-            if (d === 3) {
-              return d3ChartTranslate.wednesday;
-            }
-            if (d === 4) {
-              return d3ChartTranslate.thusday;
-            }
-            if (d === 5) {
-              return d3ChartTranslate.friday;
-            }
-            if (d === 6) {
-              return d3ChartTranslate.saturday;
-            }
-            return d3ChartTranslate.sunday;
+            return D3ChartService.dayOfWeekTickFormat(d, d3ChartTranslate);
           },
         },
         xDomain: [1, 7],
@@ -240,5 +204,26 @@ export class D3ChartService {
         enable: true,
       },
     };
+  }
+  private static dayOfWeekTickFormat(d: any, d3ChartTranslate: any): any {
+    if (d === 1) {
+      return d3ChartTranslate.monday;
+    }
+    if (d === 2) {
+      return d3ChartTranslate.tuesday;
+    }
+    if (d === 3) {
+      return d3ChartTranslate.wednesday;
+    }
+    if (d === 4) {
+      return d3ChartTranslate.thusday;
+    }
+    if (d === 5) {
+      return d3ChartTranslate.friday;
+    }
+    if (d === 6) {
+      return d3ChartTranslate.saturday;
+    }
+    return d3ChartTranslate.sunday;
   }
 }
