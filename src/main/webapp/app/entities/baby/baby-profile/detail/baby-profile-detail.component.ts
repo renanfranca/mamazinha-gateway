@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AccountService } from 'app/core/auth/account.service';
@@ -9,14 +9,17 @@ import { HumorHistoryService } from 'app/entities/baby/humor-history/service/hum
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
 import { WeightService } from 'app/entities/baby/weight/service/weight.service';
 import { D3ChartService } from 'app/shared/d3-chart.service';
+import * as dayjs from 'dayjs';
+import { NvD3Component } from 'ng2-nvd3';
 import { IBabyProfile } from '../baby-profile.model';
 
 @Component({
   selector: 'jhi-baby-profile-detail',
   templateUrl: './baby-profile-detail.component.html',
 })
-export class BabyProfileDetailComponent implements OnInit {
+export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   babyProfile: IBabyProfile | null = null;
+  currentTodayDateShortFormat = dayjs(Date.now()).format('D MMM');
   humorAverageNap?: any;
   averageNapHumorLastCurrentWeek: any = {};
   averageNapHumorOptions?: any;
@@ -27,6 +30,7 @@ export class BabyProfileDetailComponent implements OnInit {
   favoriteNapPlace?: any;
   d3ChartTranslate: any = {};
   currentDate = new Date();
+  @ViewChild(NvD3Component) nvD3Component: NvD3Component | undefined;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -39,12 +43,32 @@ export class BabyProfileDetailComponent implements OnInit {
     private translateService: TranslateService
   ) {}
 
+  @HostListener('touchmove') touchmove(): void {
+    d3.select(window).on('scroll', () => {
+      d3.selectAll('.nvtooltip').style('opacity', '0');
+    });
+  }
+
+  @HostListener('touchstart') touchstart(): void {
+    d3.selectAll('.nvtooltip').style('opacity', '0');
+  }
+
   ngOnInit(): void {
     this.translateD3Chart(false);
 
     this.activatedRoute.data.subscribe(({ babyProfile }) => {
       this.babyProfile = babyProfile;
       this.getUserData(this.babyProfile!.id!);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.translateService.onLangChange.pipe().subscribe(() => {
+      this.changeChartLanguage();
+      this.currentTodayDateShortFormat = dayjs(Date.now()).format('D MMM');
+    });
+    this.translateService.onTranslationChange.pipe().subscribe(() => {
+      this.changeChartLanguage();
     });
   }
 
@@ -130,6 +154,18 @@ export class BabyProfileDetailComponent implements OnInit {
     return isShow;
   }
 
+  showHideWeekAverageNapHumorGraphic(): void {
+    if (this.isShowWeekAverageNapHumorGraphic(this.averageNapHumorLastCurrentWeek)) {
+      this.averageNapHumorLastCurrentWeek = {};
+      this.createAverageNapsHumorLastWeekCurrentWeekChart();
+    } else {
+      this.napService.lastWeekCurrentWeekAverageNapsHumorEachDayByBabyProfile(this.babyProfile!.id!).subscribe((res: HttpResponse<any>) => {
+        this.averageNapHumorLastCurrentWeek = res.body;
+        this.createAverageNapsHumorLastWeekCurrentWeekChart();
+      });
+    }
+  }
+
   getUserData(id: number): void {
     this.getNapData(id);
     this.getHumorHistoryData(id);
@@ -143,10 +179,6 @@ export class BabyProfileDetailComponent implements OnInit {
     });
     this.napService.favoriteNapPlaceFromLastDaysByBabyProfile(id, 30).subscribe((res: HttpResponse<any>) => {
       this.favoriteNapPlace = res.body;
-    });
-    this.napService.lastWeekCurrentWeekAverageNapsHumorEachDayByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
-      this.averageNapHumorLastCurrentWeek = res.body;
-      this.createAverageNapsHumorLastWeekCurrentWeekChart();
     });
   }
 
@@ -225,6 +257,14 @@ export class BabyProfileDetailComponent implements OnInit {
     } else {
       this.averageNapHumorLastCurrentWeek.lastWeekHumorAverage = [];
       this.averageNapHumorLastCurrentWeek.currentWeekHumorAverage = [];
+    }
+  }
+
+  private changeChartLanguage(): void {
+    this.translateD3Chart(false);
+    this.createAverageNapsHumorLastWeekCurrentWeekChart();
+    if (this.nvD3Component !== undefined) {
+      this.nvD3Component.chart.update();
     }
   }
 }

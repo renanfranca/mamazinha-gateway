@@ -7,6 +7,7 @@ import {
   faBell,
   faBook,
   faCalendarAlt,
+  faChartArea,
   faCheck,
   faCloud,
   faCogs,
@@ -94,5 +95,6 @@ export const fontAwesomeIcons = [
   faSmile,
   faLaugh,
   faThumbsUp,
+  faChartArea,
   // jhipster-needle-add-icon-import
 ];

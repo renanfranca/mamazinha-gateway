@@ -54,7 +54,7 @@ export class D3ChartService {
           top: 20,
           right: 25,
           bottom: 45,
-          left: 45,
+          left: 70,
         },
         x(d: any): unknown {
           return d.x;
@@ -78,7 +78,7 @@ export class D3ChartService {
         xDomain: [1, 7],
         yAxis: {
           axisLabel: '',
-          axisLabelDistance: -25,
+          axisLabelDistance: -5,
           tickFormat(d: any): any {
             if (d === 1) {
               return d3ChartTranslate.angry;
