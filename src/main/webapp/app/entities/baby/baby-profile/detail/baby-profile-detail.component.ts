@@ -24,6 +24,9 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   averageNapHumorLastCurrentWeek: any = {};
   averageNapHumorOptions?: any;
   averageNapHumorData?: any;
+  averageHumorHistoryLastCurrentWeek: any = {};
+  averageHumorHistoryOptions?: any;
+  averageHumorHistoryData?: any;
   humorAverageHumorHistory?: any;
   latestWeight?: any;
   latestHeight?: any;
@@ -84,6 +87,7 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     this.d3ChartTranslate.currentWeek = 'Current Week';
     this.d3ChartTranslate.dayOfWeek = 'Day of Week';
     this.d3ChartTranslate.averageNapHumor = 'Average humor after nap';
+    this.d3ChartTranslate.averageHumorHistory = 'Average humor history';
     this.d3ChartTranslate.angry = 'angry';
     this.d3ChartTranslate.sad = 'sad';
     this.d3ChartTranslate.calm = 'calm';
@@ -100,6 +104,9 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     });
     this.translateService.get('gatewayApp.averageNapHumor').subscribe((res: string) => {
       this.d3ChartTranslate.averageNapHumor = res;
+    });
+    this.translateService.get('gatewayApp.averageHumorHistory').subscribe((res: string) => {
+      this.d3ChartTranslate.averageHumorHistory = res;
     });
     this.translateService.get('gatewayApp.angry').subscribe((res: string) => {
       this.d3ChartTranslate.angry = res;
@@ -163,6 +170,31 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
         this.averageNapHumorLastCurrentWeek = res.body;
         this.createAverageNapsHumorLastWeekCurrentWeekChart();
       });
+    }
+  }
+
+  isShowWeekAverageHumorHistoryGraphic(averageHumorHistoryLastCurrentWeek: any): boolean {
+    if (Object.keys(averageHumorHistoryLastCurrentWeek).length === 0) {
+      return false;
+    }
+    let isShow: boolean = averageHumorHistoryLastCurrentWeek.lastWeekHumorAverage.some((item: any) => item.humorAverage > 0);
+    if (!isShow) {
+      isShow = averageHumorHistoryLastCurrentWeek.currentWeekHumorAverage.some((item: any) => item.humorAverage > 0);
+    }
+    return isShow;
+  }
+
+  showHideWeekAverageHumorHistoryGraphic(): void {
+    if (this.isShowWeekAverageHumorHistoryGraphic(this.averageHumorHistoryLastCurrentWeek)) {
+      this.averageHumorHistoryLastCurrentWeek = {};
+      this.createAverageHumorHistoryLastWeekCurrentWeekChart();
+    } else {
+      this.humorHistoryService
+        .lastWeekCurrentWeekAverageHumorHistoryEachDayByBabyProfile(this.babyProfile!.id!)
+        .subscribe((res: HttpResponse<any>) => {
+          this.averageHumorHistoryLastCurrentWeek = res.body;
+          this.createAverageHumorHistoryLastWeekCurrentWeekChart();
+        });
     }
   }
 
@@ -260,9 +292,58 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private createAverageHumorHistoryLastWeekCurrentWeekChart(): void {
+    if (Object.keys(this.averageHumorHistoryLastCurrentWeek).length === 0) {
+      return;
+    }
+    // https://stackoverflow.com/a/34694155/65681
+    this.averageHumorHistoryOptions = { ...D3ChartService.getHumorChartConfig(this.d3ChartTranslate) };
+    if (
+      this.averageHumorHistoryLastCurrentWeek.lastWeekHumorAverage.length ||
+      this.averageHumorHistoryLastCurrentWeek.currentWeekHumorAverage.length
+    ) {
+      this.averageHumorHistoryOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dayOfWeek;
+      this.averageHumorHistoryOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.averageHumorHistory;
+
+      const lastWeek: { x: any; y: any }[] = [],
+        currentWeek: { x: any; y: any }[] = [];
+
+      this.averageHumorHistoryLastCurrentWeek.lastWeekHumorAverage.forEach((item: any) => {
+        lastWeek.push({
+          x: item.dayOfWeek,
+          y: item.humorAverage,
+        });
+      });
+      this.averageHumorHistoryLastCurrentWeek.currentWeekHumorAverage.forEach((item: any) => {
+        currentWeek.push({
+          x: item.dayOfWeek,
+          y: item.humorAverage,
+        });
+      });
+      this.averageHumorHistoryData = [
+        {
+          values: lastWeek,
+          key: this.d3ChartTranslate.lastWeek,
+          color: '#eb00ff',
+        },
+        {
+          values: currentWeek,
+          key: this.d3ChartTranslate.currentWeek,
+          color: '#0077ff',
+        },
+      ];
+      // set y scale to be 10 more than max and min
+      this.averageHumorHistoryOptions.chart.yDomain = [0, 5];
+    } else {
+      this.averageHumorHistoryLastCurrentWeek.lastWeekHumorAverage = [];
+      this.averageHumorHistoryLastCurrentWeek.currentWeekHumorAverage = [];
+    }
+  }
+
   private changeChartLanguage(): void {
     this.translateD3Chart(false);
     this.createAverageNapsHumorLastWeekCurrentWeekChart();
+    this.createAverageHumorHistoryLastWeekCurrentWeekChart();
     if (this.nvD3Component !== undefined) {
       this.nvD3Component.chart.update();
     }
