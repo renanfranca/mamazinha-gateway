@@ -57,6 +57,15 @@ export class HeightService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  lastHeightsByDaysByBabyProfile(id: number, days: number): Observable<EntityArrayResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<IHeight[]>(`${this.resourceUrl}/last-heights-by-days-by-baby-profile/${id}?tz=${tz}&days=${days}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

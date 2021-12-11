@@ -103,7 +103,7 @@ export class D3ChartService {
       },
     };
   }
-  static getWeightSizeChartConfig(): any {
+  static getWeightHeightChartConfig(): any {
     return {
       chart: {
         type: 'lineChart',

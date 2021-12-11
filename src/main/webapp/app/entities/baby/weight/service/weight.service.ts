@@ -57,10 +57,10 @@ export class WeightService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  lastWeightByDaysByBabyProfile(id: number, days: number): Observable<EntityArrayResponseType> {
+  lastWeightsByDaysByBabyProfile(id: number, days: number): Observable<EntityArrayResponseType> {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return this.http
-      .get<IWeight[]>(`${this.resourceUrl}/last-weight-by-days-by-baby-profile/${id}?tz=${tz}&days=${days}`, {
+      .get<IWeight[]>(`${this.resourceUrl}/last-weights-by-days-by-baby-profile/${id}?tz=${tz}&days=${days}`, {
         observe: 'response',
       })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));

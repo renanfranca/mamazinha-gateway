@@ -31,6 +31,9 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   lastWeightsDaysAgo: any = {};
   lastWeightsDaysAgoOptions?: any;
   lastWeightsDaysAgoData?: any;
+  lastHeightsDaysAgo: any = {};
+  lastHeightsDaysAgoOptions?: any;
+  lastHeightsDaysAgoData?: any;
   latestWeight?: any;
   latestHeight?: any;
   favoriteNapPlace?: any;
@@ -91,6 +94,7 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     this.d3ChartTranslate.averageNapHumor = 'Average humor after nap';
     this.d3ChartTranslate.averageHumorHistory = 'Average humor history';
     this.d3ChartTranslate.weight = 'Weight (kg)';
+    this.d3ChartTranslate.height = 'Height (cm)';
     this.d3ChartTranslate.dates = 'Dates';
     this.d3ChartTranslate.last30Days = 'Last 30 Days';
     this.d3ChartTranslate.angry = 'angry';
@@ -115,6 +119,9 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     });
     this.translateService.get('gatewayApp.weight').subscribe((res: string) => {
       this.d3ChartTranslate.weight = res;
+    });
+    this.translateService.get('gatewayApp.height').subscribe((res: string) => {
+      this.d3ChartTranslate.height = res;
     });
     this.translateService.get('gatewayApp.dates').subscribe((res: string) => {
       this.d3ChartTranslate.dates = res;
@@ -213,7 +220,7 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   }
 
   isShowLastWeightsDaysAgoGraphic(lastWeightsDaysAgo: any): boolean {
-    return Object.keys(lastWeightsDaysAgo).length > 0;
+    return Object.keys(lastWeightsDaysAgo).length > 1;
   }
 
   showHideLastWeightsDaysAgoGraphic(): void {
@@ -221,9 +228,25 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
       this.lastWeightsDaysAgo = {};
       this.createLastWeightsDaysAgo();
     } else {
-      this.weightService.lastWeightByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
+      this.weightService.lastWeightsByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
         this.lastWeightsDaysAgo = res.body;
         this.createLastWeightsDaysAgo();
+      });
+    }
+  }
+
+  isShowLastHeightsDaysAgoGraphic(lastHeightsDaysAgo: any): boolean {
+    return Object.keys(lastHeightsDaysAgo).length > 1;
+  }
+
+  showHideLastHeightsDaysAgoGraphic(): void {
+    if (this.isShowLastHeightsDaysAgoGraphic(this.lastHeightsDaysAgo)) {
+      this.lastHeightsDaysAgo = {};
+      this.createLastHeightsDaysAgo();
+    } else {
+      this.heightService.lastHeightsByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
+        this.lastHeightsDaysAgo = res.body;
+        this.createLastHeightsDaysAgo();
       });
     }
   }
@@ -371,8 +394,8 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   }
 
   private createLastWeightsDaysAgo(): void {
-    if (Object.keys(this.lastWeightsDaysAgo).length > 0) {
-      this.lastWeightsDaysAgoOptions = { ...D3ChartService.getWeightSizeChartConfig() };
+    if (Object.keys(this.lastWeightsDaysAgo).length > 1) {
+      this.lastWeightsDaysAgoOptions = { ...D3ChartService.getWeightHeightChartConfig() };
       this.lastWeightsDaysAgoOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dates;
       this.lastWeightsDaysAgoOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.weight;
       const weightValues: { x: any; y: any }[] = [];
@@ -396,11 +419,38 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private createLastHeightsDaysAgo(): void {
+    if (Object.keys(this.lastHeightsDaysAgo).length > 1) {
+      this.lastHeightsDaysAgoOptions = { ...D3ChartService.getWeightHeightChartConfig() };
+      this.lastHeightsDaysAgoOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dates;
+      this.lastHeightsDaysAgoOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.height;
+      const heightValues: { x: any; y: any }[] = [];
+      const yValues: any[] = [];
+      this.lastHeightsDaysAgo.forEach((item: any) => {
+        heightValues.push({
+          x: item.date.valueOf(),
+          y: item.value,
+        });
+        yValues.push(item.value);
+      });
+      this.lastHeightsDaysAgoData = [
+        {
+          values: heightValues,
+          key: this.d3ChartTranslate.height,
+          color: '#ffeb3b',
+          area: true,
+        },
+      ];
+      this.lastHeightsDaysAgoOptions.chart.yDomain = [0, Math.ceil(Math.max(...yValues))];
+    }
+  }
+
   private changeChartLanguage(): void {
     this.translateD3Chart(false);
     this.createAverageNapsHumorLastWeekCurrentWeekChart();
     this.createAverageHumorHistoryLastWeekCurrentWeekChart();
     this.createLastWeightsDaysAgo();
+    this.createLastHeightsDaysAgo();
     if (this.nvD3Component !== undefined) {
       this.nvD3Component.chart.update();
     }
