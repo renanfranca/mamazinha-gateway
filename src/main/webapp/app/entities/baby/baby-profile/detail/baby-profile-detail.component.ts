@@ -24,15 +24,17 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   averageNapHumorLastCurrentWeek: any = {};
   averageNapHumorOptions?: any;
   averageNapHumorData?: any;
+  humorAverageHumorHistory?: any;
   averageHumorHistoryLastCurrentWeek: any = {};
   averageHumorHistoryOptions?: any;
   averageHumorHistoryData?: any;
-  humorAverageHumorHistory?: any;
+  lastWeightsDaysAgo: any = {};
+  lastWeightsDaysAgoOptions?: any;
+  lastWeightsDaysAgoData?: any;
   latestWeight?: any;
   latestHeight?: any;
   favoriteNapPlace?: any;
   d3ChartTranslate: any = {};
-  currentDate = new Date();
   @ViewChild(NvD3Component) nvD3Component: NvD3Component | undefined;
 
   constructor(
@@ -88,6 +90,9 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     this.d3ChartTranslate.dayOfWeek = 'Day of Week';
     this.d3ChartTranslate.averageNapHumor = 'Average humor after nap';
     this.d3ChartTranslate.averageHumorHistory = 'Average humor history';
+    this.d3ChartTranslate.weight = 'Weight (kg)';
+    this.d3ChartTranslate.dates = 'Dates';
+    this.d3ChartTranslate.last30Days = 'Last 30 Days';
     this.d3ChartTranslate.angry = 'angry';
     this.d3ChartTranslate.sad = 'sad';
     this.d3ChartTranslate.calm = 'calm';
@@ -107,6 +112,15 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     });
     this.translateService.get('gatewayApp.averageHumorHistory').subscribe((res: string) => {
       this.d3ChartTranslate.averageHumorHistory = res;
+    });
+    this.translateService.get('gatewayApp.weight').subscribe((res: string) => {
+      this.d3ChartTranslate.weight = res;
+    });
+    this.translateService.get('gatewayApp.dates').subscribe((res: string) => {
+      this.d3ChartTranslate.dates = res;
+    });
+    this.translateService.get('gatewayApp.last30Days').subscribe((res: string) => {
+      this.d3ChartTranslate.last30Days = res;
     });
     this.translateService.get('gatewayApp.angry').subscribe((res: string) => {
       this.d3ChartTranslate.angry = res;
@@ -195,6 +209,22 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
           this.averageHumorHistoryLastCurrentWeek = res.body;
           this.createAverageHumorHistoryLastWeekCurrentWeekChart();
         });
+    }
+  }
+
+  isShowLastWeightsDaysAgoGraphic(lastWeightsDaysAgo: any): boolean {
+    return Object.keys(lastWeightsDaysAgo).length > 0;
+  }
+
+  showHideLastWeightsDaysAgoGraphic(): void {
+    if (this.isShowLastWeightsDaysAgoGraphic(this.lastWeightsDaysAgo)) {
+      this.lastWeightsDaysAgo = {};
+      this.createLastWeightsDaysAgo();
+    } else {
+      this.weightService.lastWeightByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
+        this.lastWeightsDaysAgo = res.body;
+        this.createLastWeightsDaysAgo();
+      });
     }
   }
 
@@ -340,10 +370,37 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private createLastWeightsDaysAgo(): void {
+    if (Object.keys(this.lastWeightsDaysAgo).length > 0) {
+      this.lastWeightsDaysAgoOptions = { ...D3ChartService.getWeightSizeChartConfig() };
+      this.lastWeightsDaysAgoOptions.chart.xAxis.axisLabel = this.d3ChartTranslate.dates;
+      this.lastWeightsDaysAgoOptions.chart.yAxis.axisLabel = this.d3ChartTranslate.weight;
+      const weightValues: { x: any; y: any }[] = [];
+      const yValues: any[] = [];
+      this.lastWeightsDaysAgo.forEach((item: any) => {
+        weightValues.push({
+          x: item.date.valueOf(),
+          y: item.value,
+        });
+        yValues.push(item.value);
+      });
+      this.lastWeightsDaysAgoData = [
+        {
+          values: weightValues,
+          key: this.d3ChartTranslate.weight,
+          color: '#ffeb3b',
+          area: true,
+        },
+      ];
+      this.lastWeightsDaysAgoOptions.chart.yDomain = [0, Math.ceil(Math.max(...yValues))];
+    }
+  }
+
   private changeChartLanguage(): void {
     this.translateD3Chart(false);
     this.createAverageNapsHumorLastWeekCurrentWeekChart();
     this.createAverageHumorHistoryLastWeekCurrentWeekChart();
+    this.createLastWeightsDaysAgo();
     if (this.nvD3Component !== undefined) {
       this.nvD3Component.chart.update();
     }

@@ -2,6 +2,7 @@
  * ChartService to define the chart config for D3
  */
 import { IBreastFeed } from 'app/entities/baby/breast-feed/breast-feed.model';
+import * as dayjs from 'dayjs';
 export class D3ChartService {
   static getChartConfig(d3ChartTranslate: any): any {
     return {
@@ -63,9 +64,6 @@ export class D3ChartService {
           return d.y;
         },
         showValues: false,
-        // valueFormat(d: any): unknown {
-        //   return d3.format(',.4f')(d);
-        // },
         useInteractiveGuideline: true,
         dispatch: {},
         xAxis: {
@@ -97,6 +95,44 @@ export class D3ChartService {
             }
             return '-';
           },
+        },
+        transitionDuration: 250,
+      },
+      title: {
+        enable: true,
+      },
+    };
+  }
+  static getWeightSizeChartConfig(): any {
+    return {
+      chart: {
+        type: 'lineChart',
+        height: 280,
+        margin: {
+          top: 20,
+          right: 25,
+          bottom: 45,
+          left: 70,
+        },
+        x(d: any): unknown {
+          return d.x;
+        },
+        y(d: any): unknown {
+          return d.y;
+        },
+        showValues: false,
+        useInteractiveGuideline: true,
+        dispatch: {},
+        xAxis: {
+          axisLabelDistance: 3,
+          showMaxMin: true,
+          tickFormat(d: any): any {
+            return dayjs(d).format('D MMM');
+          },
+        },
+        yAxis: {
+          axisLabel: '',
+          axisLabelDistance: -5,
         },
         transitionDuration: 250,
       },
