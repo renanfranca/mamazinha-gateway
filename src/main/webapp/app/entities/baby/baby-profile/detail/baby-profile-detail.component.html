@@ -69,8 +69,8 @@
                 <fa-icon icon="plus"></fa-icon>
                 <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addHumorHistory"> Humor </span>
               </a>
-              <button (click)="showHideWeekAverageHumorHistoryGraphic()" class="btn btn-info btn-sm p-2 mt-1">
-                <fa-icon icon="chart-area"></fa-icon>
+              <button (click)="showHideWeekAverageHumorHistoryGraphic()" [disabled]="graphicLoading" class="btn btn-info btn-sm p-2 mt-1">
+                <fa-icon icon="chart-area" [ngClass]="graphicLoading ? 'fa-bounce' : ''"></fa-icon>
               </button>
             </div>
           </div>
@@ -107,8 +107,8 @@
                 <fa-icon icon="plus"></fa-icon>
                 <span class="d-none d-sm-inline" jhiTranslate="gatewayApp.babyBabyProfile.addNap"> Nap </span>
               </a>
-              <button (click)="showHideWeekAverageNapHumorGraphic()" class="btn btn-info btn-sm p-2 mt-1">
-                <fa-icon icon="chart-area"></fa-icon>
+              <button (click)="showHideWeekAverageNapHumorGraphic()" [disabled]="graphicLoading" class="btn btn-info btn-sm p-2 mt-1">
+                <fa-icon icon="chart-area" [ngClass]="graphicLoading ? 'fa-bounce' : ''"></fa-icon>
               </button>
             </div>
           </div>
@@ -186,9 +186,10 @@
               <button
                 (click)="showHideLastWeightsDaysAgoGraphic()"
                 [hidden]="hideLastWeightsDaysAgoGraphicIcon"
+                [disabled]="graphicLoading"
                 class="btn btn-info btn-sm p-2 mt-1"
               >
-                <fa-icon icon="chart-area"></fa-icon>
+                <fa-icon icon="chart-area" [ngClass]="graphicLoading ? 'fa-bounce' : ''"></fa-icon>
               </button>
             </div>
           </div>
@@ -227,9 +228,10 @@
               <button
                 (click)="showHideLastHeightsDaysAgoGraphic()"
                 [hidden]="hideLastHeightsDaysAgoGraphicIcon"
+                [disabled]="graphicLoading"
                 class="btn btn-info btn-sm p-2 mt-1"
               >
-                <fa-icon icon="chart-area"></fa-icon>
+                <fa-icon icon="chart-area" [ngClass]="graphicLoading ? 'fa-bounce' : ''"></fa-icon>
               </button>
             </div>
           </div>

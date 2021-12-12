@@ -41,6 +41,7 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   latestHeight?: any;
   favoriteNapPlace?: any;
   d3ChartTranslate: any = {};
+  graphicLoading = false;
   @ViewChild(NvD3Component) nvD3Component: NvD3Component | undefined;
 
   constructor(
@@ -190,9 +191,11 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
       this.averageNapHumorLastCurrentWeek = {};
       this.createAverageNapsHumorLastWeekCurrentWeekChart();
     } else {
+      this.graphicLoading = true;
       this.napService.lastWeekCurrentWeekAverageNapsHumorEachDayByBabyProfile(this.babyProfile!.id!).subscribe((res: HttpResponse<any>) => {
         this.averageNapHumorLastCurrentWeek = res.body;
         this.createAverageNapsHumorLastWeekCurrentWeekChart();
+        this.graphicLoading = false;
       });
     }
   }
@@ -213,11 +216,13 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
       this.averageHumorHistoryLastCurrentWeek = {};
       this.createAverageHumorHistoryLastWeekCurrentWeekChart();
     } else {
+      this.graphicLoading = true;
       this.humorHistoryService
         .lastWeekCurrentWeekAverageHumorHistoryEachDayByBabyProfile(this.babyProfile!.id!)
         .subscribe((res: HttpResponse<any>) => {
           this.averageHumorHistoryLastCurrentWeek = res.body;
           this.createAverageHumorHistoryLastWeekCurrentWeekChart();
+          this.graphicLoading = false;
         });
     }
   }
@@ -231,9 +236,11 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
       this.lastWeightsDaysAgo = [];
       this.createLastWeightsDaysAgo();
     } else {
+      this.graphicLoading = true;
       this.weightService.lastWeightsByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
         this.lastWeightsDaysAgo = res.body;
         this.createLastWeightsDaysAgo();
+        this.graphicLoading = false;
       });
     }
   }
@@ -247,9 +254,11 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
       this.lastHeightsDaysAgo = {};
       this.createLastHeightsDaysAgo();
     } else {
+      this.graphicLoading = true;
       this.heightService.lastHeightsByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
         this.lastHeightsDaysAgo = res.body;
         this.createLastHeightsDaysAgo();
+        this.graphicLoading = false;
       });
     }
   }
