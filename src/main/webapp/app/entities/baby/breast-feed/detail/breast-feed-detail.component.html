@@ -22,8 +22,8 @@
         <dd>
           <span>{{ breastFeed.end | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="gatewayApp.babyBreastFeed.pain">Pain</span></dt>
-        <dd>
+        <dt *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="gatewayApp.babyBreastFeed.pain">Pain</span></dt>
+        <dd *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <span jhiTranslate="{{ 'gatewayApp.Pain.' + breastFeed.pain }}">{{ breastFeed.pain }}</span>
         </dd>
         <dt><span jhiTranslate="gatewayApp.babyBreastFeed.babyProfile">Baby Profile</span></dt>

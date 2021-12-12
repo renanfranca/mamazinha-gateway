@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
-import * as dayjs from 'dayjs';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
-
-import { IBreastFeed, BreastFeed } from '../breast-feed.model';
-import { BreastFeedService } from '../service/breast-feed.service';
 import { IBabyProfile } from 'app/entities/baby/baby-profile/baby-profile.model';
 import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-profile.service';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { BreastFeed, IBreastFeed } from '../breast-feed.model';
+import { BreastFeedService } from '../service/breast-feed.service';
 
 @Component({
   selector: 'jhi-breast-feed-update',
@@ -19,12 +17,13 @@ import { BabyProfileService } from 'app/entities/baby/baby-profile/service/baby-
 })
 export class BreastFeedUpdateComponent implements OnInit {
   isSaving = false;
+  dateError = false;
 
   babyProfilesSharedCollection: IBabyProfile[] = [];
 
   editForm = this.fb.group({
     id: [],
-    start: [],
+    start: [null, [Validators.required]],
     end: [],
     pain: [],
     babyProfile: [],
@@ -39,9 +38,10 @@ export class BreastFeedUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ breastFeed }) => {
+      const today = dayjs(Date.now());
       if (breastFeed.id === undefined) {
-        const today = dayjs().startOf('day');
         breastFeed.start = today;
+      } else if (breastFeed.end === undefined) {
         breastFeed.end = today;
       }
 
@@ -56,13 +56,25 @@ export class BreastFeedUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
     const breastFeed = this.createFromForm();
+    if (!this.validate(breastFeed)) {
+      return;
+    }
+    this.isSaving = true;
     if (breastFeed.id !== undefined) {
       this.subscribeToSaveResponse(this.breastFeedService.update(breastFeed));
     } else {
       this.subscribeToSaveResponse(this.breastFeedService.create(breastFeed));
     }
+  }
+
+  validate(breastFeed: IBreastFeed): boolean {
+    this.dateError = false;
+    if (breastFeed.start && breastFeed.end && breastFeed.start.isAfter(breastFeed.end)) {
+      this.dateError = true;
+      return false;
+    }
+    return true;
   }
 
   trackBabyProfileById(index: number, item: IBabyProfile): number {
@@ -112,7 +124,14 @@ export class BreastFeedUpdateComponent implements OnInit {
           this.babyProfileService.addBabyProfileToCollectionIfMissing(babyProfiles, this.editForm.get('babyProfile')!.value)
         )
       )
-      .subscribe((babyProfiles: IBabyProfile[]) => (this.babyProfilesSharedCollection = babyProfiles));
+      .subscribe((babyProfiles: IBabyProfile[]) => {
+        this.babyProfilesSharedCollection = babyProfiles;
+        if (babyProfiles.length === 1) {
+          this.editForm.patchValue({
+            babyProfile: babyProfiles[0],
+          });
+        }
+      });
   }
 
   protected createFromForm(): IBreastFeed {

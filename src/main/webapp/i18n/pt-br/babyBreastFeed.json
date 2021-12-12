@@ -2,30 +2,30 @@
   "gatewayApp": {
     "babyBreastFeed": {
       "home": {
-        "title": "Breast Feeds",
+        "title": "Amamentação/Fórmula",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Breast Feed",
-        "createOrEditLabel": "Criar ou editar Breast Feed",
-        "notFound": "Nenhum Breast Feed encontrado"
+        "createLabel": "Criar nova Amamentação/Fórmula",
+        "createOrEditLabel": "Criar ou editar Amamentação/Fórmula",
+        "notFound": "Nenhuma Amamentação/Fórmula encontrada"
       },
       "delete": {
-        "question": "Tem certeza de que deseja excluir Breast Feed {{ id }}?"
+        "question": "Tem certeza de que deseja excluir Amamentação/Fórmula {{ id }}?"
       },
       "detail": {
-        "title": "Breast Feed"
+        "title": "Amamentação/Fórmula"
       },
       "id": "ID",
-      "start": "Start",
-      "end": "End",
-      "pain": "Pain",
-      "babyProfile": "Baby Profile"
+      "start": "Início",
+      "end": "Fim",
+      "pain": "Dor",
+      "babyProfile": "Perfil do Bebê"
     }
   },
   "babyApp": {
     "babyBreastFeed": {
-      "created": "Um novo Breast Feed foi criado com o identificador {{ param }}",
-      "updated": "Um Breast Feed foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Breast Feed foi excluído com o identificador {{ param }}"
+      "created": "Uma nova Amamentação/Fórmula foi criada com o identificador {{ param }}",
+      "updated": "Uma Amamentação/Fórmula foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma Amamentação/Fórmula foi excluída com o identificador {{ param }}"
     }
   }
 }

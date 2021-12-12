@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as dayjs from 'dayjs';
-
-import { isPresent } from 'app/core/util/operators';
+import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IBreastFeed, getBreastFeedIdentifier } from '../breast-feed.model';
+import { isPresent } from 'app/core/util/operators';
+import * as dayjs from 'dayjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { getBreastFeedIdentifier, IBreastFeed } from '../breast-feed.model';
 
 export type EntityResponseType = HttpResponse<IBreastFeed>;
 export type EntityArrayResponseType = HttpResponse<IBreastFeed[]>;
@@ -49,6 +48,32 @@ export class BreastFeedService {
     const options = createRequestOption(req);
     return this.http
       .get<IBreastFeed[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  todayBreastFeedsByBabyProfile(id: number): Observable<EntityArrayResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<IBreastFeed[]>(`${this.resourceUrl}/today-breast-feeds-by-baby-profile/${id}?tz=${tz}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  lastWeekCurrentWeekAverageBreastFeedsInHoursEachDayByBabyProfile(id: number): Observable<EntityResponseType> {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return this.http
+      .get<IBreastFeed>(`${this.resourceUrl}/lastweek-currentweek-average-breast-feeds-in-hours-eachday-by-baby-profile/${id}?tz=${tz}`, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  incompleteBreastFeedsByBabyProfile(id: number): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IBreastFeed[]>(`${this.resourceUrl}/incomplete-breast-feeds-by-baby-profile/${id}`, {
+        observe: 'response',
+      })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
