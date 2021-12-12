@@ -8,6 +8,7 @@ import { HeightService } from 'app/entities/baby/height/service/height.service';
 import { HumorHistoryService } from 'app/entities/baby/humor-history/service/humor-history.service';
 import { NapService } from 'app/entities/baby/nap/service/nap.service';
 import { WeightService } from 'app/entities/baby/weight/service/weight.service';
+import { IWeight } from 'app/entities/baby/weight/weight.model';
 import { D3ChartService } from 'app/shared/d3-chart.service';
 import * as dayjs from 'dayjs';
 import { NvD3Component } from 'ng2-nvd3';
@@ -28,12 +29,14 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
   averageHumorHistoryLastCurrentWeek: any = {};
   averageHumorHistoryOptions?: any;
   averageHumorHistoryData?: any;
-  lastWeightsDaysAgo: any = {};
+  lastWeightsDaysAgo: IWeight[] = [];
   lastWeightsDaysAgoOptions?: any;
   lastWeightsDaysAgoData?: any;
+  hideLastWeightsDaysAgoGraphicIcon = false;
   lastHeightsDaysAgo: any = {};
   lastHeightsDaysAgoOptions?: any;
   lastHeightsDaysAgoData?: any;
+  hideLastHeightsDaysAgoGraphicIcon = false;
   latestWeight?: any;
   latestHeight?: any;
   favoriteNapPlace?: any;
@@ -219,13 +222,13 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  isShowLastWeightsDaysAgoGraphic(lastWeightsDaysAgo: any): boolean {
-    return Object.keys(lastWeightsDaysAgo).length > 1;
+  isShowLastWeightsDaysAgoGraphic(lastWeightsDaysAgo: IWeight[]): boolean {
+    return lastWeightsDaysAgo.length > 1;
   }
 
   showHideLastWeightsDaysAgoGraphic(): void {
     if (this.isShowLastWeightsDaysAgoGraphic(this.lastWeightsDaysAgo)) {
-      this.lastWeightsDaysAgo = {};
+      this.lastWeightsDaysAgo = [];
       this.createLastWeightsDaysAgo();
     } else {
       this.weightService.lastWeightsByDaysByBabyProfile(this.babyProfile!.id!, 30).subscribe((res: HttpResponse<any>) => {
@@ -277,11 +280,19 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
     this.weightService.latestWeightByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.latestWeight = res.body;
     });
+    this.weightService.lastWeightsByDaysByBabyProfile(id, 30).subscribe((res: HttpResponse<any>) => {
+      const weights = res.body;
+      this.hideLastWeightsDaysAgoGraphicIcon = weights.length <= 1;
+    });
   }
 
   getHeightData(id: number): void {
     this.heightService.latestHeightByBabyProfile(id).subscribe((res: HttpResponse<any>) => {
       this.latestHeight = res.body;
+    });
+    this.heightService.lastHeightsByDaysByBabyProfile(id, 30).subscribe((res: HttpResponse<any>) => {
+      const heights = res.body;
+      this.hideLastHeightsDaysAgoGraphicIcon = heights.length <= 1;
     });
   }
 
@@ -411,7 +422,7 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
         {
           values: weightValues,
           key: this.d3ChartTranslate.weight,
-          color: '#ffeb3b',
+          color: 'rgb(252 145 78)',
           area: true,
         },
       ];
@@ -437,7 +448,7 @@ export class BabyProfileDetailComponent implements OnInit, AfterViewInit {
         {
           values: heightValues,
           key: this.d3ChartTranslate.height,
-          color: '#ffeb3b',
+          color: 'rgb(153 255 81)',
           area: true,
         },
       ];
