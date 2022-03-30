@@ -4,19 +4,19 @@
 
 <p align="center">
 <a href="https://github.com/renanfranca/mamazinha-gateway/blob/main/LICENSE.txt" target="blank">
-<img src="https://img.shields.io/github/license/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="github-profile-readme-generator license" />
+<img src="https://img.shields.io/github/license/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="mamazinha-gateway license" />
 </a>
 <a href="https://github.com/renanfranca/mamazinha-gateway/fork" target="blank">
-<img src="https://img.shields.io/github/forks/renanfranca/mamazinha-gateway?style=flat-square" alt="github-profile-readme-generator forks"" alt="github-profile-readme-generator forks"/>
+<img src="https://img.shields.io/github/forks/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway forks"" alt="github-profile-readme-generator forks"/>
 </a>
 <a href="https://github.com/renanfranca/mamazinha-gatewayr/stargazers" target="blank">
-<img src="https://img.shields.io/github/stars/renanfranca/mamazinha-gateway?style=flat-square" alt="github-profile-readme-generator stars"/>
+<img src="https://img.shields.io/github/stars/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway stars"/>
 </a>
-<a href="https://github.com/rahuldkjain/github-profile-readme-generator/issues" target="blank">
-<img src="https://img.shields.io/github/issues/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="github-profile-readme-generator issues"/>
+<a href="https://github.com/renanfranca/mamazinha-gateway/issues" target="blank">
+<img src="https://img.shields.io/github/issues/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway issues"/>
 </a>
-<a href="https://github.com/rahuldkjain/github-profile-readme-generator/pulls" target="blank">
-<img src="https://img.shields.io/github/issues-pr/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="github-profile-readme-generator pull-requests"/>
+<a href="https://github.com/renanfranca/mamazinha-gateway/pulls" target="blank">
+<img src="https://img.shields.io/github/issues-pr/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway pull-requests"/>
 </a>
 </p>
 
