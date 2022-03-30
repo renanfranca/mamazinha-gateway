@@ -4,7 +4,7 @@
 
 <p align="center">
 <a href="https://github.com/renanfranca/mamazinha-gateway/blob/main/LICENSE.txt" target="blank">
-<img src="https://img.shields.io/github/license/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="mamazinha-gateway license" />
+<img src="https://img.shields.io/github/license/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway license" />
 </a>
 <a href="https://github.com/renanfranca/mamazinha-gateway/fork" target="blank">
 <img src="https://img.shields.io/github/forks/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway forks"" alt="github-profile-readme-generator forks"/>
