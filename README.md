@@ -9,8 +9,8 @@
 <a href="https://github.com/renanfranca/mamazinha-gateway/fork" target="blank">
 <img src="https://img.shields.io/github/forks/renanfranca/mamazinha-gateway?style=flat-square" alt="github-profile-readme-generator forks"" alt="github-profile-readme-generator forks"/>
 </a>
-<a href="https://github.com/rahuldkjain/github-profile-readme-generator/stargazers" target="blank">
-<img src="https://img.shields.io/github/stars/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="github-profile-readme-generator stars"/>
+<a href="https://github.com/renanfranca/mamazinha-gatewayr/stargazers" target="blank">
+<img src="https://img.shields.io/github/stars/renanfranca/mamazinha-gateway?style=flat-square" alt="github-profile-readme-generator stars"/>
 </a>
 <a href="https://github.com/rahuldkjain/github-profile-readme-generator/issues" target="blank">
 <img src="https://img.shields.io/github/issues/rahuldkjain/github-profile-readme-generator?style=flat-square" alt="github-profile-readme-generator issues"/>
