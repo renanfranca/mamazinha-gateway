@@ -8,7 +8,7 @@
 <a href="https://github.com/renanfranca/mamazinha-gateway/fork" target="blank">
 <img src="https://img.shields.io/github/forks/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway forks"" alt="github-profile-readme-generator forks"/>
 </a>
-<a href="https://github.com/renanfranca/mamazinha-gatewayr/stargazers" target="blank">
+<a href="https://github.com/renanfranca/mamazinha-gateway/stargazers" target="blank">
 <img src="https://img.shields.io/github/stars/renanfranca/mamazinha-gateway?style=flat-square" alt="mamazinha-gateway stars"/>
 </a>
 <a href="https://github.com/renanfranca/mamazinha-gateway/issues" target="blank">
